@@ -1,0 +1,106 @@
+@use '../shared.scss' as *;
+
+$anim-duration: 2s;
+$wait-before-walk: 1.35s;
+
+%idle-rotation {
+    animation-name: idle-rotation;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    animation-duration: 5s;
+}
+@mixin idle-float($duration: 1.5s) {
+    animation-name: idle-float;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    animation-duration: $duration;
+}
+
+.page.home {
+    background: $color-blue-sky;
+    main.wrapper {
+        display: grid;
+        grid-template:
+            "sky" 1fr
+            "world" auto
+            "text" 1fr / 1fr;
+        .cloud-wrapper {
+            @include idle-float(2.5s);
+            width: 15%;
+            grid-area: sky;
+            place-self: end start;
+        }
+        .sun-wrapper {
+            @include idle-float;
+            width: 15%;
+            grid-area: sky;
+            place-self: end end;
+            .sun {
+                @extend %idle-rotation;
+            }
+        }
+        .world {
+            grid-area: world;
+        }
+        .character-wrapper {
+            width: 5%;
+            margin-left: 46%;
+            margin-top: 18%;
+            transition: margin ease-in-out $anim-duration $wait-before-walk;
+        }
+        .text {
+            grid-area: text;
+            text-align: center;
+            place-self: center;
+            transition: opacity $anim-duration;
+        }
+
+        &.animated {
+            .character-wrapper {
+                margin-left: 14%;
+                margin-top: 37%;
+            }
+            .world {
+                animation-name: world-zoom;
+                animation-timing-function: ease-in-out;
+                animation-duration: $anim-duration;
+                animation-fill-mode: forwards;
+            }
+            .text {
+                opacity: 0;
+            }
+        }
+    }
+}
+
+@keyframes idle-rotation {
+    0% {
+        transform: rotate(-12deg);
+    }
+    100% {
+        transform: rotate(12deg);
+    }
+}
+
+@keyframes idle-float {
+    0% {
+        transform: rotate(-1deg) translateY(0);
+    }
+    100% {
+        transform: rotate(0deg) translateY(5px);
+    }
+}
+
+@keyframes world-zoom {
+    0% {
+        transform: scale(1) translateX(0) translateY(0);
+    }
+    50% {
+        transform: scale(.85) translateX(0) translateY(0);
+    }
+    100% {
+        transform: scale(2) translateX(25%) translateY(10%);
+    }
+}

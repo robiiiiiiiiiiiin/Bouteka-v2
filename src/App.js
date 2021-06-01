@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import 'App.scss';
+
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import Loading from 'pages/Loading';
+import Home from 'pages/Home';
+import HelloWorld from 'components/HelloWorld';
+import LangSelector from 'components/LangSelector';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 function App() {
+
+  const { i18n, ready } = useTranslation(null, { useSuspense: false });
+  const [selectedLang, setSelectedLang] = useState('fr');
+
+  const changeLanguage = (event) => {
+    setSelectedLang(event.target.value);
+    i18n.changeLanguage(event.target.value);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      { ready
+        ? 
+          <Router>
+            <Switch>
+              <Route path="/lang">
+                <HelloWorld />
+                <LangSelector changeLanguage={changeLanguage} selectedLang={selectedLang} />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </Router>
+        : 
+          <Loading />
+      }
     </div>
   );
 }
