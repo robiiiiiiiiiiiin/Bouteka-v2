@@ -1,4 +1,9 @@
 {
     "Hello": "Hello",
-    "clickOnWorld": "Click on the world"
+    "clickOnWorld": "Click on the world",
+    "choose": "Choose",
+    "tooltip": {
+        "chooseBasket": "Choose the size of your basket",
+        "addSomething": "Do you want to add anything?"
+    }
 }

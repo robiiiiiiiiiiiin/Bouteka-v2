@@ -10,7 +10,7 @@ import Character from 'components/Character'
 
 import { useTranslation } from 'react-i18next';
 
-const Home = () => {
+const Home = (props) => {
     const { t } = useTranslation();
     const [animated, setAnimated] = useState(false)
     const [characterWalking, setCharacterWalking] = useState(false)
@@ -22,6 +22,7 @@ const Home = () => {
         }, 1350)
         setTimeout(() => {
             setCharacterWalking(false)
+            props.setRedirect('/baskets')
         }, 3350)
     }
 
