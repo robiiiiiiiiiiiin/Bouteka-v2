@@ -18,6 +18,20 @@ import {
 } from "react-router-dom";
 
 function App() {
+
+  /* page height */
+  const [windowHeight, setWindowHeight] = useState(0)
+  
+  useEffect(() => {
+    const updateWindowHeight = () => {
+      setWindowHeight(window.innerHeight+'px')
+    }
+
+    window.addEventListener('resize', updateWindowHeight)
+    updateWindowHeight()
+
+    return () => window.removeEventListener('resize', updateWindowHeight);
+  }, [])
   
   /* Redirection handling */
   const [redirect, setRedirect] = useState(null)
@@ -58,8 +72,8 @@ function App() {
   }
 
   useEffect(() => {
-    if(ready) { fetchData('products?lang='+selectedLang, setBaskets) }
-  }, [ready])
+    ready && fetchData('products?lang='+selectedLang, setBaskets)
+  }, [ready, selectedLang])
 
   useEffect(() => {
     baskets && console.log("baskets",baskets)
@@ -67,7 +81,7 @@ function App() {
 
   /* template */
   return (
-    <div className="App">
+    <div className="App" style={{ '--window-height': windowHeight }}>
       { ready
         ? 
           <Router>

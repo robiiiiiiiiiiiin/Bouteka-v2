@@ -1,3 +1,5 @@
+import './Tooltip.scss'
+
 import React from 'react';
 
 const Tooltip = (props) => {
@@ -8,5 +10,7 @@ const Tooltip = (props) => {
         </div>
     )
 }
+
+
 
 export default Tooltip;

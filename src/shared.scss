@@ -1,19 +1,64 @@
-/* Spacing */
-$max-width: 375px;
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-style: normal;
+    src: url("./assets/fonts/Montserrat-Regular.woff2") format("woff2"),
+            url("./assets/fonts/Montserrat-Regular.woff") format("woff");
+}
 
-/* Colors */
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-style: normal;
+    src: url("./assets/fonts/Montserrat-Bold.woff2") format("woff2"),
+            url("./assets/fonts/Montserrat-Bold.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 900;
+    font-style: normal;
+    src: url("./assets/fonts/Montserrat-Bold.woff2") format("woff2"),
+            url("./assets/fonts/Montserrat-Bold.woff") format("woff");
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+/* variables */
+$max-width: 375px;
+$space-character-top: 50px;
+
 $color-blue-sky: #b5ffff;
 $color-green-grass: #5abf7d;
+$color-brown-light: #f2ca80;
+$color-brown-dark: #44200e;
+
+/* normalize */
+* {
+    padding: 0;
+    margin: 0;
+}
+ul, ol {
+    list-style: none;
+}
+
+
+body, #root, .App {
+    overflow: hidden;
+}
 
 .page {
     main.wrapper {
+        position: relative;
         width: 95%;
         max-width: $max-width;
-        min-height: 100vh;
+        height: 100vh;
         margin: auto;
     }
 }
-
 
 .composed-img {
     display: grid;
@@ -25,7 +70,14 @@ $color-green-grass: #5abf7d;
 }
 
 .fg {
+    z-index: 3;
+}
+.character-wrapper {
     z-index: 2;
+}
+
+.hidden {
+    display: none;
 }
 
 .character-wrapper {

@@ -1,0 +1,44 @@
+@use '../shared.scss' as *;
+
+.page.baskets {
+    background: $color-green-grass;
+    main.wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .baskets {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1.4fr;
+            .basket-item {
+                @for $i from 1 through 3 {
+                    &:nth-child(#{$i}) {
+                        grid-column: $i / span 1;
+                        margin-top: calc( (#{$i} - 1) * 45px);
+                    }
+                }
+                .basket-banner {
+                    position: absolute;
+                    top: 0;
+                    width: 100vw;
+                    background: $color-brown-light;
+
+                }
+            }
+        }
+        .character-wrapper {
+            position: absolute;
+            width: 40%;
+            top: calc(var(--window-height) / 2 + #{$space-character-top});
+            left: 5%;
+        }
+        .road {
+            position: absolute;
+            left: 50%;
+            top: calc(var(--window-height) / 2 + #{$space-character-top});
+            transform: rotate(28deg) translate(-50%, 1080px);
+            rect {
+                fill: #f2a766;
+            }
+        }
+    }
+}
