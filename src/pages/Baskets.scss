@@ -17,11 +17,52 @@
                     }
                 }
                 .basket-banner {
-                    position: absolute;
+                    position: fixed;
                     top: 0;
-                    width: 100vw;
+                    left: 0;
+                    width: calc(100vw - (2 * #{$gutter-banner-horiz}));
                     background: $color-brown-light;
-
+                    padding: $gutter-banner-vert $gutter-banner-horiz;
+                    .header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-end;
+                        position: relative;
+                        padding-bottom: $gutter-banner-vert;
+                        &::after {
+                            position: absolute;
+                            content: "";
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            border-bottom: 1px solid $color-text;
+                        }
+                    }
+                    .basket-content {
+                        margin-top: $space-elements;
+                        position: relative;
+                        .text {
+                            max-height: 20vh;
+                            overflow: scroll;
+                            padding-bottom: 1em; /* contains the blur for overflowing text */
+                            ol {
+                                list-style: inside;
+                                list-style-type: "- ";
+                            }
+                        }
+                        &::after {
+                            position: absolute;
+                            content: "";
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            height: 1.5em;
+                            background: linear-gradient(0deg, $color-brown-light 0%, rgba(0,0,0,0) 100%);
+                        }
+                    }
+                    .basket-btn-add {
+                        float: right;
+                    }
                 }
             }
         }

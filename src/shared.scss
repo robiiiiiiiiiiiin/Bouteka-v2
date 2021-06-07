@@ -22,19 +22,18 @@
             url("./assets/fonts/Montserrat-Bold.woff") format("woff");
 }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-}
-
 /* variables */
 $max-width: 375px;
 $space-character-top: 50px;
+$space-elements: 7px;
+$gutter-banner-vert: 15px;
+$gutter-banner-horiz: 3vw;
 
 $color-blue-sky: #b5ffff;
 $color-green-grass: #5abf7d;
 $color-brown-light: #f2ca80;
 $color-brown-dark: #44200e;
+$color-text: #44200E;
 
 /* normalize */
 * {
@@ -44,7 +43,17 @@ $color-brown-dark: #44200e;
 ul, ol {
     list-style: none;
 }
+button {
+    border: none;
+}
 
+/* general properties */
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: $color-text;
+}
 
 body, #root, .App {
     overflow: hidden;
@@ -74,6 +83,24 @@ body, #root, .App {
 }
 .character-wrapper {
     z-index: 2;
+}
+
+button {
+    border-radius: 8px;
+    font-weight: 700;
+    padding: 4px 1em;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    &.primary {
+        background: $color-brown-dark;
+        color: $color-brown-light;
+    }
+    &.secondary {
+        background: $color-brown-light;
+        color: $color-brown-dark;
+    }
 }
 
 .hidden {

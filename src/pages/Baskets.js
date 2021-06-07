@@ -54,10 +54,12 @@ const Baskets = (props) => {
                 <div className={`basket-banner ${props.selected ? '' : 'hidden'}`}>
                     <div className="header">
                         <h2 className="basket-title">{props.basket.name}</h2>
-                        <span className="price">{props.basket.price}</span>
+                        <span className="price">chf {props.basket.price}</span>
                     </div>
-                    <div className="basket-content" dangerouslySetInnerHTML={{ __html: props.basket.parsed_short_description }}></div>
-                    <button className="button primary" onClick={addBasketToCart(props.basket.id)}>{t('choose')}</button>
+                    <div className="basket-content">
+                        <p className="text" dangerouslySetInnerHTML={{ __html: props.basket.parsed_short_description }}></p>
+                    </div>
+                    <button className="basket-btn-add button primary" onClick={addBasketToCart(props.basket.id)}>{t('choose')}</button>
                 </div>
             </li>
         )
