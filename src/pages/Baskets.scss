@@ -8,12 +8,19 @@
         justify-content: center;
         .baskets {
             display: grid;
-            grid-template-columns: 1fr 1.2fr 1.4fr;
+            grid-template-columns: 1fr 1.3fr 1.6fr;
             .basket-item {
                 @for $i from 1 through 3 {
                     &:nth-child(#{$i}) {
                         grid-column: $i / span 1;
                         margin-top: calc( (#{$i} - 1) * 45px);
+                    }
+                }
+                .basket-btn-toggle {
+                    width: 100%;
+                    .basket-fg {
+                        transform: translateY(0);
+                        transition: transform ease-out $transition-duration;
                     }
                 }
                 .basket-banner {
@@ -23,6 +30,11 @@
                     width: calc(100vw - (2 * #{$gutter-banner-horiz}));
                     background: $color-brown-light;
                     padding: $gutter-banner-vert $gutter-banner-horiz;
+                    
+                    visibility: hidden;
+                    opacity: 0;
+                    transform: translateY(-100%);
+                    transition: visibility $transition-duration, opacity $transition-duration, transform ease-out $transition-duration;
                     .header {
                         display: flex;
                         justify-content: space-between;
@@ -62,6 +74,19 @@
                     }
                     .basket-btn-add {
                         float: right;
+                    }
+                }
+                &.selected {
+                    .basket-banner {
+                        display: block;
+                        visibility: visible;
+                        opacity: 1;
+                        transform: translateY(0);
+                        transition: visibility $transition-duration, opacity $transition-duration, transform ease-out $transition-duration;
+                    }
+                    .basket-fg {
+                        transform: translateY(-30%);
+                        transition: transform ease-out $transition-duration;
                     }
                 }
             }

@@ -1,5 +1,34 @@
+@use '../shared.scss' as *;
+
 .tooltip {
+    background: $color-brown-light;
+    position: fixed;
+    left: 0;
+    top: 25%;
+    padding: $gutter-banner-vert $gutter-banner-horiz;
+    width: calc(100vw - (2 * #{$gutter-banner-horiz}));
+    text-align: center;
+    z-index: 4;
     .text {
         margin: 0;
     }
+    &::after {
+        content: "";
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 30px solid $color-brown-light;
+        position: absolute;
+        bottom: -30px;
+        right: calc((var(--window-width) / 2) - 130px);
+    }
+    &.showing {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        transition: visibility $transition-duration, opacity $transition-duration, transform ease-out $transition-duration;
+    }
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-30%);
+    transition: visibility $transition-duration, opacity $transition-duration, transform ease-out $transition-duration;
 }

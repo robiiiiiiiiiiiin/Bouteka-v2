@@ -19,18 +19,20 @@ import {
 
 function App() {
 
-  /* page height */
+  /* page dimensions */
   const [windowHeight, setWindowHeight] = useState(0)
+  const [windowWidth, setWindowWidth] = useState(0)
   
   useEffect(() => {
-    const updateWindowHeight = () => {
+    const updateWindowDimensions = () => {
       setWindowHeight(window.innerHeight+'px')
+      setWindowWidth(window.innerWidth+'px')
     }
 
-    window.addEventListener('resize', updateWindowHeight)
-    updateWindowHeight()
+    window.addEventListener('resize', updateWindowDimensions)
+    updateWindowDimensions()
 
-    return () => window.removeEventListener('resize', updateWindowHeight);
+    return () => window.removeEventListener('resize', updateWindowDimensions);
   }, [])
   
   /* Redirection handling */
@@ -75,13 +77,13 @@ function App() {
     ready && fetchData('products?lang='+selectedLang, setBaskets)
   }, [ready, selectedLang])
 
-  useEffect(() => {
+  /* useEffect(() => {
     baskets && console.log("baskets",baskets)
-  }, [baskets])
+  }, [baskets]) */
 
   /* template */
   return (
-    <div className="App" style={{ '--window-height': windowHeight }}>
+    <div className="App" style={{ '--window-height': windowHeight, '--window-width': windowWidth }}>
       { ready
         ? 
           <Router>

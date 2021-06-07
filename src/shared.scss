@@ -35,6 +35,8 @@ $color-brown-light: #f2ca80;
 $color-brown-dark: #44200e;
 $color-text: #44200E;
 
+$transition-duration: 0.5s;
+
 /* normalize */
 * {
     padding: 0;
@@ -45,6 +47,8 @@ ul, ol {
 }
 button {
     border: none;
+    background: none;
+    cursor: pointer;
 }
 
 /* general properties */
@@ -85,14 +89,13 @@ body, #root, .App {
     z-index: 2;
 }
 
-button {
+.button {
     border-radius: 8px;
     font-weight: 700;
     padding: 4px 1em;
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
     box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
     &.primary {
         background: $color-brown-dark;
         color: $color-brown-light;
