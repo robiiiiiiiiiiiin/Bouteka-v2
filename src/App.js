@@ -48,7 +48,7 @@ function App() {
   }
 
   /* data fetching */
-  const apiUrl = 'http://localhost:8000/'
+  const apiUrl = 'https://proxy.bouteka.ch/'
   const [dataLoading, setDataLoading] = useState(false)
   const [fetchError, setFetchError] = useState(false)
   const [baskets, setBaskets] = useState(null)
