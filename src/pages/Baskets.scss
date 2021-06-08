@@ -3,10 +3,10 @@
 .page.baskets {
     background: $color-green-grass;
     main.wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         .baskets {
+            position: absolute;
+            width: 100%;
+            top: calc((var(--window-height) / 2) - 10%);
             display: grid;
             grid-template-columns: 1fr 1.3fr 1.6fr;
             .basket-item {
@@ -55,8 +55,23 @@
                         position: relative;
                         .text {
                             max-height: 20vh;
-                            overflow: scroll;
+                            overflow-y: scroll;
                             padding-bottom: 1em; /* contains the blur for overflowing text */
+                            scrollbar-width: thin;
+                            scrollbar-color: $color-brown-dark transparent;
+                            &::-webkit-scrollbar-track {
+                                border-radius: 5px;
+                                background-color: transparent;
+                            }
+                            &::-webkit-scrollbar {
+                                border-radius: 5px;
+                                width: 5px;
+                                background-color: transparent;
+                            }
+                            &::-webkit-scrollbar-thumb {
+                                border-radius: 5px;
+                                background-color: $color-brown-dark;
+                            }
                             ol {
                                 list-style: inside;
                                 list-style-type: "- ";
