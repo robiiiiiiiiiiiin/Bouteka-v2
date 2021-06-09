@@ -11,15 +11,8 @@
             grid-template-columns: 1fr 1.3fr 1.6fr;
             .selectable-item {
                 @include selectable-item;
-                @for $i from 1 through 3 {
-                    &:nth-child(#{$i}) {
-                        grid-column: $i / span 1;
-                        margin-top: calc( (#{$i} - 1) * 45px);
-                    }
-                }
-                .btn-toggle {
-                    width: 100%;
-                }
+                grid-column: var(--index) / span 1;
+                margin-top: calc((var(--index) - 1) * 45px);
                 .banner {
                     position: fixed;
                     top: 0;

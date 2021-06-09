@@ -59,7 +59,7 @@ body {
     color: $color-text;
 }
 
-body, #root, .App {
+body, #root, .App, .page {
     overflow: hidden;
 }
 
@@ -83,13 +83,9 @@ body, #root, .App {
         width: 100%;
         grid-area: center;
     }
-}
-
-.fg {
-    z-index: 3;
-}
-.character-wrapper {
-    z-index: 2;
+    .bg     { z-index: 2; }
+    .icon   { z-index: 3; }
+    .fg     { z-index: 4; }
 }
 
 .button {
@@ -154,11 +150,15 @@ body, #root, .App {
 %on-the-road {
     background: $color-green-grass;
     main.wrapper {
+        .btn-toggle {
+            width: 100%;
+        }
         .character-wrapper {
             position: absolute;
             width: 40%;
             top: calc(var(--window-height) / 2 + #{$space-character-top});
             left: 5%;
+            z-index: 5;
         }
     }
 }

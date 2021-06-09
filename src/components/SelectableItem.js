@@ -10,7 +10,7 @@ const SelectableItem = (props) => {
     }
 
     return (
-        <li className={`selectable-item ${selected ? 'selected' : ''}`}>
+        <li className={`selectable-item ${selected ? 'selected' : ''}`} style={{'--index': props.index+1}}>
             <OutsideClickHandler activated={selected} triggerThis={closeModal}>
                 <button className="btn-toggle" onClick={() => setSelected(!selected)}>
                     <div className="composed-img" role="img">
