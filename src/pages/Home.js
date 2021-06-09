@@ -10,7 +10,7 @@ import Character from 'components/Character'
 
 import { useTranslation } from 'react-i18next';
 
-const Home = (props) => {
+const Home = React.forwardRef((props, ref) => {
     const { t } = useTranslation();
     const [animated, setAnimated] = useState(false)
     const [characterWalking, setCharacterWalking] = useState(false)
@@ -22,12 +22,12 @@ const Home = (props) => {
         }, 1350)
         setTimeout(() => {
             setCharacterWalking(false)
-            props.setRedirect('/baskets')
+            props.history.push('/baskets')
         }, 3350)
     }
 
     return (
-        <div className="page home" onClick={animate}>
+        <div ref={ref} className="page home" onClick={animate}>
             <main className={`wrapper ${animated ? 'animated' : ''}`}>
                 <div className="cloud-wrapper">
                     <img className="cloud" src={cloud} alt="" />
@@ -44,6 +44,6 @@ const Home = (props) => {
             </main>
         </div>
     )
-}
+})
 
 export default Home;

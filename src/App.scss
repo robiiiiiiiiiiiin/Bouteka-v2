@@ -1,0 +1,20 @@
+@use './shared.scss' as *;
+
+.App {
+    background: $color-green-grass;
+}
+
+.fade-enter, .fade-appear {
+    opacity: 0;
+}
+.fade-enter-active, .fade-appear-active {
+    opacity: 1;
+    transition: opacity var(--transition-betw-pages-dur);
+}
+.fade-exit {
+    opacity: 1;
+}
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity var(--transition-betw-pages-dur);
+}

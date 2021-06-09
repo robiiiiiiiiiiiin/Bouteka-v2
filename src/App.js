@@ -1,32 +1,29 @@
 import 'App.scss';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import axios from 'axios';
 
 import Loading from 'pages/Loading';
 import Home from 'pages/Home';
 import Baskets from 'pages/Baskets';
+import Options from 'pages/Options';
 import HelloWorld from 'components/HelloWorld';
 import LangSelector from 'components/LangSelector';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
+import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
 function App() {
 
   /* page dimensions */
   const [windowHeight, setWindowHeight] = useState(0)
   const [windowWidth, setWindowWidth] = useState(0)
-  
+
   useEffect(() => {
     const updateWindowDimensions = () => {
-      setWindowHeight(window.innerHeight+'px')
-      setWindowWidth(window.innerWidth+'px')
+      setWindowHeight(window.innerHeight + 'px')
+      setWindowWidth(window.innerWidth + 'px')
     }
 
     window.addEventListener('resize', updateWindowDimensions)
@@ -34,9 +31,21 @@ function App() {
 
     return () => window.removeEventListener('resize', updateWindowDimensions);
   }, [])
-  
-  /* Redirection handling */
-  const [redirect, setRedirect] = useState(null)
+
+  /* Navigation */
+  let history = useHistory()
+  const location = useLocation()
+  const loadingRef = useRef(null)
+  const homeRef = useRef(null)
+  const basketsRef = useRef(null)
+  const optionsRef = useRef(null)
+  const nodeRefs = {
+    '/': homeRef,
+    '/baskets': basketsRef,
+    '/options': optionsRef,
+    '/loading': loadingRef
+  }
+  const transitionBetwPagesDur = 600
 
   /* i18n */
   const { i18n, ready } = useTranslation(null, { useSuspense: false });
@@ -46,6 +55,9 @@ function App() {
     setSelectedLang(event.target.value);
     i18n.changeLanguage(event.target.value);
   }
+
+  /* user data */
+  const [chosenBasket, setChosenBasket] = useState(null)
 
   /* data fetching */
   const apiUrl = 'https://proxy.bouteka.ch/'
@@ -63,7 +75,7 @@ function App() {
     setDataLoading(true);
 
     try {
-      const result = await axios(apiUrl+endpoint);
+      const result = await axios(apiUrl + endpoint);
       setData(result.data);
     } catch (error) {
       setFetchError(error);
@@ -74,39 +86,43 @@ function App() {
   }
 
   useEffect(() => {
-    ready && fetchData('products?lang='+selectedLang, setBaskets)
+    ready && fetchData('products?lang=' + selectedLang, setBaskets)
   }, [ready, selectedLang])
 
-  /* useEffect(() => {
-    baskets && console.log("baskets",baskets)
-  }, [baskets]) */
+  useEffect(() => {
+    chosenBasket && console.log("chosenBasket: ", chosenBasket)
+  }, [chosenBasket])
 
   /* template */
   return (
-    <div className="App" style={{ '--window-height': windowHeight, '--window-width': windowWidth }}>
-      { ready
-        ? 
-          <Router>
-            <Switch>
-              <Route path="/lang">
+    <div className="App" style={{ '--window-height': windowHeight, '--window-width': windowWidth , '--transition-betw-pages-dur': transitionBetwPagesDur+'ms'}}>
+      <TransitionGroup>
+        <CSSTransition key={location.key} nodeRef={nodeRefs[location.pathname]} timeout={transitionBetwPagesDur} classNames="fade" >
+          {ready
+            ?
+            <Switch location={location}>
+              <Route path="/lang" >
                 <HelloWorld />
                 <LangSelector changeLanguage={changeLanguage} selectedLang={selectedLang} />
               </Route>
+              <Route path="/options">
+                <Options ref={optionsRef} history={history} chosenBasket={chosenBasket} />
+              </Route>
               <Route path="/baskets">
-                { baskets
-                  ? <Baskets setRedirect={setRedirect} baskets={baskets} />
-                  : <Loading />
+                {baskets
+                  ? <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} />
+                  : <Loading ref={loadingRef} />
                 }
               </Route>
               <Route path="/">
-                <Home  setRedirect={setRedirect} />
+                <Home ref={homeRef} history={history} />
               </Route>
             </Switch>
-            { redirect && <Redirect to={redirect} /> }
-          </Router>
-        : 
-          <Loading />
-      }
+            :
+            <Loading ref={loadingRef} />
+          }
+        </CSSTransition>
+      </TransitionGroup>
     </div>
   );
 }

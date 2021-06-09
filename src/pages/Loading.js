@@ -1,11 +1,11 @@
 import React from 'react';
  
-const Loading = () => {
+const Loading = React.forwardRef((props, ref) => {
   return (
-    <div className="loading">
+    <div ref={ref} className="loading">
         loading
     </div>
   )
-}
+})
  
 export default Loading;

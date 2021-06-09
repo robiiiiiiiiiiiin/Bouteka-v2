@@ -64,6 +64,9 @@ body, #root, .App {
 }
 
 .page {
+    position: absolute;
+    top: 0;
+    width: 100%;
     main.wrapper {
         position: relative;
         width: 95%;
@@ -145,5 +148,47 @@ body, #root, .App {
     }
     100% {
         transform: rotate(-10deg) scaleY(0.7) translateY(15%);
+    }
+}
+
+%on-the-road {
+    background: $color-green-grass;
+    main.wrapper {
+        .character-wrapper {
+            position: absolute;
+            width: 40%;
+            top: calc(var(--window-height) / 2 + #{$space-character-top});
+            left: 5%;
+        }
+    }
+}
+
+@mixin selectable-item() {
+    .banner {
+        width: calc(100vw - (2 * #{$gutter-banner-horiz}));
+        background: $color-brown-light;
+        padding: $gutter-banner-vert $gutter-banner-horiz;
+        
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: visibility $transition-duration, opacity $transition-duration, transform ease-out $transition-duration;
+    }
+    .icon {
+        transform: translateY(0);
+        transition: transform ease-out $transition-duration;
+    }
+    &.selected {
+        .banner {
+            /* display: block; */
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+            transition: visibility $transition-duration, opacity $transition-duration, transform ease-out $transition-duration;
+        }
+        .icon {
+            transform: translateY(-30%);
+            transition: transform ease-out $transition-duration;
+        }
     }
 }

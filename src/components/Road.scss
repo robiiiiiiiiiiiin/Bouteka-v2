@@ -1,0 +1,11 @@
+@use '../shared.scss' as *;
+
+.road {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--window-height) / 2 + #{$space-character-top});
+    transform: rotate(28deg) translate(-50%, 1080px);
+    rect {
+        fill: #f2a766;
+    }
+}
