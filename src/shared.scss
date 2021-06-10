@@ -8,6 +8,22 @@
 
 @font-face {
     font-family: "Montserrat";
+    font-weight: 500;
+    font-style: normal;
+    src: url("./assets/fonts/Montserrat-Medium.woff2") format("woff2"),
+            url("./assets/fonts/Montserrat-Medium.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 600;
+    font-style: normal;
+    src: url("./assets/fonts/Montserrat-SemiBold.woff2") format("woff2"),
+            url("./assets/fonts/Montserrat-SemiBold.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Montserrat";
     font-weight: 700;
     font-style: normal;
     src: url("./assets/fonts/Montserrat-Bold.woff2") format("woff2"),
@@ -24,8 +40,12 @@
 
 /* variables */
 $max-width: 375px;
+$slope: 0.5; /* pente */
+$angle: 26.57deg;
 $space-character-top: 70px;
 $space-elements: 7px;
+$gutter-vert: 15px;
+$gutter-horiz: 4vw;
 $gutter-banner-vert: 15px;
 $gutter-banner-horiz: 3vw;
 
@@ -102,6 +122,19 @@ body, #root, .App, .page {
     &.secondary {
         background: $color-brown-light;
         color: $color-brown-dark;
+    }
+    &.toggle {
+        font-weight: 500;
+        box-shadow: none;
+        background: none;
+        border: 1.5px solid $color-brown-dark;
+        color: $color-brown-dark;
+        padding-right: 8px;
+        padding-left: 8px;
+        &.selected {
+            background: $color-brown-dark;
+            color: $color-brown-light;
+        }
     }
 }
 

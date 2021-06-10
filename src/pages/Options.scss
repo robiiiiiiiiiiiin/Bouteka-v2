@@ -14,12 +14,65 @@
                 @include selectable-item;
                 width: 25%;
                 flex-shrink: 0;
-                margin-top: calc((var(--index) - 1) * 45px);
-                .icon {
-                    width: 50%;
-                    margin: auto;
-                    transform: translateY(15%);
+                margin-top: calc((var(--index) - 1) * (#{$slope} * 25%));
+                .btn-toggle {
+                    /* pagination */
+                    transform: translate(calc(var(--current-page) * (-400%)), calc(var(--current-page) * #{$slope} * (-#{$max-width})));
+                    transition: transform 2s;
+                    .icon {
+                        width: 50%;
+                        margin: auto;
+                        transform: translateY(15%);
+                    }
                 }
+                .banner {
+                    position: fixed;
+                    top: 18%;
+                    left: 0;
+                    z-index: 5;
+                    text-align: center;
+                    .header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-end;
+                        margin-bottom: $space-elements;
+                        text-align: left;
+                        .price {
+                            flex-shrink: 0;
+                            margin-left: 10px;
+                        }
+                    }
+                    .option-variations {
+                        .option-variation {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            label {
+                                cursor: pointer;
+                                margin: calc(#{$space-elements} / 2) 0;
+                                input {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                    .option-btn-add {
+                        margin-top: $space-elements;
+                    }
+                }
+            }
+        }
+        .navbar {
+            position: fixed;
+            bottom: $gutter-vert;
+            width: calc(100vw - (2 * #{$gutter-horiz}));
+            left: $gutter-horiz;
+            .previous {
+                justify-self: flex-start;
+            }
+            .next, .checkout {
+                justify-self: flex-end;
+                float: right;
             }
         }   
     }

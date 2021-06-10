@@ -2,8 +2,14 @@
     "Hello": "Salut",
     "clickOnWorld": "Clique sur le monde",
     "choose": "Choisir",
+    "add": "Ajouter",
     "tooltip": {
         "chooseBasket": "Choisi la taille de ton panier",
         "addSomething": "Veux-tu ajouter quelque chose?"
+    },
+    "pagination": {
+        "previous": "Revenir",
+        "next": "Voir plus loin",
+        "checkout": "Passer en caisse"
     }
 }

@@ -2,8 +2,14 @@
     "Hello": "Hello",
     "clickOnWorld": "Click on the world",
     "choose": "Choose",
+    "add": "Add",
     "tooltip": {
         "chooseBasket": "Choose the size of your basket",
         "addSomething": "Do you want to add anything?"
+    },
+    "pagination": {
+        "previous": "Go back",
+        "next": "See further",
+        "checkout": "Checkout"
     }
 }

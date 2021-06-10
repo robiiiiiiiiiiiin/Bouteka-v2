@@ -4,7 +4,7 @@
     position: absolute;
     left: 50%;
     top: calc(var(--window-height) / 2 + #{$space-character-top});
-    transform: rotate(28deg) translate(-50%, 1080px);
+    transform: rotate($angle) translate(-50%, 1040px);
     rect {
         fill: #f2a766;
     }
