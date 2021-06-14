@@ -3,6 +3,7 @@
     "clickOnWorld": "Clique sur le monde",
     "choose": "Choisir",
     "add": "Ajouter",
+    "modify": "Modifier",
     "tooltip": {
         "chooseBasket": "Choisi la taille de ton panier",
         "addSomething": "Veux-tu ajouter quelque chose?"

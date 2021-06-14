@@ -8,7 +8,6 @@
     padding: $gutter-banner-vert $gutter-banner-horiz;
     width: calc(100vw - (2 * #{$gutter-banner-horiz}));
     text-align: center;
-    z-index: 4;
     .text {
         margin: 0;
     }

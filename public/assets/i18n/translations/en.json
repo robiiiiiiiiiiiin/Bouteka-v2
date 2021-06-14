@@ -3,6 +3,7 @@
     "clickOnWorld": "Click on the world",
     "choose": "Choose",
     "add": "Add",
+    "modify": "Modify",
     "tooltip": {
         "chooseBasket": "Choose the size of your basket",
         "addSomething": "Do you want to add anything?"

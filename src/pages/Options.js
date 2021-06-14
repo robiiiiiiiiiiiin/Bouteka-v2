@@ -6,10 +6,9 @@ import Character from 'components/Character'
 import Tooltip from 'components/Tooltip'
 import SelectableItem from 'components/SelectableItem'
 import Road from 'components/Road'
+import Decor from 'components/Decor'
+import Cart from 'components/Cart'
 
-import grass from 'assets/img/grass.svg'
-import treeSmall from 'assets/img/tree_1_small.svg'
-import treeBig from 'assets/img/tree_1_big.svg'
 import cart from 'assets/img/cart.svg'
 import boxBg from 'assets/img/box_bg_carots.svg'
 import boxFg from 'assets/img/box_fg_carots.svg'
@@ -19,8 +18,8 @@ import { useTranslation } from 'react-i18next';
 
 const Options = React.forwardRef((props, ref) => {
     const { t } = useTranslation();
-    //const optional_products = props.chosenBasket.attributes
-    const optional_products = [
+    //const availableOptions = props.chosenBasket.attributes
+    const availableOptions = [
       {
         "id": 3,
         "name": "4 œufs",
@@ -108,12 +107,38 @@ const Options = React.forwardRef((props, ref) => {
             "price": " 4.50"
           }
         ]
+      },
+      {
+        "id": 9,
+        "name": "Tsanpinyon",
+        "position": 7,
+        "visible": false,
+        "variation": true,
+        "options": [
+          "250g (Supplément CHF 2.50)",
+          "500g (Supplément CHF 4.50)",
+          "Sans"
+        ],
+        "isVariable": true,
+        "processed_options": [
+          {
+            "fullname": "250g (Supplément CHF 2.50)",
+            "name": "250g",
+            "price": " 2.50"
+          },
+          {
+            "fullname": "500g (Supplément CHF 4.50)",
+            "name": "500g",
+            "price": " 4.50"
+          }
+        ]
       }
     ]
-    /* for(let i = 10; i <= 16; i++) {
-      optional_products.push({ id: i })
+    /* const availableOptions = []
+    for(let i = 1; i <= 16; i++) {
+      availableOptions.push({ id: i })
     } */
-    const pageCount = Math.ceil(optional_products.length / 4)
+    const pageCount = Math.ceil(availableOptions.length / 4)
     const [currentPage, setCurrentPage] = useState(1)
     const [characterWalking, setCharacterWalking] = useState(false)
 
@@ -132,13 +157,23 @@ const Options = React.forwardRef((props, ref) => {
       }, 2000)
     }
 
-    const addOptionToCart = () => {
-
+    const addOptionToCart = (product, optionValue, optionPrice) => {
+      props.setChosenOptions([...props.chosenOptions, {
+        id: product.id,
+        name: product.name,
+        option: optionValue,
+        price: optionPrice
+      }])
     }
 
-    const SimpleProduct = ({product}) => {
+    const SimpleProduct = ({setSelected, product}) => {
       const name = product.name
       const { fullname, price } = product.processed_options[0]
+      
+      const handleAddProduct = () => {
+        setSelected(false)
+        addOptionToCart(product, fullname, price)
+      }
 
       return (
         <div className='banner'>
@@ -146,14 +181,19 @@ const Options = React.forwardRef((props, ref) => {
                 <h2 className="option-title">{name}</h2>
                 <span className="price">chf{price}</span>
             </div>
-            <button className="option-btn-add button primary" onClick={() => addOptionToCart()}>{t('add')}</button>
+            <button className="option-btn-add button primary" onClick={() => handleAddProduct()}>{t('add')}</button>
         </div>
       )
     }
     
-    const VariableProduct = ({product}) => {
+    const VariableProduct = ({setSelected, product}) => {
       const name = product.name
       const [selectedVariation, setSelectedVariation] = useState(null)
+
+      const handleAddProduct = () => {
+        setSelected(false)
+        addOptionToCart(product, selectedVariation.fullname, selectedVariation.price)
+      }
 
       return (
         <div className='banner'>
@@ -164,7 +204,7 @@ const Options = React.forwardRef((props, ref) => {
                 {
                   product.processed_options.map(variation =>
                     <li key={variation.fullname} className="option-variation">
-                      <label className={`button toggle ${(selectedVariation == variation.fullname) && 'selected'}`} onClick={() => setSelectedVariation(variation.fullname)}>
+                      <label className={`button toggle ${(selectedVariation && selectedVariation.fullname == variation.fullname) && 'selected'}`} onClick={() => setSelectedVariation(variation)}>
                         <input type="radio" id={variation.name} name={name} value={variation.fullname} />
                         {variation.name}
                       </label>
@@ -173,27 +213,33 @@ const Options = React.forwardRef((props, ref) => {
                   )
                 }
             </ul>
-            <button className="option-btn-add button primary" onClick={() => addOptionToCart()}>{t('add')}</button>
+            <button className="option-btn-add button primary" onClick={() => handleAddProduct()}>{t('add')}</button>
         </div>
       )
     }
 
     const items = []
-    Object.values(optional_products).forEach((product, i) => {
+    Object.values(availableOptions).forEach((product, i) => {
+        const optionIsInBasket = props.chosenOptions.filter(option => option.id === product.id).length
         items.push(
-            <SelectableItem key={product.id} index={i} imgs={{bg: boxBg, icon: iconCarot, fg: boxFg}} >
-              { 
-                product.isVariable ? <VariableProduct product={product} /> : <SimpleProduct  product={product} />
-              }
+            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: boxBg, icon: (optionIsInBasket) ? '' : iconCarot, fg: boxFg}} >
+              { setSelected => (
+                product.isVariable ? <VariableProduct setSelected={setSelected} product={product} /> : <SimpleProduct  setSelected={setSelected} product={product} />
+              )}
             </SelectableItem>
         )
     })
 
+    const decors = []
+    for(let i=1; i<=pageCount; i++) {
+      decors.push(<Decor index={i} />)
+    }
+
     return (
-        <div ref={ref} className="page options">
+        <div ref={ref} className="page options" style={{'--current-page': currentPage-1}}>
             <main className="wrapper">
                 <Tooltip text={t('tooltip.addSomething')} />
-                <ul className="products" style={{'--current-page': currentPage-1}}>
+                <ul className="products">
                     { items }
                 </ul>
                 <Character options={{ hasBasket: true, isWalking: characterWalking }} />
@@ -209,7 +255,11 @@ const Options = React.forwardRef((props, ref) => {
                     <button className="button primary checkout">{t('pagination.checkout')}</button>
                   }
                 </nav>
+                <Cart chosenBasket={props.chosenBasket} chosenOptions={props.chosenOptions} setChosenOptions={props.setChosenOptions} />  
             </main>
+            <div className='decorative-elems'>
+              { decors }
+            </div>
         </div>
     )
 })

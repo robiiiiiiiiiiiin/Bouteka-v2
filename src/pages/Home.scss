@@ -57,12 +57,6 @@ $wait-before-walk: 1.35s;
             margin-top: 5vh;
             transition: opacity $anim-duration;
         }
-        .fg {
-            z-index: 3;
-        }
-        .character-wrapper {
-            z-index: 2;
-        }
 
         &.animated {
             .character-wrapper {

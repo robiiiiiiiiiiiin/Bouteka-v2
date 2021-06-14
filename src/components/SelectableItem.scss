@@ -1,0 +1,33 @@
+@use '../shared.scss' as *;
+
+.selectable-item {
+    .banner {
+        width: calc(100vw - (2 * #{$gutter-banner-horiz}));
+        background: $color-brown-light;
+        padding: $gutter-banner-vert $gutter-banner-horiz;
+        
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: visibility $transition-duration, opacity $transition-duration, transform ease-out $transition-duration;
+    }
+    .icon {
+        transform: translateY(0);
+        transition: transform ease-out $transition-duration;
+    }
+    &.selected {
+        .banner {
+            /* display: block; */
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+            transition: visibility $transition-duration, opacity $transition-duration, transform ease-out $transition-duration;
+        }
+        .btn-toggle {
+            .icon {
+                transform: translateY(-30%) !important;
+                transition: transform ease-out $transition-duration;
+            }
+        }
+    }
+}

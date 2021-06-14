@@ -1,0 +1,17 @@
+@use '../shared.scss' as *;
+
+.cart {
+    .button.cart {
+        position: fixed;
+        top: $gutter-vert;
+        right: $gutter-horiz;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        padding: 0.55rem;
+    }
+    .content {
+        position: fixed;
+        visibility: hidden;
+    }
+}

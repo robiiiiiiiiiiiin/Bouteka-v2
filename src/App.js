@@ -19,11 +19,13 @@ function App() {
   /* page dimensions */
   const [windowHeight, setWindowHeight] = useState(0)
   const [windowWidth, setWindowWidth] = useState(0)
+  const maxWidth = 375 // px
+  const wrapperWidth = 0.95 // %
 
   useEffect(() => {
     const updateWindowDimensions = () => {
-      setWindowHeight(window.innerHeight + 'px')
-      setWindowWidth(window.innerWidth + 'px')
+      setWindowHeight(window.innerHeight)
+      setWindowWidth(window.innerWidth)
     }
 
     window.addEventListener('resize', updateWindowDimensions)
@@ -56,8 +58,9 @@ function App() {
     i18n.changeLanguage(event.target.value);
   }
 
-  /* user data */
+  /* user data ( mostly cart ) */
   const [chosenBasket, setChosenBasket] = useState(null)
+  const [chosenOptions, setChosenOptions] = useState([])
 
   /* data fetching */
   const apiUrl = 'https://proxy.bouteka.ch/'
@@ -95,7 +98,13 @@ function App() {
 
   /* template */
   return (
-    <div className="App" style={{ '--window-height': windowHeight, '--window-width': windowWidth , '--transition-betw-pages-dur': transitionBetwPagesDur+'ms'}}>
+    <div className="App" style={{
+      '--max-width': maxWidth+'px',
+      '--wrapper-width': (wrapperWidth*100)+"%",
+      '--window-height': windowHeight + 'px',
+      '--window-width': windowWidth + 'px',
+      '--window-width-95': (windowWidth * wrapperWidth) > maxWidth ? maxWidth + 'px' : (windowWidth * wrapperWidth) + 'px',
+      '--transition-betw-pages-dur': transitionBetwPagesDur + 'ms' }}>
       <TransitionGroup>
         <CSSTransition key={location.key} nodeRef={nodeRefs[location.pathname]} timeout={transitionBetwPagesDur} classNames="fade" >
           {ready
@@ -106,7 +115,7 @@ function App() {
                 <LangSelector changeLanguage={changeLanguage} selectedLang={selectedLang} />
               </Route>
               <Route path="/options">
-                <Options ref={optionsRef} history={history} chosenBasket={chosenBasket} />
+                <Options ref={optionsRef} history={history} chosenBasket={chosenBasket} chosenOptions={chosenOptions} setChosenOptions={setChosenOptions} />
               </Route>
               <Route path="/baskets">
                 {baskets

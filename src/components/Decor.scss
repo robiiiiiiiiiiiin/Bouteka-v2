@@ -1,0 +1,35 @@
+@use '../shared.scss' as *;
+
+.decor {
+    position: fixed;
+    top: 0;
+    left: 0%;
+    width: 150vw;
+    height: 100vh;
+    .tree {
+        position: absolute;
+        width: 120px;
+        left: 20vw;
+        top: 6vh;
+    }
+    .grass {
+        position: absolute;
+        width: 80px;
+        &:nth-child(1) {
+            top: 15vh;
+            left: 8%;
+        }
+        &:nth-child(2) {
+            top: 32vh;
+            left: 78%;
+        }
+        &:nth-child(3) {
+            top: 35vh;
+            left: 46%;
+        }
+        &:nth-child(4) {
+            top: 74vh;
+            left: 78%;
+        }
+    }
+}

@@ -1,16 +1,18 @@
+import './SelectableItem.scss'
 import React, { useState } from 'react';
 
 import OutsideClickHandler from 'components/OutsideClickHandler'
 
 const SelectableItem = (props) => {
     const [selected, setSelected] = useState(props.selected || false)
+    const index = props.index || 0
 
     const closeModal = () => {
         setSelected(false)
     }
 
     return (
-        <li className={`selectable-item ${selected ? 'selected' : ''}`} style={{'--index': props.index+1}}>
+        <li className={`selectable-item ${selected ? 'selected' : ''}`} style={{'--index': index+1}}>
             <OutsideClickHandler activated={selected} triggerThis={closeModal}>
                 <button className="btn-toggle" onClick={() => setSelected(!selected)}>
                     <div className="composed-img" role="img">
@@ -19,7 +21,7 @@ const SelectableItem = (props) => {
                         { props.imgs.fg &&  <img className="fg" src={props.imgs.fg} alt="" /> }
                     </div>
                 </button>
-                { props.children }
+                { props.children(setSelected) }
             </OutsideClickHandler>
         </li>
     )

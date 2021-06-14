@@ -6,17 +6,8 @@ import Character from 'components/Character'
 import Tooltip from 'components/Tooltip'
 import SelectableItem from 'components/SelectableItem'
 import Road from 'components/Road'
+import Decor from 'components/Decor'
 
-import grass from 'assets/img/grass.svg'
-import treeSmall from 'assets/img/tree_1_small.svg'
-import treeBig from 'assets/img/tree_1_big.svg'
-import cart from 'assets/img/cart.svg'
-/* import basketBig from 'assets/img/basket_big.svg'
-import basketMedium from 'assets/img/basket_medium.svg'
-import basketSmall from 'assets/img/basket_small.svg'
-import basketShadowBig from 'assets/img/basketShadow_big.svg'
-import basketShadowMedium from 'assets/img/basketShadow_medium.svg'
-import basketShadowSmall from 'assets/img/basketShadow_small.svg' */
 import basketIcon from 'assets/img/basket.svg'
 import basketShadow from 'assets/img/basketShadow.svg'
 
@@ -44,16 +35,18 @@ const Baskets = React.forwardRef((props, ref) => {
     Object.values(baskets).forEach((basket, i) => {
         items.push(
             <SelectableItem key={basket.id} index={i} selected={basket.id === chosenBasketId} imgs={{bg: basketShadow, icon: basketIcon}} >
-                <div className='banner'>
-                    <div className="header">
-                        <h2 className="basket-title">{basket.name}</h2>
-                        <span className="price">chf {basket.price}</span>
+                {setSelected => (
+                    <div className='banner'>
+                        <div className="header">
+                            <h2 className="basket-title">{basket.name}</h2>
+                            <span className="price">chf {basket.price}</span>
+                        </div>
+                        <div className="basket-content">
+                            <p className="text" dangerouslySetInnerHTML={{ __html: basket.parsed_short_description }}></p>
+                        </div>
+                        <button className="basket-btn-add button primary" onClick={() => addBasketToCart(basket)}>{t('choose')}</button>
                     </div>
-                    <div className="basket-content">
-                        <p className="text" dangerouslySetInnerHTML={{ __html: basket.parsed_short_description }}></p>
-                    </div>
-                    <button className="basket-btn-add button primary" onClick={() => addBasketToCart(basket)}>{t('choose')}</button>
-                </div>
+                )}
             </SelectableItem>
         )
     })
@@ -67,6 +60,7 @@ const Baskets = React.forwardRef((props, ref) => {
                 </ul>
                 <Character options={{}} />
                 <Road />
+                <Decor />
             </main>
         </div>
     )
