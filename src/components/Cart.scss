@@ -88,6 +88,9 @@
             }
             .composed-img {
                 width: 100%;
+                > * {
+                    place-self: end center;
+                }
             }
         }
         ul.list-options {

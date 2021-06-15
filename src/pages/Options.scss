@@ -1,5 +1,4 @@
 @use '../shared.scss' as *;
-@use "sass:math";
 
 .page.options {
     @extend %on-the-road;
@@ -17,7 +16,7 @@
                 margin-top: calc((var(--index) - 1) * (#{$slope} * 25%));
                 .btn-toggle {
                     /* pagination */
-                    transform: translate(calc(var(--current-page) * (-400%)), calc(var(--current-page) * #{$slope} * (var(--max-width)*-1)));
+                    transform: translate(calc(var(--current-page) * (-400%)), calc(var(--current-page) * #{$slope} * var(--max-width) * -1));
                     transition: transform 2s;
                     .icon {
                         width: 50%;
@@ -78,11 +77,11 @@
     .decorative-elems {
         .decor {
             left: calc(var(--index) * 150vw);
-            top: calc(var(--index) * #{$slope} * 150vw)
+            top: calc(var(--index) * #{$slope} * 150vw);
         }
-        /* pagination */
         .tree, .grass {
-            transform: translate(calc(var(--current-page) * (var(--window-width-95) * -1)), calc(var(--current-page) * #{$slope} * (var(--max-width) * -1)));
+            /* pagination */
+            transform: translate(calc(var(--current-page) * var(--window-width-95) * -1), calc(var(--current-page) * #{$slope} * var(--max-width) * -1));
             transition: transform 2s;
         }
     }
