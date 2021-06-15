@@ -141,6 +141,7 @@ const Options = React.forwardRef((props, ref) => {
     const pageCount = Math.ceil(availableOptions.length / 4)
     const [currentPage, setCurrentPage] = useState(1)
     const [characterWalking, setCharacterWalking] = useState(false)
+    const [animProductAdded, setAnimProductAdded] = useState(false)
 
     useEffect(() => {
     }, [])
@@ -164,6 +165,10 @@ const Options = React.forwardRef((props, ref) => {
         option: optionValue,
         price: optionPrice
       }])
+      setAnimProductAdded(true)
+      setTimeout(() => {
+        setAnimProductAdded(false)
+      }, 800)
     }
 
     const SimpleProduct = ({setSelected, product}) => {
@@ -255,7 +260,7 @@ const Options = React.forwardRef((props, ref) => {
                     <button className="button primary checkout">{t('pagination.checkout')}</button>
                   }
                 </nav>
-                <Cart chosenBasket={props.chosenBasket} chosenOptions={props.chosenOptions} setChosenOptions={props.setChosenOptions} />  
+                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} chosenOptions={props.chosenOptions} setChosenOptions={props.setChosenOptions} />  
             </main>
             <div className='decorative-elems'>
               { decors }

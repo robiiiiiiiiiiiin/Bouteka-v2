@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     const updateWindowDimensions = () => {
       setWindowHeight(window.innerHeight)
-      setWindowWidth(window.innerWidth)
+      setWindowWidth(window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight)
     }
 
     window.addEventListener('resize', updateWindowDimensions)

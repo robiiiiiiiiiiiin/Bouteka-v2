@@ -63,7 +63,7 @@
         .navbar {
             position: fixed;
             bottom: $gutter-vert;
-            width: calc(100vw - (2 * #{$gutter-horiz}));
+            width: calc(100% - (2 * #{$gutter-horiz}));
             left: $gutter-horiz;
             .previous {
                 justify-self: flex-start;

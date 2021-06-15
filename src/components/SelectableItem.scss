@@ -2,7 +2,7 @@
 
 .selectable-item {
     .banner {
-        width: calc(100vw - (2 * #{$gutter-banner-horiz}));
+        width: calc(100% - (2 * #{$gutter-banner-horiz}));
         background: $color-brown-light;
         padding: $gutter-banner-vert $gutter-banner-horiz;
         

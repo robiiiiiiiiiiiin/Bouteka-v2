@@ -9,9 +9,15 @@
         height: 3.5rem;
         border-radius: 50%;
         padding: 0.55rem;
+        &.animating {
+            animation-name: addedToCart;
+            animation-duration: 0.2s;
+            animation-direction: alternate;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 2;
+        }
     }
     .content {
-        visibility: hidden;
         position: fixed;
         top: 0;
         left: 0;
@@ -107,12 +113,42 @@
             }
         }
     }
+
+    /* transitions */
+    %visible {
+        transform: translateY(0%);
+        visibility: visible;
+        opacity: 1;
+        transition: $transition-duration;
+    }
+    %invisible {
+        transform: translateY(-30%);
+        visibility: hidden;
+        opacity: 0;
+        transition: $transition-duration;
+    }
+
+    .button.cart {
+        @extend %visible;
+    }
+    .content {
+        @extend %invisible;
+    }
     &.opened {
-        .button {
-            visibility: hidden;
+        .button.cart {
+            @extend %invisible;
         }
         .content {
-            visibility: visible;
+            @extend %visible;
+        }
+    }
+
+    @keyframes addedToCart {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(20%);
         }
     }
 }

@@ -85,7 +85,12 @@ body, #root, .App, .page {
 .page {
     position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
+    max-width: 100vh;
+    margin: auto;
+    transform: rotate(0deg);
     main.wrapper {
         position: relative;
         width: var(--wrapper-width);
