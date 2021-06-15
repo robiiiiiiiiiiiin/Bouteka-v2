@@ -168,7 +168,7 @@ const Options = React.forwardRef((props, ref) => {
       setAnimProductAdded(true)
       setTimeout(() => {
         setAnimProductAdded(false)
-      }, 800)
+      }, 400)
     }
 
     const SimpleProduct = ({setSelected, product}) => {

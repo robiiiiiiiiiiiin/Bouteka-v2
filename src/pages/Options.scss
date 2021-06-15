@@ -76,8 +76,8 @@
     }
     .decorative-elems {
         .decor {
-            left: calc(var(--index) * 150vw);
-            top: calc(var(--index) * #{$slope} * 150vw);
+            left: calc(var(--index) * 1.5 * var(--window-width));
+            top: calc(var(--index) * #{$slope} * 1.5 * var(--window-width));
         }
         .tree, .grass {
             /* pagination */
