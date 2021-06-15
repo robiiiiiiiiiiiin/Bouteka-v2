@@ -4,6 +4,7 @@
     "choose": "Choose",
     "add": "Add",
     "modify": "Modify",
+    "remove": "Remove",
     "tooltip": {
         "chooseBasket": "Choose the size of your basket",
         "addSomething": "Do you want to add anything?"

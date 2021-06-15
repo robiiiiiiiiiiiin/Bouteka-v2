@@ -4,6 +4,7 @@
     "choose": "Auswählen",
     "add": "Hinzufügen",
     "modify": "Ändern",
+    "remove": "Entfernen",
     "tooltip": {
         "chooseBasket": "Wählen Sie die Größe Ihres Korbes",
         "addSomething": "Möchten Sie etwas hinzufügen?"

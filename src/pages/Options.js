@@ -107,31 +107,6 @@ const Options = React.forwardRef((props, ref) => {
             "price": " 4.50"
           }
         ]
-      },
-      {
-        "id": 9,
-        "name": "Tsanpinyon",
-        "position": 7,
-        "visible": false,
-        "variation": true,
-        "options": [
-          "250g (Supplément CHF 2.50)",
-          "500g (Supplément CHF 4.50)",
-          "Sans"
-        ],
-        "isVariable": true,
-        "processed_options": [
-          {
-            "fullname": "250g (Supplément CHF 2.50)",
-            "name": "250g",
-            "price": " 2.50"
-          },
-          {
-            "fullname": "500g (Supplément CHF 4.50)",
-            "name": "500g",
-            "price": " 4.50"
-          }
-        ]
       }
     ]
     /* const availableOptions = []
@@ -213,7 +188,7 @@ const Options = React.forwardRef((props, ref) => {
                   )
                 }
             </ul>
-            <button className="option-btn-add button primary" onClick={() => handleAddProduct()}>{t('add')}</button>
+            <button className="option-btn-add button primary" onClick={() => handleAddProduct()} disabled={!selectedVariation} >{t('add')}</button>
         </div>
       )
     }
@@ -232,7 +207,7 @@ const Options = React.forwardRef((props, ref) => {
 
     const decors = []
     for(let i=1; i<=pageCount; i++) {
-      decors.push(<Decor index={i} />)
+      decors.push(<Decor key={`decor_${i}`} index={i} />)
     }
 
     return (

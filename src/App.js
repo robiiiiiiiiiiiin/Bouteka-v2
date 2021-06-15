@@ -93,8 +93,12 @@ function App() {
   }, [ready, selectedLang])
 
   useEffect(() => {
-    chosenBasket && console.log("chosenBasket: ", chosenBasket)
+    /* chosenBasket && console.log("useEffect chosenBasket: ", chosenBasket) */
   }, [chosenBasket])
+  
+  useEffect(() => {
+    /* chosenOptions && console.log("useEffect chosenOptions: ", chosenOptions) */
+  }, [chosenOptions])
 
   /* template */
   return (

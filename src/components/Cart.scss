@@ -11,7 +11,105 @@
         padding: 0.55rem;
     }
     .content {
-        position: fixed;
         visibility: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 0 $gutter-banner-horiz ;
+        background-color: $color-brown-light;
+        transform: rotate(0deg);
+        .first-line {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .price {
+                margin: 0 1rem;
+            }
+        }
+        ul {
+            min-height: 4rem;
+            .selectable-item {
+                width: 2rem;
+                height: 4rem;
+                margin: 0 1rem;
+                display: grid;
+                align-items: center;
+                &.option {
+                    .icon {
+                        width: 85%;
+                    }
+                }
+                .bg {
+                    opacity: 0;
+                    transition: opacity 0.5s;
+                }
+                &.selected .bg {
+                    opacity: 1;
+                    transition: opacity 0.5s;
+                }
+                .btn-toggle {
+                    height: 4rem;
+                }
+                .banner {
+                    position: fixed;
+                    top: 100%;
+                    left: 0;
+                    text-align: center;
+                    .header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-end;
+                        text-align: left;
+                        .cart-item-title {
+                            font-size: 1.2rem;
+                            font-weight: 600;
+                        }
+                    }
+                    .remove-from-cart, .modify-basket {
+                        margin-top: $gutter-banner-vert;
+                    }
+                    .modify-basket {
+                        display: inline-block;
+                        text-decoration: none;
+                    }
+                    &::before {
+                        display: block;
+                        content: "";
+                        border-top: 0.5px solid $color-brown-dark;
+                        opacity: 0.3;
+                        width: calc(100% - 2 * #{$gutter-banner-horiz});
+                        position: absolute;
+                        top: 0;
+                        left: $gutter-banner-horiz
+                    }
+                }
+            }
+            .composed-img {
+                width: 100%;
+            }
+        }
+        ul.list-options {
+            display: flex;
+            flex-wrap: wrap;
+            .selectable-item {
+                height: 5rem;
+            }
+            &::before {
+                content: "";
+                border-top: 0.5px solid $color-brown-dark;
+                opacity: 0.3;
+                width: 100%;
+            }
+        }
+    }
+    &.opened {
+        .button {
+            visibility: hidden;
+        }
+        .content {
+            visibility: visible;
+        }
     }
 }
