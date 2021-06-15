@@ -11,6 +11,7 @@ import Baskets from 'pages/Baskets';
 import Options from 'pages/Options';
 import HelloWorld from 'components/HelloWorld';
 import LangSelector from 'components/LangSelector';
+import useStateWithLS from 'components/useStateWithLS';
 
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
@@ -59,8 +60,8 @@ function App() {
   }
 
   /* user data ( mostly cart ) */
-  const [chosenBasket, setChosenBasket] = useState(null)
-  const [chosenOptions, setChosenOptions] = useState([])
+  const [chosenBasket, setChosenBasket] = useStateWithLS('chosenBasket', null)
+  const [chosenOptions, setChosenOptions] = useStateWithLS('chosenOptions' ,[])
 
   /* data fetching */
   const apiUrl = 'https://proxy.bouteka.ch/'

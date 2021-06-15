@@ -227,7 +227,7 @@ const Options = React.forwardRef((props, ref) => {
     Object.values(availableOptions).forEach((product, i) => {
         const optionIsInBasket = props.chosenOptions.filter(option => option.id === product.id).length
         items.push(
-            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: boxBg, icon: (optionIsInBasket) ? '' : iconCarot, fg: boxFg}} >
+            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: boxBg, icon: (optionIsInBasket) ? '' : iconCarot, fg: boxFg}} disabled={optionIsInBasket} >
               { setSelected => (
                 product.isVariable ? <VariableProduct setSelected={setSelected} product={product} /> : <SimpleProduct  setSelected={setSelected} product={product} />
               )}
