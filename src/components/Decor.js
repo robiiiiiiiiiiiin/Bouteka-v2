@@ -2,7 +2,7 @@ import './Decor.scss'
 import React from 'react';
 
 import grass from 'assets/img/grass.svg'
-import treeSmall from 'assets/img/tree_1_small.svg'
+/* import treeSmall from 'assets/img/tree_1_small.svg' */
 import treeBig from 'assets/img/tree_1_big.svg'
 
 const Decor = ({index = 1}) => {

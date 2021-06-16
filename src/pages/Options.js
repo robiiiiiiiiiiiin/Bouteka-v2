@@ -9,7 +9,6 @@ import Road from 'components/Road'
 import Decor from 'components/Decor'
 import Cart from 'components/Cart'
 
-import cart from 'assets/img/cart.svg'
 import boxBg from 'assets/img/box_bg_carots.svg'
 import boxFg from 'assets/img/box_fg_carots.svg'
 import iconCarot from 'assets/img/product_carots.svg'
@@ -148,9 +147,9 @@ const Options = React.forwardRef((props, ref) => {
 
     const move = (direction) => {
       setCharacterWalking(true)
-      if (direction == "next") {
+      if (direction === "next") {
         setCurrentPage(currentPage+1)
-      } else if (direction == "previous") {
+      } else if (direction === "previous") {
         setCurrentPage(currentPage-1)
       }
       setTimeout(() => {
@@ -209,7 +208,7 @@ const Options = React.forwardRef((props, ref) => {
                 {
                   product.processed_options.map(variation =>
                     <li key={variation.fullname} className="option-variation">
-                      <label className={`button toggle ${(selectedVariation && selectedVariation.fullname == variation.fullname) && 'selected'}`} onClick={() => setSelectedVariation(variation)}>
+                      <label className={`button toggle ${(selectedVariation && selectedVariation.fullname === variation.fullname) && 'selected'}`} onClick={() => setSelectedVariation(variation)}>
                         <input type="radio" id={variation.name} name={name} value={variation.fullname} />
                         {variation.name}
                       </label>

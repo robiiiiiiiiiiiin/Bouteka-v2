@@ -7,7 +7,7 @@ const useStateWithLS = (LsKey, defaultValue) => {
 
     useEffect(() => {
         value && localStorage.setItem(LsKey, JSON.stringify(value));
-    }, [value]);
+    }, [value, LsKey]);
 
     return [value, setValue];
 }

@@ -61,10 +61,11 @@ function App() {
 
   /* user data ( mostly cart ) */
   const [chosenBasket, setChosenBasket] = useStateWithLS('chosenBasket', null)
-  const [chosenOptions, setChosenOptions] = useStateWithLS('chosenOptions' ,[])
+  const [chosenOptions, setChosenOptions] = useStateWithLS('chosenOptions', [])
+  const [currentVariation, setCurrentVariation] = useStateWithLS('currentVariation', null)
 
   /* data fetching */
-  const apiUrl = 'https://proxy.bouteka.ch/'
+  const apiUrl = 'http://proxy.bouteka.ch/'
   const [dataLoading, setDataLoading] = useState(false)
   const [fetchError, setFetchError] = useState(false)
   const [baskets, setBaskets] = useState(null)
@@ -89,6 +90,13 @@ function App() {
     setDataLoading(false);
   }
 
+  // Convert special character to unicode in a string
+  const unicodize = (string) => {
+    return string.replace(/[\u007F-\uFFFF]/g, function (chr) {
+      return `\\u${("0000" + chr.charCodeAt(0).toString(16)).substr(-4)}`
+    })
+  }
+
   useEffect(() => {
     ready && fetchData('products?lang=' + selectedLang, setBaskets)
   }, [ready, selectedLang])
@@ -96,20 +104,38 @@ function App() {
   useEffect(() => {
     /* chosenBasket && console.log("useEffect chosenBasket: ", chosenBasket) */
   }, [chosenBasket])
-  
+
+  // Keep the currentVariation up to date with the user choices
   useEffect(() => {
-    /* chosenOptions && console.log("useEffect chosenOptions: ", chosenOptions) */
-  }, [chosenOptions])
+    if (chosenBasket) {
+      // Format the array of the attributes with chosen value
+      const basketAttributes = chosenBasket.attributes.map(attribute => {
+        const chosenOption = chosenOptions.find(option => option.id === attribute.id)
+        return {
+          id: attribute.id,
+          name: attribute.name,
+          option: chosenOption ? chosenOption.option : "Sans"
+        }
+      })
+      // fetch data
+      fetchData(`products/${chosenBasket.id}/search-variation?attributes=${unicodize(JSON.stringify(basketAttributes))}`, setCurrentVariation)
+    }
+  }, [chosenOptions, chosenBasket])
+
+  useEffect(() => {
+    /* currentVariation && console.log("useEffect currentVariation: ", currentVariation) */
+  }, [currentVariation])
 
   /* template */
   return (
     <div className="App" style={{
-      '--max-width': maxWidth+'px',
-      '--wrapper-width': (wrapperWidth*100)+"%",
+      '--max-width': maxWidth + 'px',
+      '--wrapper-width': (wrapperWidth * 100) + "%",
       '--window-height': windowHeight + 'px',
       '--window-width': windowWidth + 'px',
       '--window-width-95': (windowWidth * wrapperWidth) > maxWidth ? maxWidth + 'px' : (windowWidth * wrapperWidth) + 'px',
-      '--transition-betw-pages-dur': transitionBetwPagesDur + 'ms' }}>
+      '--transition-betw-pages-dur': transitionBetwPagesDur + 'ms'
+    }}>
       <TransitionGroup>
         <CSSTransition key={location.key} nodeRef={nodeRefs[location.pathname]} timeout={transitionBetwPagesDur} classNames="fade" >
           {ready

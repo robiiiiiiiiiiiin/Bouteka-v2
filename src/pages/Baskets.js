@@ -1,6 +1,6 @@
 import './Baskets.scss';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Character from 'components/Character'
 import Tooltip from 'components/Tooltip'

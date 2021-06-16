@@ -25,7 +25,7 @@ const Cart = ({chosenOptions, setChosenOptions, chosenBasket, animating}) => {
     const optionItems = chosenOptions.map(option => {
 
         const removeFromCart = (idToRemove) => {
-            const newArray = chosenOptions.filter(option => option.id != idToRemove)
+            const newArray = chosenOptions.filter(option => option.id !== idToRemove)
             setChosenOptions(newArray)
         }
 
