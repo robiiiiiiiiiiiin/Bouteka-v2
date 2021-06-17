@@ -13,5 +13,15 @@
         "previous": "Zurück",
         "next": "Mehr sehen",
         "checkout": "Zur Kasse"
+    },
+    "cashier": {
+        "cabas": {
+            "wannaCabas": "Hallo, Ihr Warenkorb ist gut gefüllt! Möchten Sie <1>{{strongcabas}}</1> für 8,00 chf hinzufügen?",
+            "theCabas": "die Einkaufstasche",
+            "dontForgetWithoutPastas": "Ansonsten vergessen Sie nicht, Ihren eigenen Behälter mitzubringen, um Ihren Warenkorb abzuholen.",
+            "dontForgetWithPastas": "Andernfalls vergessen Sie nicht, Ihre eigenen Behälter mitzubringen, um Ihren Korb und die Pasta abzuholen.",
+            "addCabas": "Die Einkaufstasche hinzufügen",
+            "noThanks": "Nein Danke"
+        }
     }
 }

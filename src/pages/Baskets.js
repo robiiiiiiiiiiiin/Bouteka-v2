@@ -26,7 +26,17 @@ const Baskets = React.forwardRef((props, ref) => {
     useEffect(() => {
     }, [])
 
+    const compareAttributes = (attributes1, attributes2) => {
+        const attributes1_id = attributes1.map(attr => attr.id).sort()
+        const attributes2_id = attributes2.map(attr => attr.id).sort()
+        return JSON.stringify(attributes1_id) === JSON.stringify(attributes2_id)
+    }
+
     const addBasketToCart = (basket) => {
+        // reset chosenAttributes if the new basket doesn't have the same attributes as the precedent
+        if(!compareAttributes(basket.attributes, props.chosenBasket.attributes)) {
+            props.setChosenOptions([])
+        }
         props.setChosenBasket(basket)
         props.history.push('/options')
     }

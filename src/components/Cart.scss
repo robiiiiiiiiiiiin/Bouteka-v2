@@ -76,10 +76,6 @@
                     .remove-from-cart, .modify-basket {
                         margin-top: $gutter-banner-vert;
                     }
-                    .modify-basket {
-                        display: inline-block;
-                        text-decoration: none;
-                    }
                     &::before {
                         display: block;
                         content: "";

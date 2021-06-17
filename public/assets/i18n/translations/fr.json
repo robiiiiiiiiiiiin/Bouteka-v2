@@ -13,5 +13,15 @@
         "previous": "Revenir",
         "next": "Voir plus loin",
         "checkout": "Passer en caisse"
+    },
+    "cashier": {
+        "cabas": {
+            "wannaCabas": "Bonjour, votre panier est bien rempli! Souhaitez-vous ajouter <1>{{strongcabas}}</1> pour 8,00 chf ?</p>",
+            "theCabas": "le Cabas",
+            "dontForgetWithoutPastas": "Sinon, il ne faudra pas oublier d'apporter votre propre contenant pour récupérer votre panier.",
+            "dontForgetWithPastas": "Sinon, il ne faudra pas oublier d'apporter vos propres contenants pour récupérer votre panier et vos pâtes.",
+            "addCabas": "Ajouter le Cabas",
+            "noThanks": "Non merci"
+        }
     }
 }

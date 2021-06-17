@@ -1,6 +1,7 @@
 import './Options.scss';
 
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 import Character from 'components/Character'
 import Tooltip from 'components/Tooltip'
@@ -256,7 +257,7 @@ const Options = React.forwardRef((props, ref) => {
                     <button className="button secondary next" onClick={() => move("next")}>{t('pagination.next')}</button>
                   }
                   { currentPage >= pageCount &&
-                    <button className="button primary checkout">{t('pagination.checkout')}</button>
+                    <Link className="button primary checkout" to="/cashier">{t('pagination.checkout')}</Link>
                   }
                 </nav>
                 <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} chosenOptions={props.chosenOptions} setChosenOptions={props.setChosenOptions} />  

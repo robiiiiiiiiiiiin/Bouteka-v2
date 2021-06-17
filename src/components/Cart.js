@@ -1,6 +1,7 @@
 import './Cart.scss'
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from "react-router-dom";
 
 import SelectableItem from 'components/SelectableItem'
 import OutsideClickHandler from 'components/OutsideClickHandler'
@@ -60,7 +61,7 @@ const Cart = ({chosenOptions, setChosenOptions, chosenBasket, animating}) => {
                                             <h2 className="cart-item-title">{chosenBasket.name}</h2>
                                             <span className="price">chf {chosenBasket.price}</span>
                                         </div>
-                                        <a className="button primary modify-basket" href="/baskets">{t('modify')}</a>
+                                        <Link to="/baskets" className="button primary modify-basket">{t('modify')}</Link>
                                     </div>
                                 )}
                             </SelectableItem>

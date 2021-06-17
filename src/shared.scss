@@ -152,6 +152,8 @@ body, #root, .App, .page {
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
     box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    text-decoration: none;
     &.primary {
         background: $color-brown-dark;
         color: $color-brown-light;

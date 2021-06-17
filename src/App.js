@@ -9,6 +9,7 @@ import Loading from 'pages/Loading';
 import Home from 'pages/Home';
 import Baskets from 'pages/Baskets';
 import Options from 'pages/Options';
+import Cashier from 'pages/Cashier';
 import HelloWorld from 'components/HelloWorld';
 import LangSelector from 'components/LangSelector';
 import useStateWithLS from 'components/useStateWithLS';
@@ -42,10 +43,12 @@ function App() {
   const homeRef = useRef(null)
   const basketsRef = useRef(null)
   const optionsRef = useRef(null)
+  const cashierRef = useRef(null)
   const nodeRefs = {
     '/': homeRef,
     '/baskets': basketsRef,
     '/options': optionsRef,
+    '/cashier': cashierRef,
     '/loading': loadingRef
   }
   const transitionBetwPagesDur = 600
@@ -68,7 +71,7 @@ function App() {
   const apiUrl = 'http://proxy.bouteka.ch/'
   const [dataLoading, setDataLoading] = useState(false)
   const [fetchError, setFetchError] = useState(false)
-  const [baskets, setBaskets] = useState(null)
+  const [baskets, setBaskets] = useStateWithLS('baskets', null)
 
   /**
    * 
@@ -99,7 +102,7 @@ function App() {
 
   useEffect(() => {
     ready && fetchData('products?lang=' + selectedLang, setBaskets)
-  }, [ready, selectedLang])
+  }, [ready, selectedLang, setBaskets])
 
   useEffect(() => {
     /* chosenBasket && console.log("useEffect chosenBasket: ", chosenBasket) */
@@ -120,10 +123,10 @@ function App() {
       // fetch data
       fetchData(`products/${chosenBasket.id}/search-variation?attributes=${unicodize(JSON.stringify(basketAttributes))}`, setCurrentVariation)
     }
-  }, [chosenOptions, chosenBasket])
+  }, [chosenOptions, chosenBasket, setCurrentVariation])
 
   useEffect(() => {
-    /* currentVariation && console.log("useEffect currentVariation: ", currentVariation) */
+    currentVariation && console.log("useEffect currentVariation: ", currentVariation)
   }, [currentVariation])
 
   /* template */
@@ -145,14 +148,17 @@ function App() {
                 <HelloWorld />
                 <LangSelector changeLanguage={changeLanguage} selectedLang={selectedLang} />
               </Route>
-              <Route path="/options">
-                <Options ref={optionsRef} history={history} chosenBasket={chosenBasket} chosenOptions={chosenOptions} setChosenOptions={setChosenOptions} />
-              </Route>
               <Route path="/baskets">
                 {baskets
-                  ? <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} />
+                  ? <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenOptions={setChosenOptions} />
                   : <Loading ref={loadingRef} />
                 }
+              </Route>
+              <Route path="/options">
+                <Options ref={optionsRef} chosenBasket={chosenBasket} chosenOptions={chosenOptions} setChosenOptions={setChosenOptions} />
+              </Route>
+              <Route path="/cashier">
+                <Cashier ref={cashierRef} chosenOptions={chosenOptions} currentVariation={currentVariation} />
               </Route>
               <Route path="/">
                 <Home ref={homeRef} history={history} />

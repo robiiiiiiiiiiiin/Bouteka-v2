@@ -13,5 +13,15 @@
         "previous": "Go back",
         "next": "See further",
         "checkout": "Checkout"
+    },
+    "cashier": {
+        "cabas": {
+            "wannaCabas": "Hi, your cart is well filled! Would you like to add <1>{{strongcabas}}</1> for 8,00 chf?",
+            "theCabas": "the shopping Bag",
+            "dontForgetWithoutPastas": "Otherwise, don't forget to bring your own container to collect your basket.",
+            "dontForgetWithPastas": "Otherwise, don't forget to bring your own containers to pick up your basket and pasta.",
+            "addCabas": "Add the shopping Bag",
+            "noThanks": "No thanks"
+        }
     }
 }
