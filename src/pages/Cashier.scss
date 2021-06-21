@@ -1,5 +1,11 @@
 @use '../shared.scss' as *;
 
+%positionnedAtBottom {
+    position: fixed;
+    top: calc(var(--window-height) - 1rem); /* Positioned according to --window-height instead of viewport to avoid off-screen displaying on mobile */
+    transform: translateY(-100%);           /* As the height of the element is variable, we have to use this method */
+}
+
 .page.cashier {
     background-image: url('/assets/img/shop_bg.svg');
     background-size: cover;
@@ -31,8 +37,7 @@
             }
         }
         .cashier-step {
-            position: fixed;
-            bottom: 1rem;
+            @extend %positionnedAtBottom;
             width: 100%;
             left: 0;
             text-align: center;
@@ -51,8 +56,7 @@
             }
         }
         .button.goback {
-            position: fixed;
-            bottom: 1rem;
+            @extend %positionnedAtBottom;
             left: 3%;
             display: flex;
             padding: 4px;
