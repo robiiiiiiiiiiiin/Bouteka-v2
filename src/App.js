@@ -68,7 +68,7 @@ function App() {
   const [currentVariation, setCurrentVariation] = useStateWithLS('currentVariation', null)
 
   /* data fetching */
-  const apiUrl = 'http://proxy.bouteka.ch/'
+  const apiUrl = 'https://proxy.bouteka.ch/'
   const [dataLoading, setDataLoading] = useState(false)
   const [fetchError, setFetchError] = useState(false)
   const [baskets, setBaskets] = useStateWithLS('baskets', null)
