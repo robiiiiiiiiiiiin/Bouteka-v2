@@ -34,7 +34,7 @@ const Baskets = React.forwardRef((props, ref) => {
 
     const addBasketToCart = (basket) => {
         // reset chosenAttributes if the new basket doesn't have the same attributes as the precedent
-        if(!compareAttributes(basket.attributes, props.chosenBasket.attributes)) {
+        if(props.chosenBasket && !compareAttributes(basket.attributes, props.chosenBasket.attributes)) {
             props.setChosenOptions([])
         }
         props.setChosenBasket(basket)
