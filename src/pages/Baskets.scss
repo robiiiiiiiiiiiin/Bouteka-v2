@@ -65,7 +65,8 @@
                             left: 0;
                             right: 0;
                             height: 1.5em;
-                            background: linear-gradient(0deg, $color-brown-light 0%, rgba(0,0,0,0) 100%);
+                            background-image: linear-gradient(0deg, $color-brown-light 0%, rgba(255,255,255,0) 100%);
+                            background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, $color-brown-light 100%);
                         }
                     }
                     .basket-btn-add {
