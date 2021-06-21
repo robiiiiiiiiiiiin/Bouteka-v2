@@ -62,7 +62,8 @@
         }
         .navbar {
             position: fixed;
-            bottom: $gutter-vert;
+            /* bottom: $gutter-vert; */
+            top: calc(var(--window-height) - 2em - #{$gutter-vert}); 
             width: calc(100% - (2 * #{$gutter-horiz}));
             left: $gutter-horiz;
             .previous {
