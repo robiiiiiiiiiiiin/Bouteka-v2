@@ -3,7 +3,11 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import useStateWithLS from 'components/useStateWithLS';
 
-const Cabas = (props) => {
+type CabasProps = {
+    hasPastas: boolean;
+}
+
+const Cabas = ({hasPastas}: CabasProps) => {
     const { t } = useTranslation();
 
     return (
@@ -16,7 +20,7 @@ const Cabas = (props) => {
                 </p>
                 <br/>
                 <p>
-                    {props.hasPastas ? t('cashier.cabas.dontForgetWithPastas') : t('cashier.cabas.dontForgetWithoutPastas')}
+                    {hasPastas ? t('cashier.cabas.dontForgetWithPastas') : t('cashier.cabas.dontForgetWithoutPastas')}
                 </p>
             </div>
             <div className="step-buttons">

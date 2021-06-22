@@ -1,6 +1,6 @@
 import './Options.scss';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Link } from "react-router-dom";
 
 import Character from 'components/Character'
@@ -16,7 +16,18 @@ import iconCarot from 'assets/img/product_carots.svg'
 
 import { useTranslation } from 'react-i18next';
 
-const Options = React.forwardRef((props, ref) => {
+import BasketAttr from 'models/BasketAttr';
+import Basket from 'models/Basket';
+import ChosenOption from 'models/ChosenOption';
+import BasketAttrOption from 'models/BasketAttrOption';
+
+type OptionsProps = {
+  chosenBasket: Basket;
+  chosenOptions: Array<ChosenOption>;
+  setChosenOptions: Dispatch<SetStateAction<Array<ChosenOption>>>;
+}
+
+const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
     const { t } = useTranslation();
     //const availableOptions = props.chosenBasket.attributes
     const availableOptions = [
@@ -146,7 +157,7 @@ const Options = React.forwardRef((props, ref) => {
     useEffect(() => {
     }, [])
 
-    const move = (direction) => {
+    const move = (direction: string) => {
       setCharacterWalking(true)
       if (direction === "next") {
         setCurrentPage(currentPage+1)
@@ -158,7 +169,7 @@ const Options = React.forwardRef((props, ref) => {
       }, 2000)
     }
 
-    const addOptionToCart = (product, optionValue, optionPrice) => {
+    const addOptionToCart = (product: BasketAttr, optionValue: string, optionPrice: string) => {
       props.setChosenOptions([...props.chosenOptions, {
         id: product.id,
         name: product.name,
@@ -171,7 +182,12 @@ const Options = React.forwardRef((props, ref) => {
       }, 400)
     }
 
-    const SimpleProduct = ({setSelected, product}) => {
+    type ProductProps = {
+      setSelected: Dispatch<SetStateAction<boolean>>;
+      product: BasketAttr;
+    }
+
+    const SimpleProduct = ({setSelected, product}: ProductProps) => {
       const name = product.name
       const { fullname, price } = product.processed_options[0]
       
@@ -191,13 +207,15 @@ const Options = React.forwardRef((props, ref) => {
       )
     }
     
-    const VariableProduct = ({setSelected, product}) => {
+    const VariableProduct = ({setSelected, product}: ProductProps) => {
       const name = product.name
-      const [selectedVariation, setSelectedVariation] = useState(null)
+      const [selectedVariation, setSelectedVariation] = useState<BasketAttrOption | null>(null)
 
       const handleAddProduct = () => {
         setSelected(false)
-        addOptionToCart(product, selectedVariation.fullname, selectedVariation.price)
+        if(selectedVariation) {
+          addOptionToCart(product, selectedVariation.fullname, selectedVariation.price)
+        }
       }
 
       return (
@@ -223,12 +241,12 @@ const Options = React.forwardRef((props, ref) => {
       )
     }
 
-    const items = []
+    const items: Array<JSX.Element> = []
     Object.values(availableOptions).forEach((product, i) => {
-        const optionIsInBasket = props.chosenOptions.filter(option => option.id === product.id).length
+        const optionIsInBasket = props.chosenOptions.filter(option => option.id === product.id).length > 0
         items.push(
             <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: boxBg, icon: (optionIsInBasket) ? '' : iconCarot, fg: boxFg}} disabled={optionIsInBasket} >
-              { setSelected => (
+              { (setSelected: Dispatch<SetStateAction<boolean>>) => (
                 product.isVariable ? <VariableProduct setSelected={setSelected} product={product} /> : <SimpleProduct  setSelected={setSelected} product={product} />
               )}
             </SelectableItem>
@@ -241,7 +259,7 @@ const Options = React.forwardRef((props, ref) => {
     }
 
     return (
-        <div ref={ref} className="page options" style={{'--current-page': currentPage-1}}>
+        <div ref={ref} className="page options" style={{['--current-page' as any]: currentPage-1}}>
             <main className="wrapper">
                 <Tooltip text={t('tooltip.addSomething')} />
                 <ul className="products">

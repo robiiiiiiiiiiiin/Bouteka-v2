@@ -1,6 +1,7 @@
 import './Baskets.scss';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Dispatch, SetStateAction } from 'react';
+import { History } from 'history';
 
 import Character from 'components/Character'
 import Tooltip from 'components/Tooltip'
@@ -11,28 +12,34 @@ import Decor from 'components/Decor'
 import basketIcon from 'assets/img/basket.svg'
 import basketShadow from 'assets/img/basketShadow.svg'
 
+import Basket from 'models/Basket';
+import BasketAttr from 'models/BasketAttr';
+import ChosenOption from 'models/ChosenOption';
+
 import { useTranslation } from 'react-i18next';
 
-const Baskets = React.forwardRef((props, ref) => {
+type BasketsProps = {
+    chosenBasket: Basket | null;
+    baskets: Array<Basket>;
+    setChosenOptions: Dispatch<SetStateAction<Array<ChosenOption>>>;
+    setChosenBasket: Dispatch<SetStateAction<Basket | null>>;
+    history: History;
+}
+
+const Baskets = React.forwardRef<HTMLDivElement, BasketsProps>((props, ref) => {
     const { t } = useTranslation();
     const chosenBasketId = (props.chosenBasket) ? props.chosenBasket.id : null
-
-    const baskets = {
-        small: { ...props.baskets[0] },
-        medium: { ...props.baskets[1] },
-        big: { ...props.baskets[2] }
-    }
 
     useEffect(() => {
     }, [])
 
-    const compareAttributes = (attributes1, attributes2) => {
+    const compareAttributes = (attributes1: Array<BasketAttr>, attributes2: Array<BasketAttr>) => {
         const attributes1_id = attributes1.map(attr => attr.id).sort()
         const attributes2_id = attributes2.map(attr => attr.id).sort()
         return JSON.stringify(attributes1_id) === JSON.stringify(attributes2_id)
     }
 
-    const addBasketToCart = (basket) => {
+    const addBasketToCart = (basket: Basket) => {
         // reset chosenAttributes if the new basket doesn't have the same attributes as the precedent
         if(props.chosenBasket && !compareAttributes(basket.attributes, props.chosenBasket.attributes)) {
             props.setChosenOptions([])
@@ -41,11 +48,11 @@ const Baskets = React.forwardRef((props, ref) => {
         props.history.push('/options')
     }
 
-    const items = []
-    Object.values(baskets).forEach((basket, i) => {
+    const items: Array<JSX.Element> = []
+    Object.values(props.baskets).forEach((basket, i) => {
         items.push(
             <SelectableItem key={basket.id} index={i} selected={basket.id === chosenBasketId} imgs={{bg: basketShadow, icon: basketIcon}} >
-                {setSelected => (
+                {(/* setSelected */) => (
                     <div className='banner'>
                         <div className="header">
                             <h2 className="basket-title">{basket.name}</h2>

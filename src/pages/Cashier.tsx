@@ -13,14 +13,22 @@ import character_cashier from 'assets/img/character_cashier.svg'
 import shop_desk from 'assets/img/shop_desk.svg'
 import arrow_left from 'assets/img/arrow_left.svg'
 
-const Cashier = React.forwardRef((props, ref) => {
+import ChosenOption from 'models/ChosenOption';
+import Variation from 'models/Variation';
+
+type CashierProps = {
+    chosenOptions: Array<ChosenOption>;
+    currentVariation: Variation | null;
+}
+
+const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
     const { t } = useTranslation();
 
     const stepOrder = ["Cabas", "Resume", "Authentication", "UserDetails", "Shipping", "Redirection"]
     const [currentStep, setCurrentStep] = useStateWithLS('currentStep', 1)
-    const hasPastas = props.chosenOptions.find(option => option.name === "400g pâtes blé dur en vrac")
+    const hasPastas = !!props.chosenOptions.find(option => option.name === "400g pâtes blé dur en vrac")
 
-    const goStep = (direction) => {
+    const goStep = (direction: string) => {
         if (direction === "previous" && currentStep > 1) {
             setCurrentStep(currentStep -1)
         }

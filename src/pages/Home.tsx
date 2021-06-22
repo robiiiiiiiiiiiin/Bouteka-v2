@@ -1,6 +1,8 @@
 import './Home.scss';
 
 import React, { useState } from 'react';
+import { History } from 'history';
+
 import cloud from 'assets/img/cloud.svg'
 import sun from 'assets/img/sun.svg'
 import world_bg from 'assets/img/world_bg.png'
@@ -10,7 +12,11 @@ import Character from 'components/Character'
 
 import { useTranslation } from 'react-i18next';
 
-const Home = React.forwardRef((props, ref) => {
+type HomeProps = {
+    history: History;
+}
+
+const Home = React.forwardRef<HTMLDivElement, HomeProps>((props, ref) => {
     const { t } = useTranslation();
     const [animated, setAnimated] = useState(false)
     const [characterWalking, setCharacterWalking] = useState(false)

@@ -2,7 +2,11 @@ import './Tooltip.scss'
 
 import React, { useState, useEffect } from 'react';
 
-const Tooltip = (props) => {
+type TooltipProps = {
+    text: string;
+}
+
+const Tooltip = ({text}: TooltipProps) => {
     const [show, setShow] = useState(false)
 
     useEffect(() => {
@@ -20,7 +24,7 @@ const Tooltip = (props) => {
 
     return (
         <div className={`tooltip ${show ? 'showing' : ''}`}>
-            <p className="text">{props.text}</p>
+            <p className="text">{text}</p>
         </div>
     )
 }

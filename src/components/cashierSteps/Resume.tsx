@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 import useStateWithLS from 'components/useStateWithLS';
 
-const Resume = (props) => {
+type ResumeProps = {
+
+}
+
+const Resume = ({}: ResumeProps) => {
     const { t } = useTranslation();
 
     return (
