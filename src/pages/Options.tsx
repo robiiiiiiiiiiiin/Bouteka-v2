@@ -18,13 +18,13 @@ import { useTranslation } from 'react-i18next';
 
 import BasketAttr from 'models/BasketAttr';
 import Basket from 'models/Basket';
-import ChosenOption from 'models/ChosenOption';
+import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import BasketAttrOption from 'models/BasketAttrOption';
 
 type OptionsProps = {
   chosenBasket: Basket;
-  chosenOptions: Array<ChosenOption>;
-  setChosenOptions: Dispatch<SetStateAction<Array<ChosenOption>>>;
+  chosenBasketAttributes: Array<ChosenBasketAttr>;
+  setChosenBasketAttr: Dispatch<SetStateAction<Array<ChosenBasketAttr>>>;
 }
 
 const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
@@ -170,7 +170,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
     }
 
     const addOptionToCart = (product: BasketAttr, optionValue: string, optionPrice: string) => {
-      props.setChosenOptions([...props.chosenOptions, {
+      props.setChosenBasketAttr([...props.chosenBasketAttributes, {
         id: product.id,
         name: product.name,
         option: optionValue,
@@ -243,7 +243,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
 
     const items: Array<JSX.Element> = []
     Object.values(availableOptions).forEach((product, i) => {
-        const optionIsInBasket = props.chosenOptions.filter(option => option.id === product.id).length > 0
+        const optionIsInBasket = props.chosenBasketAttributes.filter(option => option.id === product.id).length > 0
         items.push(
             <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: boxBg, icon: (optionIsInBasket) ? '' : iconCarot, fg: boxFg}} disabled={optionIsInBasket} >
               { (setSelected: Dispatch<SetStateAction<boolean>>) => (
@@ -278,7 +278,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
                     <Link className="button primary checkout" to="/cashier">{t('pagination.checkout')}</Link>
                   }
                 </nav>
-                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} chosenOptions={props.chosenOptions} setChosenOptions={props.setChosenOptions} />  
+                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} ChosenBasketAttrs={props.chosenBasketAttributes} setChosenBasketAttrs={props.setChosenBasketAttr} />  
             </main>
             <div className='decorative-elems'>
               { decors }

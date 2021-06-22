@@ -14,14 +14,14 @@ import basketShadow from 'assets/img/basketShadow.svg'
 
 import Basket from 'models/Basket';
 import BasketAttr from 'models/BasketAttr';
-import ChosenOption from 'models/ChosenOption';
+import ChosenBasketAttr from 'models/ChosenBasketAttr';
 
 import { useTranslation } from 'react-i18next';
 
 type BasketsProps = {
     chosenBasket: Basket | null;
     baskets: Array<Basket>;
-    setChosenOptions: Dispatch<SetStateAction<Array<ChosenOption>>>;
+    setChosenBasketAttrs: Dispatch<SetStateAction<Array<ChosenBasketAttr>>>;
     setChosenBasket: Dispatch<SetStateAction<Basket | null>>;
     history: History;
 }
@@ -42,7 +42,7 @@ const Baskets = React.forwardRef<HTMLDivElement, BasketsProps>((props, ref) => {
     const addBasketToCart = (basket: Basket) => {
         // reset chosenAttributes if the new basket doesn't have the same attributes as the precedent
         if(props.chosenBasket && !compareAttributes(basket.attributes, props.chosenBasket.attributes)) {
-            props.setChosenOptions([])
+            props.setChosenBasketAttrs([])
         }
         props.setChosenBasket(basket)
         props.history.push('/options')

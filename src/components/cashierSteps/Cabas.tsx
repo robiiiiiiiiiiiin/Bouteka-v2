@@ -1,21 +1,34 @@
-import React, { useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 
-import useStateWithLS from 'components/useStateWithLS';
+import Accessory from 'models/Accessory';
 
 type CabasProps = {
     hasPastas: boolean;
+    goNextStep: () => void;
+    cabas: Accessory;
+    addAccessoryToCart: (accessory: Accessory) => void;
+    removeAccessoryFromCart: (accessory: Accessory) => void;
 }
 
-const Cabas = ({hasPastas}: CabasProps) => {
+const Cabas = ({hasPastas, goNextStep, cabas, addAccessoryToCart, removeAccessoryFromCart}: CabasProps) => {
     const { t } = useTranslation();
+    const cabasPrice = parseInt(cabas.price).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
+
+    const addCabas = () => {
+        addAccessoryToCart(cabas)
+        goNextStep()
+    }
+    const removeCabas = () => {
+        removeAccessoryFromCart(cabas)
+        goNextStep()
+    }
 
     return (
         <div className="cashier-step cabas">
             <div className="step-content">
                 <p>
                     <Trans i18nKey="cashier.cabas.wannaCabas">
-                        Hello ... <strong>{{ strongcabas: t('cashier.cabas.theCabas') }}</strong> ?
+                        Hello do you want <strong>{{ strongcabas: t('cashier.cabas.theCabas') }}</strong> {{ price: cabasPrice }} ?
                     </Trans>
                 </p>
                 <br/>
@@ -24,8 +37,8 @@ const Cabas = ({hasPastas}: CabasProps) => {
                 </p>
             </div>
             <div className="step-buttons">
-                <button className="button primary">{t('cashier.cabas.addCabas')}</button>
-                <button className="button secondary">{t('cashier.cabas.noThanks')}</button>
+                <button className="button primary" onClick={() => addCabas()}>{t('cashier.cabas.addCabas')}</button>
+                <button className="button secondary" onClick={() => removeCabas()}>{t('cashier.cabas.noThanks')}</button>
             </div>
         </div>
     )

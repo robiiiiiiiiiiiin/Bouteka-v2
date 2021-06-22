@@ -6,4 +6,5 @@ export default interface Basket {
     price: string;
     attributes: Array<BasketAttr>;
     parsed_short_description: string;
+    stock_status: string;
 }

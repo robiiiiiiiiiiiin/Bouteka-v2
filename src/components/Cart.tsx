@@ -10,34 +10,34 @@ import cart from 'assets/img/cart.svg'
 import cartShadow from 'assets/img/cartShadow.svg'
 import iconCarot from 'assets/img/product_carots.svg'
 
-import ChosenOption from 'models/ChosenOption';
+import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Basket from 'models/Basket';
 
 type CartProps = {
-    chosenOptions: Array<ChosenOption>;
-    setChosenOptions: Dispatch<SetStateAction<Array<ChosenOption>>>;
+    ChosenBasketAttrs: Array<ChosenBasketAttr>;
+    setChosenBasketAttrs: Dispatch<SetStateAction<Array<ChosenBasketAttr>>>;
     chosenBasket: Basket;
     animating: boolean;
 }
 
-const Cart = ({chosenOptions, setChosenOptions, chosenBasket, animating}: CartProps) => {
+const Cart = ({ChosenBasketAttrs, setChosenBasketAttrs, chosenBasket, animating}: CartProps) => {
     const { t } = useTranslation();
     const [cartOpen, setCartOpen] = useState(false)
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
         const basketPrice = parseFloat(chosenBasket.price)
-        const cartPrice = chosenOptions.reduce((currentPrice, option2) => {
+        const cartPrice = ChosenBasketAttrs.reduce((currentPrice, option2) => {
             return currentPrice + parseFloat(option2.price)
         }, basketPrice)
         setTotalPrice(cartPrice)
-    }, [chosenOptions, chosenBasket])
+    }, [ChosenBasketAttrs, chosenBasket])
 
-    const optionItems = chosenOptions.map(option => {
+    const optionItems = ChosenBasketAttrs.map(option => {
 
         const removeFromCart = (idToRemove: number) => {
-            const newArray = chosenOptions.filter(option => option.id !== idToRemove)
-            setChosenOptions(newArray)
+            const newArray = ChosenBasketAttrs.filter(option => option.id !== idToRemove)
+            setChosenBasketAttrs(newArray)
         }
 
         return (

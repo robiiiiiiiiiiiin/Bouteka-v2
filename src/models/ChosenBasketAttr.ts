@@ -1,4 +1,4 @@
-export default interface ChosenOption {
+export default interface ChosenBasketAttr {
     id: number;
     name: string;
     option: string;

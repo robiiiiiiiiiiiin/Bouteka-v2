@@ -1,6 +1,6 @@
 import './Cashier.scss';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import useStateWithLS from 'components/useStateWithLS';
@@ -13,12 +13,16 @@ import character_cashier from 'assets/img/character_cashier.svg'
 import shop_desk from 'assets/img/shop_desk.svg'
 import arrow_left from 'assets/img/arrow_left.svg'
 
-import ChosenOption from 'models/ChosenOption';
+import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Variation from 'models/Variation';
+import Accessory from 'models/Accessory';
 
 type CashierProps = {
-    chosenOptions: Array<ChosenOption>;
+    chosenBasketAttributes: Array<ChosenBasketAttr>;
     currentVariation: Variation | null;
+    accessories: Array<Accessory>;
+    chosenAccessories: Array<Accessory>;
+    setChosenAccessories: Dispatch<SetStateAction<Accessory[]>>
 }
 
 const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
@@ -26,7 +30,9 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
 
     const stepOrder = ["Cabas", "Resume", "Authentication", "UserDetails", "Shipping", "Redirection"]
     const [currentStep, setCurrentStep] = useStateWithLS('currentStep', 1)
-    const hasPastas = !!props.chosenOptions.find(option => option.name === "400g pâtes blé dur en vrac")
+
+    const hasPastas = !!props.chosenBasketAttributes.find(option => option.name === "400g pâtes blé dur en vrac")
+    const cabas = props.accessories.find(accessory => accessory.slug === "le-cabas")
 
     const goStep = (direction: string) => {
         if (direction === "previous" && currentStep > 1) {
@@ -39,16 +45,28 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
     const goPreviousStep = () => goStep("previous")
     const goNextStep = () => goStep("next")
 
+    const addAccessoryToCart = (accessory: Accessory) => {
+        // If the accessory is already in the chosenAccessories array, don't add it twice
+        if (props.chosenAccessories.filter(item => item.id === accessory.id).length) return
+        props.setChosenAccessories([...props.chosenAccessories, accessory])
+    }
+    const removeAccessoryFromCart = (accessory: Accessory) => {
+        const newAccessories = props.chosenAccessories.filter(item => item.id !== accessory.id)
+        props.setChosenAccessories(newAccessories)
+    }
+
     const displayCurrentStep = () => {
         switch (stepOrder[currentStep -1]) {
-            case "Cabas":   return <Cabas hasPastas={hasPastas} />
+            case "Cabas":   {
+                // Propose to buy the cabas only if it has been found in accessories list
+                if (cabas) return <Cabas hasPastas={hasPastas} goNextStep={goNextStep} cabas={cabas} addAccessoryToCart={addAccessoryToCart} removeAccessoryFromCart={removeAccessoryFromCart} />
+                else return goNextStep()
+            }
             case "Resume":  return <Resume />
 
             default: return
         }
     }
-
-    console.log("chosenOptions", props.chosenOptions)
 
     return (
         <div ref={ref} className="page cashier">

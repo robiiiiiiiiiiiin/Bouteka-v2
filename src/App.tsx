@@ -15,8 +15,9 @@ import useStateWithLS from 'components/useStateWithLS';
 
 import Basket from 'models/Basket';
 import BasketAttr from 'models/BasketAttr';
-import ChosenOption from 'models/ChosenOption';
+import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Variation from 'models/Variation';
+import Accessory from 'models/Accessory';
 
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
@@ -55,8 +56,8 @@ function App() {
     '/cashier': cashierRef,
     '/loading': loadingRef
   }
-  //@ts-ignore We can't assure that location.pathname will correspond to a nodeRefs key
-  const currentPathname: keyof typeof nodeRefs = location.pathname
+  
+  const currentPathname = location.pathname as keyof typeof nodeRefs
   const transitionBetwPagesDur: number = 600
 
   /* i18n */
@@ -68,16 +69,19 @@ function App() {
     i18n.changeLanguage(event.target.value);
   } */
 
-  /* user data ( mostly cart ) */
+  /* data */
+  const apiUrl = 'http://localhost:8000/'
+
+  const [baskets, setBaskets] = useStateWithLS<Array<Basket>>('baskets', [])
   const [chosenBasket, setChosenBasket] = useStateWithLS<Basket | null>('chosenBasket', null)
-  const [chosenOptions, setChosenOptions] = useStateWithLS<Array<ChosenOption>>('chosenOptions', [])
+  const [chosenBasketAttributes, setChosenBasketAttributes] = useStateWithLS<Array<ChosenBasketAttr>>('ChosenBasketAttrs', [])
   const [currentVariation, setCurrentVariation] = useStateWithLS<Variation | null>('currentVariation', null)
 
-  /* data fetching */
-  const apiUrl = 'https://proxy.bouteka.ch/'
+  const [accessories, setAccessories] = useStateWithLS<Array<Accessory>>('accessories', [])
+  const [chosenAccessories, setChosenAccessories] = useStateWithLS<Array<Accessory>>('chosenAccessories', [])
+  
   const [dataLoading, setDataLoading] = useState(false)
   const [fetchError, setFetchError] = useState(false)
-  const [baskets, setBaskets] = useStateWithLS<Array<Basket>>('baskets', [])
 
   /**
    * 
@@ -106,33 +110,35 @@ function App() {
     })
   }
 
+  // Load the baskets
   useEffect(() => {
-    ready && fetchData('products?lang=' + selectedLang, setBaskets)
+    if (ready) fetchData('products/baskets?lang=' + selectedLang, setBaskets)
   }, [ready, selectedLang, setBaskets])
-
+  
+  // Load the accessories
   useEffect(() => {
-    /* chosenBasket && console.log("useEffect chosenBasket: ", chosenBasket) */
-  }, [chosenBasket])
+    if (ready) fetchData('products/accessories?lang=' + selectedLang, setAccessories)
+  }, [ready, selectedLang, setAccessories])
 
   // Keep the currentVariation up to date with the user choices
   useEffect(() => {
     if (chosenBasket) {
       // Format the array of the attributes with chosen value
       const basketAttributes: object = chosenBasket.attributes.map(attribute => {
-        const chosenOption = chosenOptions.find(option => option.id === attribute.id)
+        const ChosenBasketAttr = chosenBasketAttributes.find(option => option.id === attribute.id)
         return {
           id: attribute.id,
           name: attribute.name,
-          option: chosenOption ? chosenOption.option : "Sans"
+          option: ChosenBasketAttr ? ChosenBasketAttr.option : "Sans"
         }
       })
       // fetch data
-      fetchData(`products/${chosenBasket.id}/search-variation?attributes=${unicodize(JSON.stringify(basketAttributes))}`, setCurrentVariation)
+      fetchData(`products/baskets/${chosenBasket.id}/search-variation?attributes=${unicodize(JSON.stringify(basketAttributes))}`, setCurrentVariation)
     }
-  }, [chosenOptions, chosenBasket, setCurrentVariation])
+  }, [chosenBasketAttributes, chosenBasket, setCurrentVariation])
 
   useEffect(() => {
-    currentVariation && console.log("useEffect currentVariation: ", currentVariation)
+    currentVariation && console.log("useEffect currentVariation.id: ", currentVariation.id)
   }, [currentVariation])
 
   /* template */
@@ -154,16 +160,16 @@ function App() {
                 {/* <LangSelector changeLanguage={changeLanguage} selectedLang={selectedLang} /> */}
               </Route>
               <Route path="/baskets">
-                {baskets
-                  ? <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenOptions={setChosenOptions} />
+                {baskets.length
+                  ? <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenBasketAttrs={setChosenBasketAttributes} />
                   : <Loading ref={loadingRef} />
                 }
               </Route>
               <Route path="/options">
-                <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenOptions={chosenOptions} setChosenOptions={setChosenOptions} />
+                <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttr={setChosenBasketAttributes} />
               </Route>
               <Route path="/cashier">
-                <Cashier ref={cashierRef} chosenOptions={chosenOptions} currentVariation={currentVariation} />
+                <Cashier ref={cashierRef} chosenBasketAttributes={chosenBasketAttributes} currentVariation={currentVariation} accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories} />
               </Route>
               <Route path="/">
                 <Home ref={homeRef} history={history} />
