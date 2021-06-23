@@ -1,7 +1,11 @@
 import './Cashier.scss';
 
-import React, { useEffect, Dispatch, SetStateAction } from 'react';
+import React, { createRef, useRef, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
+import { History } from 'history';
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+
+import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
 import useStateWithLS from 'components/useStateWithLS';
 
@@ -16,8 +20,11 @@ import arrow_left from 'assets/img/arrow_left.svg'
 import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Variation from 'models/Variation';
 import Accessory from 'models/Accessory';
+import Basket from 'models/Basket';
 
 type CashierProps = {
+    chosenBasket: Basket;
+    history: History;
     chosenBasketAttributes: Array<ChosenBasketAttr>;
     currentVariation: Variation | null;
     accessories: Array<Accessory>;
@@ -35,11 +42,15 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
     const cabas = props.accessories.find(accessory => accessory.slug === "le-cabas")
 
     const goStep = (direction: string) => {
-        if (direction === "previous" && currentStep > 1) {
-            setCurrentStep(currentStep -1)
+        if (direction === "previous") {
+            if (currentStep > 1) {
+                setCurrentStep(currentStep - 1)
+            } else {
+                props.history.push('/options')
+            }
         }
         else if (direction === "next" && currentStep < stepOrder.length) {
-            setCurrentStep(currentStep +1)
+            setCurrentStep(currentStep + 1)
         }
     }
     const goPreviousStep = () => goStep("previous")
@@ -55,16 +66,26 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
         props.setChosenAccessories(newAccessories)
     }
 
-    const displayCurrentStep = () => {
-        switch (stepOrder[currentStep -1]) {
-            case "Cabas":   {
-                // Propose to buy the cabas only if it has been found in accessories list
-                if (cabas) return <Cabas hasPastas={hasPastas} goNextStep={goNextStep} cabas={cabas} addAccessoryToCart={addAccessoryToCart} removeAccessoryFromCart={removeAccessoryFromCart} />
-                else return goNextStep()
-            }
-            case "Resume":  return <Resume />
+    /* Transition */
+    const cabasRef = useRef<HTMLDivElement>(null)
+    const resumeRef = useRef<HTMLDivElement>(null)
+    const nodeRefs = [cabasRef, resumeRef]
 
-            default: return
+    /* const nodeRefs = stepOrder.map(() => createRef<HTMLDivElement>()) */
+
+    const displayCurrentStep = () => {
+        switch (stepOrder[currentStep - 1]) {
+            case "Cabas": {
+                // Propose to buy the cabas only if it has been found in accessories list
+                if (cabas) return <Cabas ref={nodeRefs[0]} hasPastas={hasPastas} goNextStep={goNextStep} cabas={cabas} addAccessoryToCart={addAccessoryToCart} removeAccessoryFromCart={removeAccessoryFromCart} />
+                else {
+                    goNextStep()
+                    return
+                }
+            }
+            case "Resume": return <Resume ref={nodeRefs[1]} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} chosenAccessories={props.chosenAccessories} />
+
+            default: return <div></div>
         }
     }
 
@@ -82,13 +103,17 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
                         <img className="character" src={character_back} alt="" />
                     </div>
                 </div>
-                { displayCurrentStep() }
+                <TransitionGroup>
+                    <CSSTransition key={currentStep} nodeRef={nodeRefs[currentStep - 1]} timeout={600} classNames="fade" >
+                        {displayCurrentStep()}
+                    </CSSTransition>
+                </TransitionGroup>
                 <button className="button secondary goback" onClick={() => goPreviousStep()}>
                     <img className="arrow-icon" src={arrow_left} alt="" />
                 </button>
             </main>
         </div>
-    )
+            )
 })
 
-export default Cashier;
+            export default Cashier;

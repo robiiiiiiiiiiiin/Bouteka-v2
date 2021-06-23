@@ -206,6 +206,69 @@ body, #root, .App, .page {
     }
 }
 
+%thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: $color-brown-dark transparent;
+    &::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar {
+        border-radius: 5px;
+        width: 5px;
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: $color-brown-dark;
+    }
+}
+%fade-after-scroll {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.5em;
+    background: linear-gradient(0deg, $color-brown-light 0%, rgba(0,0,0,0) 100%);
+}
+
+%line {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+}
+%line-after {
+    @extend %line;
+    border-bottom: 0.5px solid #44200E;
+    bottom: 0;
+}
+%line-before {
+    @extend %line;
+    border-top: 0.5px solid #44200E;
+    top: 0;
+}
+
+%arrow {
+    content: "";
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    position: absolute;
+    right: calc((var(--window-width) / 2) - 130px);
+}
+%arrow-after {
+    @extend %arrow;
+    border-top: 30px solid $color-brown-light;
+    bottom: -30px;
+}
+%arrow-before {
+    @extend %arrow;
+    border-bottom: 30px solid $color-brown-light;
+    top: -30px;
+}
+
 @keyframes walking-right {
     0% {
         transform: rotate(0) scaleY(1) translateY(0);

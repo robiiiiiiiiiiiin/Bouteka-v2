@@ -22,6 +22,11 @@
             "dontForgetWithPastas": "Otherwise, don't forget to bring your own containers to pick up your basket and pasta.",
             "addCabas": "Add the shopping Bag",
             "noThanks": "No thanks"
+        },
+        "resume": {
+            "thereIsTheContent": "Here is the content of your cart:",
+            "confirm": "Confirm and pay",
+            "back": "Return to the products"
         }
     }
 }

@@ -1,0 +1,45 @@
+@use '../../shared.scss' as *;
+
+.cashier-step.resume {
+    .step-content {
+        position: relative;
+        .fixed-text {
+            position: relative;
+            padding-bottom: 1rem;
+            &::after {
+                @extend %line-after;
+            }
+        }
+        .resume-wrapper {
+            @extend %thin-scrollbar;
+            max-height: 30vh;
+            overflow-y: scroll;
+            padding-bottom: 0.75em;
+            .resume {
+                position: relative;
+                padding: 0.4rem 1.5ch 0.3rem 0;
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    .name {
+                        font-weight: 600;
+                    }
+                }
+                & + .resume::before {
+                    @extend %line-before;
+                }
+                .content {
+                    margin-top: 0.6rem;
+                    ol {
+                        list-style: inside;
+                        list-style-type: "- ";
+                    }
+                }
+            }
+        }
+        &::after {
+            @extend %fade-after-scroll;
+            bottom: $gutter-banner-vert
+        }
+    }
+}

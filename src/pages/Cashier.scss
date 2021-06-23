@@ -45,6 +45,10 @@
                 background-color: $color-brown-light;
                 padding: $gutter-banner-vert $gutter-banner-horiz;
                 text-align: left;
+                &::before {
+                    @extend %arrow-before;
+                    right: calc((var(--window-width) / 2) - 70px);
+                }
             }
             .step-buttons {
                 display: flex;

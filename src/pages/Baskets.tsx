@@ -55,10 +55,10 @@ const Baskets = React.forwardRef<HTMLDivElement, BasketsProps>((props, ref) => {
                 {(/* setSelected */) => (
                     <div className='banner'>
                         <div className="header">
-                            <h2 className="basket-title">{basket.name}</h2>
+                            <h2 className="title">{basket.name}</h2>
                             <span className="price">chf {basket.price}</span>
                         </div>
-                        <div className="basket-content">
+                        <div className="content">
                             <p className="text" dangerouslySetInnerHTML={{ __html: basket.parsed_short_description }}></p>
                         </div>
                         <button className="basket-btn-add button primary" onClick={() => addBasketToCart(basket)}>{t('choose')}</button>

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useTranslation, Trans } from 'react-i18next';
 
 import Accessory from 'models/Accessory';
@@ -10,7 +11,7 @@ type CabasProps = {
     removeAccessoryFromCart: (accessory: Accessory) => void;
 }
 
-const Cabas = ({hasPastas, goNextStep, cabas, addAccessoryToCart, removeAccessoryFromCart}: CabasProps) => {
+const Cabas = React.forwardRef<HTMLDivElement, CabasProps>(({hasPastas, goNextStep, cabas, addAccessoryToCart, removeAccessoryFromCart}, ref) => {
     const { t } = useTranslation();
     const cabasPrice = parseInt(cabas.price).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
 
@@ -24,7 +25,7 @@ const Cabas = ({hasPastas, goNextStep, cabas, addAccessoryToCart, removeAccessor
     }
 
     return (
-        <div className="cashier-step cabas">
+        <div ref={ref} className="cashier-step cabas">
             <div className="step-content">
                 <p>
                     <Trans i18nKey="cashier.cabas.wannaCabas">
@@ -42,6 +43,6 @@ const Cabas = ({hasPastas, goNextStep, cabas, addAccessoryToCart, removeAccessor
             </div>
         </div>
     )
-}
+})
 
 export default Cabas;

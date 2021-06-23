@@ -12,13 +12,7 @@
         margin: 0;
     }
     &::after {
-        content: "";
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-top: 30px solid $color-brown-light;
-        position: absolute;
-        bottom: -30px;
-        right: calc((var(--window-width) / 2) - 130px);
+        @extend %arrow-after;
     }
     &.showing {
         visibility: visible;

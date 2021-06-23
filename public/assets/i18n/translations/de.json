@@ -22,6 +22,11 @@
             "dontForgetWithPastas": "Andernfalls vergessen Sie nicht, Ihre eigenen Behälter mitzubringen, um Ihren Korb und die Pasta abzuholen.",
             "addCabas": "Die Einkaufstasche hinzufügen",
             "noThanks": "Nein Danke"
+        },
+        "resume": {
+            "thereIsTheContent": "Hier ist der Inhalt Ihres Warenkorbs:",
+            "confirm": "Bestätigen und bezahlen",
+            "back": "Zurück zu den Produkten"
         }
     }
 }

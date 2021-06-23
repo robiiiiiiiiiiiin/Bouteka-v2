@@ -169,7 +169,7 @@ function App() {
                 <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttr={setChosenBasketAttributes} />
               </Route>
               <Route path="/cashier">
-                <Cashier ref={cashierRef} chosenBasketAttributes={chosenBasketAttributes} currentVariation={currentVariation} accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories} />
+                <Cashier ref={cashierRef} history={history} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} currentVariation={currentVariation} accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories} />
               </Route>
               <Route path="/">
                 <Home ref={homeRef} history={history} />

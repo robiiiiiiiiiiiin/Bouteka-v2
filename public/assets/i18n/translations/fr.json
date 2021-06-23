@@ -22,6 +22,11 @@
             "dontForgetWithPastas": "Sinon, il ne faudra pas oublier d'apporter vos propres contenants pour récupérer votre panier et vos pâtes.",
             "addCabas": "Ajouter le Cabas",
             "noThanks": "Non merci"
+        },
+        "resume": {
+            "thereIsTheContent": "Voici le contenu de votre panier:",
+            "confirm": "Confirmer et payer",
+            "back": "Revenir aux étalages"
         }
     }
 }
