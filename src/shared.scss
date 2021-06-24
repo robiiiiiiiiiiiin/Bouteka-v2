@@ -72,7 +72,7 @@ button {
 
 /* general properties */
 
-body {
+body, input {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     color: $color-text;
@@ -152,7 +152,8 @@ body, #root, .App, .page {
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
     box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.3);
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
     &.primary {
         background: $color-brown-dark;
@@ -267,6 +268,31 @@ body, #root, .App, .page {
     @extend %arrow;
     border-bottom: 30px solid $color-brown-light;
     top: -30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    label {
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin: .8rem 0 .1rem .5rem
+    }
+    input {
+        font-size: 1rem;
+        background: $color-brown-light;
+        border: 1px solid $color-brown-dark;
+        height: 2.5rem;
+        border-radius: .5rem;
+        padding-left: .5rem;
+        color: $color-text;
+        &:focus {
+            outline: 1px solid $color-brown-dark;
+        }
+    }
 }
 
 @keyframes walking-right {

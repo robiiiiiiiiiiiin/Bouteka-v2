@@ -26,7 +26,22 @@
         "resume": {
             "thereIsTheContent": "Hier ist der Inhalt Ihres Warenkorbs:",
             "confirm": "Bestätigen und bezahlen",
-            "back": "Zurück zu den Produkten"
+            "back": "Zurück zu den Produkten",
+            "total": "Total"
+        },
+        "authentication": {
+            "dialogAlreadyConnected": "Ich sehe, Sie sind als <1>{{strongemail}}</1> angemeldet, sind Sie das?",
+            "dialogHaveAccount": "Haben Sie bereits ein Konto bei uns?",
+            "dialogCreateAccount": "Möchten Sie ein Konto erstellen?",
+            "username": "Benutzername",
+            "pwd": "Passwort",
+            "mail": "E-Mail Adresse",
+            "createAnAccount": "Erstellen Sie ein Konto",
+            "createMyAccount": "Mein Konto erstellen",
+            "login": "Login",
+            "cancel": "Abbrechen",
+            "confirm": "Bestätigen",
+            "changeAccount": "Konto ändern"
         }
     }
 }

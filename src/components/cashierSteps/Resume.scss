@@ -35,6 +35,13 @@
                         list-style-type: "- ";
                     }
                 }
+                &.total .header {
+                    justify-content: flex-end;
+                    .price {
+                        margin-left: 1ch;
+                        font-weight: 600;
+                    }
+                }
             }
         }
         &::after {

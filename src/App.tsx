@@ -70,7 +70,8 @@ function App() {
   } */
 
   /* data */
-  const apiUrl = 'http://localhost:8000/'
+  const apiUrl = process.env.REACT_APP_API_URL
+  console.log("apiUrl",apiUrl)
 
   const [baskets, setBaskets] = useStateWithLS<Array<Basket>>('baskets', [])
   const [chosenBasket, setChosenBasket] = useStateWithLS<Basket | null>('chosenBasket', null)
@@ -81,7 +82,7 @@ function App() {
   const [chosenAccessories, setChosenAccessories] = useStateWithLS<Array<Accessory>>('chosenAccessories', [])
   
   const [dataLoading, setDataLoading] = useState(false)
-  const [fetchError, setFetchError] = useState(false)
+  const [error, setError] = useState<string | boolean>(false)
 
   /**
    * 
@@ -89,15 +90,15 @@ function App() {
    * @param {function} setData the setState function to execute with the fetched data.
    */
   const fetchData = async (endpoint: string, setData: Dispatch<SetStateAction<any>>) => {
-    setFetchError(false);
+    setError(false);
     setDataLoading(true);
 
     try {
       const result = await axios(apiUrl + endpoint);
       setData(result.data);
     } catch (error) {
-      setFetchError(error);
-      console.log("Fetch error", error)
+      setError(error);
+      console.error("Fetch error", error)
     }
 
     setDataLoading(false);
@@ -120,22 +121,24 @@ function App() {
     if (ready) fetchData('products/accessories?lang=' + selectedLang, setAccessories)
   }, [ready, selectedLang, setAccessories])
 
-  // Keep the currentVariation up to date with the user choices
-  useEffect(() => {
-    if (chosenBasket) {
-      // Format the array of the attributes with chosen value
-      const basketAttributes: object = chosenBasket.attributes.map(attribute => {
-        const ChosenBasketAttr = chosenBasketAttributes.find(option => option.id === attribute.id)
-        return {
-          id: attribute.id,
-          name: attribute.name,
-          option: ChosenBasketAttr ? ChosenBasketAttr.option : "Sans"
-        }
-      })
-      // fetch data
-      fetchData(`products/baskets/${chosenBasket.id}/search-variation?attributes=${unicodize(JSON.stringify(basketAttributes))}`, setCurrentVariation)
-    }
-  }, [chosenBasketAttributes, chosenBasket, setCurrentVariation])
+  // Search for the current variation depending on the chosen attributes
+  const getCurrentVariation = () => {
+      if (chosenBasket) {
+        // Format the array of the attributes with chosen value
+        const basketAttributes: object = chosenBasket.attributes.map(attribute => {
+          const ChosenBasketAttr = chosenBasketAttributes.find(option => option.id === attribute.id)
+          return {
+            id: attribute.id,
+            name: attribute.name,
+            option: ChosenBasketAttr ? ChosenBasketAttr.option : "Sans"
+          }
+        })
+        // fetch data
+        fetchData(`products/baskets/${chosenBasket.id}/search-variation?attributes=${unicodize(JSON.stringify(basketAttributes))}`, setCurrentVariation)
+      } else {
+        setError("Can't get current variation if chosenBasket is null");
+      }
+  }
 
   useEffect(() => {
     currentVariation && console.log("useEffect currentVariation.id: ", currentVariation.id)
@@ -166,10 +169,14 @@ function App() {
                 }
               </Route>
               <Route path="/options">
-                <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttr={setChosenBasketAttributes} />
+                <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttributes={setChosenBasketAttributes} />
               </Route>
               <Route path="/cashier">
-                <Cashier ref={cashierRef} history={history} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} currentVariation={currentVariation} accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories} />
+                <Cashier 
+                  ref={cashierRef} history={history} 
+                  chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes}
+                  currentVariation={currentVariation} getCurrentVariation={getCurrentVariation} 
+                  accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories} />
               </Route>
               <Route path="/">
                 <Home ref={homeRef} history={history} />

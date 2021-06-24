@@ -14,30 +14,30 @@ import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Basket from 'models/Basket';
 
 type CartProps = {
-    ChosenBasketAttrs: Array<ChosenBasketAttr>;
-    setChosenBasketAttrs: Dispatch<SetStateAction<Array<ChosenBasketAttr>>>;
+    chosenBasketAttributes: Array<ChosenBasketAttr>;
+    setChosenBasketAttributes: Dispatch<SetStateAction<Array<ChosenBasketAttr>>>;
     chosenBasket: Basket;
     animating: boolean;
 }
 
-const Cart = ({ChosenBasketAttrs, setChosenBasketAttrs, chosenBasket, animating}: CartProps) => {
+const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, animating}: CartProps) => {
     const { t } = useTranslation();
     const [cartOpen, setCartOpen] = useState(false)
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
         const basketPrice = parseFloat(chosenBasket.price)
-        const cartPrice = ChosenBasketAttrs.reduce((currentPrice, option2) => {
+        const cartPrice = chosenBasketAttributes.reduce((currentPrice, option2) => {
             return currentPrice + parseFloat(option2.price)
         }, basketPrice)
         setTotalPrice(cartPrice)
-    }, [ChosenBasketAttrs, chosenBasket])
+    }, [chosenBasketAttributes, chosenBasket])
 
-    const optionItems = ChosenBasketAttrs.map(option => {
+    const optionItems = chosenBasketAttributes.map(option => {
 
         const removeFromCart = (idToRemove: number) => {
-            const newArray = ChosenBasketAttrs.filter(option => option.id !== idToRemove)
-            setChosenBasketAttrs(newArray)
+            const newArray = chosenBasketAttributes.filter(option => option.id !== idToRemove)
+            setChosenBasketAttributes(newArray)
         }
 
         return (

@@ -24,7 +24,7 @@ import BasketAttrOption from 'models/BasketAttrOption';
 type OptionsProps = {
   chosenBasket: Basket;
   chosenBasketAttributes: Array<ChosenBasketAttr>;
-  setChosenBasketAttr: Dispatch<SetStateAction<Array<ChosenBasketAttr>>>;
+  setChosenBasketAttributes: Dispatch<SetStateAction<Array<ChosenBasketAttr>>>;
 }
 
 const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
@@ -170,7 +170,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
     }
 
     const addOptionToCart = (product: BasketAttr, optionValue: string, optionPrice: string) => {
-      props.setChosenBasketAttr([...props.chosenBasketAttributes, {
+      props.setChosenBasketAttributes([...props.chosenBasketAttributes, {
         id: product.id,
         name: product.name,
         option: optionValue,
@@ -278,7 +278,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
                     <Link className="button primary checkout" to="/cashier">{t('pagination.checkout')}</Link>
                   }
                 </nav>
-                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} ChosenBasketAttrs={props.chosenBasketAttributes} setChosenBasketAttrs={props.setChosenBasketAttr} />  
+                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} setChosenBasketAttributes={props.setChosenBasketAttributes} />  
             </main>
             <div className='decorative-elems'>
               { decors }

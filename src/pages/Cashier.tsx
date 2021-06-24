@@ -11,6 +11,7 @@ import useStateWithLS from 'components/useStateWithLS';
 
 import Cabas from 'components/cashierSteps/Cabas';
 import Resume from 'components/cashierSteps/Resume';
+import Authentication from 'components/cashierSteps/Authentication';
 
 import character_back from 'assets/img/character_back.svg'
 import character_cashier from 'assets/img/character_cashier.svg'
@@ -27,6 +28,7 @@ type CashierProps = {
     history: History;
     chosenBasketAttributes: Array<ChosenBasketAttr>;
     currentVariation: Variation | null;
+    getCurrentVariation: () => void;
     accessories: Array<Accessory>;
     chosenAccessories: Array<Accessory>;
     setChosenAccessories: Dispatch<SetStateAction<Accessory[]>>
@@ -67,9 +69,9 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
     }
 
     /* Transition */
-    const cabasRef = useRef<HTMLDivElement>(null)
-    const resumeRef = useRef<HTMLDivElement>(null)
-    const nodeRefs = [cabasRef, resumeRef]
+    /* const nodeRefs = useRef([])
+    stepOrder.map((step, i) => nodeRefs.current[i] ?? createRef()) */
+    const nodeRefs: React.Ref<HTMLDivElement>[] = stepOrder.map(() => createRef<HTMLDivElement>())
 
     /* const nodeRefs = stepOrder.map(() => createRef<HTMLDivElement>()) */
 
@@ -83,7 +85,8 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
                     return
                 }
             }
-            case "Resume": return <Resume ref={nodeRefs[1]} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} chosenAccessories={props.chosenAccessories} />
+            case "Resume": return <Resume ref={nodeRefs[1]} goNextStep={goNextStep} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} chosenAccessories={props.chosenAccessories} getCurrentVariation={props.getCurrentVariation} />
+            case "Authentication": return <Authentication ref={nodeRefs[2]} />
 
             default: return <div></div>
         }
