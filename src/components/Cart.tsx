@@ -1,5 +1,5 @@
 import './Cart.scss'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 
@@ -10,29 +10,39 @@ import cart from 'assets/img/cart.svg'
 import cartShadow from 'assets/img/cartShadow.svg'
 import iconCarot from 'assets/img/product_carots.svg'
 
-const Cart = ({chosenOptions, setChosenOptions, chosenBasket, animating}) => {
+import ChosenBasketAttr from 'models/ChosenBasketAttr';
+import Basket from 'models/Basket';
+
+type CartProps = {
+    chosenBasketAttributes: Array<ChosenBasketAttr>;
+    setChosenBasketAttributes: Dispatch<SetStateAction<Array<ChosenBasketAttr>>>;
+    chosenBasket: Basket;
+    animating: boolean;
+}
+
+const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, animating}: CartProps) => {
     const { t } = useTranslation();
     const [cartOpen, setCartOpen] = useState(false)
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
         const basketPrice = parseFloat(chosenBasket.price)
-        const cartPrice = chosenOptions.reduce((currentPrice, option2) => {
+        const cartPrice = chosenBasketAttributes.reduce((currentPrice, option2) => {
             return currentPrice + parseFloat(option2.price)
         }, basketPrice)
         setTotalPrice(cartPrice)
-    }, [chosenOptions, chosenBasket])
+    }, [chosenBasketAttributes, chosenBasket])
 
-    const optionItems = chosenOptions.map(option => {
+    const optionItems = chosenBasketAttributes.map(option => {
 
-        const removeFromCart = (idToRemove) => {
-            const newArray = chosenOptions.filter(option => option.id !== idToRemove)
-            setChosenOptions(newArray)
+        const removeFromCart = (idToRemove: number) => {
+            const newArray = chosenBasketAttributes.filter(option => option.id !== idToRemove)
+            setChosenBasketAttributes(newArray)
         }
 
         return (
             <SelectableItem key={`cart_option_${option.id}`} className="option" imgs={{ bg: cartShadow, icon: iconCarot }}>
-                {setSelected => (
+                {(/* setSelected */) => (
                     <div className='banner'>
                         <div className="header">
                             <span className="cart-item-title">{option.name}</span>
@@ -55,7 +65,7 @@ const Cart = ({chosenOptions, setChosenOptions, chosenBasket, animating}) => {
                     <div className="first-line">
                         <ul className="list-basket">
                             <SelectableItem key="cart_basket" imgs={{ bg: cartShadow, icon: cart }}>
-                                {setSelected => (
+                                {(/* setSelected */) => (
                                     <div className='banner'>
                                         <div className="header">
                                             <h2 className="cart-item-title">{chosenBasket.name}</h2>

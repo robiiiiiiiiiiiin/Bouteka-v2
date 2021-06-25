@@ -77,14 +77,9 @@
                         margin-top: $gutter-banner-vert;
                     }
                     &::before {
-                        display: block;
-                        content: "";
-                        border-top: 0.5px solid $color-brown-dark;
-                        opacity: 0.3;
-                        width: calc(100% - 2 * #{$gutter-banner-horiz});
-                        position: absolute;
-                        top: 0;
-                        left: $gutter-banner-horiz
+                        @extend %line-before;
+                        left: $gutter-banner-horiz;
+                        right: $gutter-banner-horiz;
                     }
                 }
             }
@@ -98,14 +93,12 @@
         ul.list-options {
             display: flex;
             flex-wrap: wrap;
+            position: relative;
             .selectable-item {
                 height: 5rem;
             }
             &::before {
-                content: "";
-                border-top: 0.5px solid $color-brown-dark;
-                opacity: 0.3;
-                width: 100%;
+                @extend %line-before;
             }
         }
     }

@@ -23,50 +23,24 @@
                         position: relative;
                         padding-bottom: $gutter-banner-vert;
                         &::after {
-                            position: absolute;
-                            content: "";
-                            bottom: 0;
-                            left: 0;
-                            right: 0;
-                            border-bottom: 1px solid $color-text;
+                            @extend %line-after;
                         }
                     }
-                    .basket-content {
+                    .content {
                         margin-top: $space-elements;
                         position: relative;
                         .text {
+                            @extend %thin-scrollbar;
                             max-height: 20vh;
                             overflow-y: scroll;
                             padding-bottom: 1em; /* contains the blur for overflowing text */
-                            scrollbar-width: thin;
-                            scrollbar-color: $color-brown-dark transparent;
-                            &::-webkit-scrollbar-track {
-                                border-radius: 5px;
-                                background-color: transparent;
-                            }
-                            &::-webkit-scrollbar {
-                                border-radius: 5px;
-                                width: 5px;
-                                background-color: transparent;
-                            }
-                            &::-webkit-scrollbar-thumb {
-                                border-radius: 5px;
-                                background-color: $color-brown-dark;
-                            }
                             ol {
                                 list-style: inside;
                                 list-style-type: "- ";
                             }
                         }
                         &::after {
-                            position: absolute;
-                            content: "";
-                            bottom: 0;
-                            left: 0;
-                            right: 0;
-                            height: 1.5em;
-                            background-image: linear-gradient(0deg, $color-brown-light 0%, rgba(255,255,255,0) 100%);
-                            background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, $color-brown-light 100%);
+                            @extend %fade-after-scroll;
                         }
                     }
                     .basket-btn-add {

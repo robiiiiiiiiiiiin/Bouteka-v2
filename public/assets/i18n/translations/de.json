@@ -16,12 +16,32 @@
     },
     "cashier": {
         "cabas": {
-            "wannaCabas": "Hallo, Ihr Warenkorb ist gut gefüllt! Möchten Sie <1>{{strongcabas}}</1> für 8,00 chf hinzufügen?",
+            "wannaCabas": "Hallo, Ihr Warenkorb ist gut gefüllt! Möchten Sie <1>{{strongcabas}}</1> für {{price}} chf hinzufügen?",
             "theCabas": "die Einkaufstasche",
             "dontForgetWithoutPastas": "Ansonsten vergessen Sie nicht, Ihren eigenen Behälter mitzubringen, um Ihren Warenkorb abzuholen.",
             "dontForgetWithPastas": "Andernfalls vergessen Sie nicht, Ihre eigenen Behälter mitzubringen, um Ihren Korb und die Pasta abzuholen.",
             "addCabas": "Die Einkaufstasche hinzufügen",
             "noThanks": "Nein Danke"
+        },
+        "resume": {
+            "thereIsTheContent": "Hier ist der Inhalt Ihres Warenkorbs:",
+            "confirm": "Bestätigen und bezahlen",
+            "back": "Zurück zu den Produkten",
+            "total": "Total"
+        },
+        "authentication": {
+            "dialogAlreadyConnected": "Ich sehe, Sie sind als <1>{{strongemail}}</1> angemeldet, sind Sie das?",
+            "dialogHaveAccount": "Haben Sie bereits ein Konto bei uns?",
+            "dialogCreateAccount": "Möchten Sie ein Konto erstellen?",
+            "username": "Benutzername",
+            "pwd": "Passwort",
+            "mail": "E-Mail Adresse",
+            "createAnAccount": "Erstellen Sie ein Konto",
+            "createMyAccount": "Mein Konto erstellen",
+            "login": "Login",
+            "cancel": "Abbrechen",
+            "confirm": "Bestätigen",
+            "changeAccount": "Konto ändern"
         }
     }
 }

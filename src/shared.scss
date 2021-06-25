@@ -72,7 +72,7 @@ button {
 
 /* general properties */
 
-body {
+body, input {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     color: $color-text;
@@ -152,7 +152,8 @@ body, #root, .App, .page {
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
     box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.3);
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
     &.primary {
         background: $color-brown-dark;
@@ -202,6 +203,94 @@ body, #root, .App, .page {
             animation-direction: alternate;
             animation-timing-function: linear;
             animation-duration: 0.5s;
+        }
+    }
+}
+
+%thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: $color-brown-dark transparent;
+    &::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar {
+        border-radius: 5px;
+        width: 5px;
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: $color-brown-dark;
+    }
+}
+%fade-after-scroll {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.5em;
+    background: linear-gradient(0deg, $color-brown-light 0%, rgba(0,0,0,0) 100%);
+}
+
+%line {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+}
+%line-after {
+    @extend %line;
+    border-bottom: 0.5px solid #44200E;
+    bottom: 0;
+}
+%line-before {
+    @extend %line;
+    border-top: 0.5px solid #44200E;
+    top: 0;
+}
+
+%arrow {
+    content: "";
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    position: absolute;
+    right: calc((var(--window-width) / 2) - 130px);
+}
+%arrow-after {
+    @extend %arrow;
+    border-top: 30px solid $color-brown-light;
+    bottom: -30px;
+}
+%arrow-before {
+    @extend %arrow;
+    border-bottom: 30px solid $color-brown-light;
+    top: -30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    label {
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin: .8rem 0 .1rem .5rem
+    }
+    input {
+        font-size: 1rem;
+        background: $color-brown-light;
+        border: 1px solid $color-brown-dark;
+        height: 2.5rem;
+        border-radius: .5rem;
+        padding-left: .5rem;
+        color: $color-text;
+        &:focus {
+            outline: 1px solid $color-brown-dark;
         }
     }
 }

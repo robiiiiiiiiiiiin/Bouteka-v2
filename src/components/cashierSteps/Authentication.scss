@@ -1,0 +1,11 @@
+@use '../../shared.scss' as *;
+
+.cashier-step.authentication {
+    position: relative;
+    .understep {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+}
