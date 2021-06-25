@@ -23,7 +23,7 @@ const Resume = React.forwardRef<HTMLDivElement, ResumeProps>(({ goNextStep, chos
     const { t } = useTranslation();
 
     const formatPrice = (price: string): string => {
-        return parseInt(price).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
+        return parseFloat(price).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
     }
 
     const confirm = () => {
