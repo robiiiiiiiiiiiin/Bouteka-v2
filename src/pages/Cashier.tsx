@@ -22,6 +22,7 @@ import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Variation from 'models/Variation';
 import Accessory from 'models/Accessory';
 import Basket from 'models/Basket';
+import Customer from 'models/Customer';
 
 type CashierProps = {
     chosenBasket: Basket;
@@ -40,6 +41,7 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
     const stepOrder = ["Cabas", "Resume", "Authentication", "UserDetails", "Shipping", "Redirection"]
     const [currentStep, setCurrentStep] = useStateWithLS('currentStep', 1)
 
+    const [currentCustomer, setCurrentCustomer] = useStateWithLS<Customer | null>('currentCustomer', null);
     const hasPastas = !!props.chosenBasketAttributes.find(option => option.name === "400g pâtes blé dur en vrac")
     const cabas = props.accessories.find(accessory => accessory.slug === "le-cabas")
 
@@ -86,7 +88,8 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
                 }
             }
             case "Resume": return <Resume ref={nodeRefs[1]} goNextStep={goNextStep} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} chosenAccessories={props.chosenAccessories} getCurrentVariation={props.getCurrentVariation} />
-            case "Authentication": return <Authentication ref={nodeRefs[2]} />
+            case "Authentication": return <Authentication ref={nodeRefs[2]} goNextStep={goNextStep} currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer} />
+            case "UserDetails": return <div>UserDetails</div>
 
             default: return <div></div>
         }

@@ -53,6 +53,7 @@ $color-green-grass: #5abf7d;
 $color-brown-light: #f2ca80;
 $color-brown-dark: #44200e;
 $color-text: #44200E;
+$color-error: #ff0040;
 
 $transition-duration: 0.5s;
 
@@ -292,6 +293,14 @@ form {
         &:focus {
             outline: 1px solid $color-brown-dark;
         }
+    }
+    &.validate input:invalid {
+        outline: 1px solid $color-error;
+        border: 1px solid $color-error;
+    }
+    .error {
+        margin: 0.8rem 0 0 0.5rem;
+        color: $color-error;
     }
 }
 
