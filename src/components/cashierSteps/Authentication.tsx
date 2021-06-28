@@ -1,5 +1,3 @@
-import './Authentication.scss'
-
 import React, { createRef, useState, Dispatch, SetStateAction, FormEvent } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import axios, { AxiosResponse } from 'axios';
@@ -74,9 +72,9 @@ const Authentication = React.forwardRef<HTMLDivElement, AuthenticationProps>((pr
                     <div className="step-content">
                         <p>{t('cashier.authentication.dialogHaveAccount')}</p>
                         <form id="loginForm" className={validateFields ? 'validate' : ''} onSubmit={login} >
-                            <label htmlFor="username">{t('cashier.authentication.username')}</label>
+                            <label htmlFor="username">{t('form.username')}</label>
                             <input type="text" id="username" name="username" required />
-                            <label htmlFor="password">{t('cashier.authentication.pwd')}</label>
+                            <label htmlFor="password">{t('form.pwd')}</label>
                             <input type="password" id="password" name="password" required />
                             <p className="error">{loginError}</p>
                         </form>
@@ -92,18 +90,18 @@ const Authentication = React.forwardRef<HTMLDivElement, AuthenticationProps>((pr
                     <div className="step-content">
                         <p>{t('cashier.authentication.dialogCreateAccount')}</p>
                         <form id="registerForm" className={validateFields ? 'validate' : ''} onSubmit={register}>
-                            <label htmlFor="username">{t('cashier.authentication.username')}</label>
+                            <label htmlFor="username">{t('form.username')}</label>
                             <input type="text" id="username" name="username" required />
-                            <label htmlFor="email">{t('cashier.authentication.mail')}</label>
+                            <label htmlFor="email">{t('form.mail')}</label>
                             <input type="email" id="email" name="email" required />
-                            <label htmlFor="password">{t('cashier.authentication.pwd')}</label>
+                            <label htmlFor="password">{t('form.pwd')}</label>
                             <input type="password" id="password" name="password" required />
                             <p className="error">{registerError}</p>
                         </form>
                     </div>
                     <div className="step-buttons">
                         <button type="submit" form="registerForm" className="button primary" disabled={loading} onClick={() => setValidateFields(true)} >{t('cashier.authentication.createMyAccount')} {loading && <LoadingSpinner />}</button>
-                        <button className="button secondary" onClick={() => {setCurrentNamedStep('login'); setValidateFields(false)}} disabled={loading} >{t('cashier.authentication.cancel')}</button>
+                        <button className="button secondary" onClick={() => {setCurrentNamedStep('login'); setValidateFields(false)}} disabled={loading} >{t('form.cancel')}</button>
                     </div>
                 </div>
             )
@@ -117,7 +115,7 @@ const Authentication = React.forwardRef<HTMLDivElement, AuthenticationProps>((pr
                         </p>
                     </div>
                     <div className="step-buttons">
-                        <button type="submit" form="registerForm" className="button primary">{t('cashier.authentication.confirm')}</button>
+                        <button type="submit" form="registerForm" className="button primary" onClick={props.goNextStep}>{t('form.confirm')}</button>
                         <button className="button secondary" onClick={() => setCurrentNamedStep('login')}>{t('cashier.authentication.changeAccount')}</button>
                     </div>
                 </div>

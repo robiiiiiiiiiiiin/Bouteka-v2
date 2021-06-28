@@ -1,10 +1,6 @@
 {
     "Hello": "Hallo",
     "clickOnWorld": "Klicken Sie auf die Welt",
-    "choose": "Auswählen",
-    "add": "Hinzufügen",
-    "modify": "Ändern",
-    "remove": "Entfernen",
     "tooltip": {
         "chooseBasket": "Wählen Sie die Größe Ihres Korbes",
         "addSomething": "Möchten Sie etwas hinzufügen?"
@@ -33,15 +29,31 @@
             "dialogAlreadyConnected": "Ich sehe, Sie sind als <1>{{strongemail}}</1> angemeldet, sind Sie das?",
             "dialogHaveAccount": "Haben Sie bereits ein Konto bei uns?",
             "dialogCreateAccount": "Möchten Sie ein Konto erstellen?",
-            "username": "Benutzername",
-            "pwd": "Passwort",
-            "mail": "E-Mail Adresse",
             "createAnAccount": "Erstellen Sie ein Konto",
             "createMyAccount": "Mein Konto erstellen",
             "login": "Login",
-            "cancel": "Abbrechen",
-            "confirm": "Bestätigen",
             "changeAccount": "Konto ändern"
+        },
+        "userDetails": {
+            "dialogConfirm": "Sind diese Koordinaten richtig?",
+            "dialogAddAddress": "Bitte geben Sie Ihre Koordinaten an."
         }
+    },
+    "form": {
+        "cancel": "Abbrechen",
+        "confirm": "Bestätigen",
+        "username": "Benutzername",
+        "pwd": "Passwort",
+        "mail": "E-Mail Adresse",
+        "name": "Name",
+        "firstname": "Vorname",
+        "street": "Straße und Hausnummer",
+        "city": "Stadt",
+        "phone": "Telefonnummer",
+        "postcode": "Postnummer",
+        "choose": "Auswählen",
+        "add": "Hinzufügen",
+        "modify": "Ändern",
+        "remove": "Entfernen"
     }
 }

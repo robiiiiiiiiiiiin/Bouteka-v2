@@ -271,6 +271,17 @@ body, #root, .App, .page {
     top: -30px;
 }
 
+/* Overlap steps for nice transition */
+.cashier-step {
+    position: relative;
+    .understep {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+}
+
 form {
     display: flex;
     flex-direction: column;

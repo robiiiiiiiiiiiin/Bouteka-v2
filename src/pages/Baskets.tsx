@@ -61,7 +61,7 @@ const Baskets = React.forwardRef<HTMLDivElement, BasketsProps>((props, ref) => {
                         <div className="content">
                             <p className="text" dangerouslySetInnerHTML={{ __html: basket.parsed_short_description }}></p>
                         </div>
-                        <button className="basket-btn-add button primary" onClick={() => addBasketToCart(basket)}>{t('choose')}</button>
+                        <button className="basket-btn-add button primary" onClick={() => addBasketToCart(basket)}>{t('form.choose')}</button>
                     </div>
                 )}
             </SelectableItem>

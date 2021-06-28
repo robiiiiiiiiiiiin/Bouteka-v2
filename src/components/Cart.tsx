@@ -48,7 +48,7 @@ const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, 
                             <span className="cart-item-title">{option.name}</span>
                             <span className="price">chf{option.price}</span>
                         </div>
-                        <button className="button primary remove-from-cart" onClick={() => removeFromCart(option.id)}>{t('remove')}</button>
+                        <button className="button primary remove-from-cart" onClick={() => removeFromCart(option.id)}>{t('form.remove')}</button>
                     </div>
                 )}
             </SelectableItem>
@@ -71,7 +71,7 @@ const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, 
                                             <h2 className="cart-item-title">{chosenBasket.name}</h2>
                                             <span className="price">chf {chosenBasket.price}</span>
                                         </div>
-                                        <Link to="/baskets" className="button primary modify-basket">{t('modify')}</Link>
+                                        <Link to="/baskets" className="button primary modify-basket">{t('form.modify')}</Link>
                                     </div>
                                 )}
                             </SelectableItem>

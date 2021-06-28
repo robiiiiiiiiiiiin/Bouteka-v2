@@ -202,7 +202,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
                 <h2 className="option-title">{name}</h2>
                 <span className="price">chf{price}</span>
             </div>
-            <button className="option-btn-add button primary" onClick={() => handleAddProduct()}>{t('add')}</button>
+            <button className="option-btn-add button primary" onClick={() => handleAddProduct()}>{t('form.add')}</button>
         </div>
       )
     }
@@ -236,7 +236,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
                   )
                 }
             </ul>
-            <button className="option-btn-add button primary" onClick={() => handleAddProduct()} disabled={!selectedVariation} >{t('add')}</button>
+            <button className="option-btn-add button primary" onClick={() => handleAddProduct()} disabled={!selectedVariation} >{t('form.add')}</button>
         </div>
       )
     }

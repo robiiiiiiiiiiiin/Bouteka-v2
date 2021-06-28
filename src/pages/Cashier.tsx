@@ -12,6 +12,7 @@ import useStateWithLS from 'components/useStateWithLS';
 import Cabas from 'components/cashierSteps/Cabas';
 import Resume from 'components/cashierSteps/Resume';
 import Authentication from 'components/cashierSteps/Authentication';
+import UserDetails from 'components/cashierSteps/UserDetails';
 
 import character_back from 'assets/img/character_back.svg'
 import character_cashier from 'assets/img/character_cashier.svg'
@@ -89,7 +90,7 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
             }
             case "Resume": return <Resume ref={nodeRefs[1]} goNextStep={goNextStep} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} chosenAccessories={props.chosenAccessories} getCurrentVariation={props.getCurrentVariation} />
             case "Authentication": return <Authentication ref={nodeRefs[2]} goNextStep={goNextStep} currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer} />
-            case "UserDetails": return <div>UserDetails</div>
+            case "UserDetails": return <UserDetails ref={nodeRefs[3]} goNextStep={goNextStep} currentCustomer={currentCustomer as Customer} setCurrentCustomer={setCurrentCustomer} />
 
             default: return <div></div>
         }
