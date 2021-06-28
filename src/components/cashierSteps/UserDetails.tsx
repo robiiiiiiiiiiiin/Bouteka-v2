@@ -52,7 +52,7 @@ const UserDetails = React.forwardRef<HTMLDivElement, UserDetailsProps>((props, r
         const params = new URLSearchParams(formData as any).toString()
         
         try {
-            const user: AxiosResponse<Customer> = await axios.put(apiUrl + 'customers/210', params)
+            const user: AxiosResponse<Customer> = await axios.put(apiUrl + 'customers/'+props.currentCustomer.id, params)
             props.setCurrentCustomer(user.data)
             props.goNextStep()
         } catch (error) {
