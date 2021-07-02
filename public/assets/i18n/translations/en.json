@@ -37,6 +37,12 @@
         "userDetails": {
             "dialogConfirm": "Are these details correct?",
             "dialogAddAddress": "Please fill in your details."
+        },
+        "shipping": {
+            "dialogAskWhere": "Finally, where and when do you want to collect your order?"
+        },
+        "redirection": {
+            "dialog": "Great! Last thing you have to do is pay for your order via our payment platform."
         }
     },
     "form": {
@@ -54,6 +60,7 @@
         "choose": "Choose",
         "add": "Add",
         "modify": "Modify",
-        "remove": "Remove"
+        "remove": "Remove",
+        "loading": "Loading"
     }
 }

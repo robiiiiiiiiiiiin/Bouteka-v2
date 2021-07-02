@@ -3,6 +3,7 @@ import './Resume.scss'
 import React, { useEffect, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
+import { formatPrice } from 'components/helpers'
 
 import useStateWithLS from 'components/useStateWithLS';
 
@@ -21,10 +22,6 @@ type ResumeProps = {
 
 const Resume = React.forwardRef<HTMLDivElement, ResumeProps>(({ goNextStep, chosenBasket, chosenBasketAttributes, chosenAccessories, getCurrentVariation }, ref) => {
     const { t } = useTranslation();
-
-    const formatPrice = (price: string): string => {
-        return parseInt(price).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
-    }
 
     const confirm = () => {
         getCurrentVariation()

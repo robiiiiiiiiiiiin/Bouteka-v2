@@ -1,6 +1,7 @@
 import React, { createRef, useState, Dispatch, SetStateAction, FormEvent } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import axios, { AxiosResponse } from 'axios';
+import { checkPath } from 'components/helpers'
 
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
@@ -49,7 +50,7 @@ const Authentication = React.forwardRef<HTMLDivElement, AuthenticationProps>((pr
             props.setCurrentCustomer(user.data)
             props.goNextStep()
         } catch (error) {
-            setError(error.response.data.message)
+            setError( checkPath(error, 'response.data.message') ? error.response.data.message : "Erreur de communication avec le serveur. Veuillez svp passer votre commande sur bouteka.ch" )
         }
 
         setLoading(false)

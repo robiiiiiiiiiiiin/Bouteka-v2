@@ -2,6 +2,7 @@ import React, { useState, createRef, FormEvent, Dispatch, SetStateAction } from 
 import { useTranslation } from 'react-i18next';
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 import axios, { AxiosResponse } from 'axios';
+import { checkPath } from 'components/helpers'
 
 import Customer from 'models/Customer';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -56,7 +57,7 @@ const UserDetails = React.forwardRef<HTMLDivElement, UserDetailsProps>((props, r
             props.setCurrentCustomer(user.data)
             props.goNextStep()
         } catch (error) {
-            setNewAddressError(error.response.data.message)
+            setNewAddressError( checkPath(error, 'response.data.message') ? error.response.data.message : "Erreur de communication avec le serveur. Veuillez svp passer votre commande sur bouteka.ch" )
         }
 
         setLoading(false)

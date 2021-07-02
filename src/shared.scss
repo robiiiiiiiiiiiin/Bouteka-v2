@@ -68,7 +68,6 @@ ul, ol {
 button {
     border: none;
     background: none;
-    cursor: pointer;
 }
 
 /* general properties */
@@ -156,6 +155,7 @@ body, #root, .App, .page {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+    cursor: pointer;
     &.primary {
         background: $color-brown-dark;
         color: $color-brown-light;
@@ -172,6 +172,9 @@ body, #root, .App, .page {
         color: $color-brown-dark;
         padding-right: 8px;
         padding-left: 8px;
+        input {
+            display: none;
+        }
         &.selected {
             background: $color-brown-dark;
             color: $color-brown-light;

@@ -46,11 +46,7 @@
                             justify-content: space-between;
                             align-items: center;
                             label {
-                                cursor: pointer;
                                 margin: calc(#{$space-elements} / 2) 0;
-                                input {
-                                    display: none;
-                                }
                             }
                         }
                     }

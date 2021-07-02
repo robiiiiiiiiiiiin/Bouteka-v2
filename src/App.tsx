@@ -20,6 +20,7 @@ import Variation from 'models/Variation';
 import Accessory from 'models/Accessory';
 
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
+import ShippingMethod from 'models/ShippingMethod';
 
 function App() {
 
@@ -75,11 +76,14 @@ function App() {
 
   const [baskets, setBaskets] = useStateWithLS<Array<Basket>>('baskets', [])
   const [chosenBasket, setChosenBasket] = useStateWithLS<Basket | null>('chosenBasket', null)
-  const [chosenBasketAttributes, setChosenBasketAttributes] = useStateWithLS<Array<ChosenBasketAttr>>('ChosenBasketAttrs', [])
+  const [chosenBasketAttributes, setChosenBasketAttributes] = useStateWithLS<Array<ChosenBasketAttr>>('chosenBasketAttrs', [])
   const [currentVariation, setCurrentVariation] = useStateWithLS<Variation | null>('currentVariation', null)
 
   const [accessories, setAccessories] = useStateWithLS<Array<Accessory>>('accessories', [])
   const [chosenAccessories, setChosenAccessories] = useStateWithLS<Array<Accessory>>('chosenAccessories', [])
+
+  const [shippingMethods, setShippingMethods] = useStateWithLS<Array<ShippingMethod>>('shippingMethods', [])
+  const [chosenShippingMethod, setChosenShippingMethod] = useStateWithLS<ShippingMethod | null>('chosenShippingMethod', null)
   
   const [dataLoading, setDataLoading] = useState(false)
   const [error, setError] = useState<string | boolean>(false)
@@ -120,6 +124,11 @@ function App() {
   useEffect(() => {
     if (ready) fetchData('products/accessories?lang=' + selectedLang, setAccessories)
   }, [ready, selectedLang, setAccessories])
+  
+  // Load the shipping methods
+  useEffect(() => {
+    if (ready) fetchData('orders/shipping-methods', setShippingMethods)
+  }, [ready, setShippingMethods])
 
   // Search for the current variation depending on the chosen attributes
   const getCurrentVariation = () => {
@@ -176,7 +185,8 @@ function App() {
                   ref={cashierRef} history={history} 
                   chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes}
                   currentVariation={currentVariation} getCurrentVariation={getCurrentVariation} 
-                  accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories} />
+                  accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories}
+                  shippingMethods={shippingMethods} chosenShippingMethod={chosenShippingMethod as ShippingMethod} setChosenShippingMethod={setChosenShippingMethod} />
               </Route>
               <Route path="/">
                 <Home ref={homeRef} history={history} />

@@ -1,9 +1,8 @@
 import './Cashier.scss';
 
-import React, { createRef, useRef, Dispatch, SetStateAction } from 'react';
+import React, { createRef, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { History } from 'history';
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
@@ -13,6 +12,8 @@ import Cabas from 'components/cashierSteps/Cabas';
 import Resume from 'components/cashierSteps/Resume';
 import Authentication from 'components/cashierSteps/Authentication';
 import UserDetails from 'components/cashierSteps/UserDetails';
+import Shipping from 'components/cashierSteps/Shipping';
+import Redirection from 'components/cashierSteps/Redirection';
 
 import character_back from 'assets/img/character_back.svg'
 import character_cashier from 'assets/img/character_cashier.svg'
@@ -24,6 +25,7 @@ import Variation from 'models/Variation';
 import Accessory from 'models/Accessory';
 import Basket from 'models/Basket';
 import Customer from 'models/Customer';
+import ShippingMethod from 'models/ShippingMethod';
 
 type CashierProps = {
     chosenBasket: Basket;
@@ -33,7 +35,10 @@ type CashierProps = {
     getCurrentVariation: () => void;
     accessories: Array<Accessory>;
     chosenAccessories: Array<Accessory>;
-    setChosenAccessories: Dispatch<SetStateAction<Accessory[]>>
+    setChosenAccessories: Dispatch<SetStateAction<Accessory[]>>;
+    shippingMethods: Array<ShippingMethod>;
+    chosenShippingMethod: ShippingMethod;
+    setChosenShippingMethod: Dispatch<SetStateAction<ShippingMethod | null>>;
 }
 
 const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
@@ -91,6 +96,8 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
             case "Resume": return <Resume ref={nodeRefs[1]} goNextStep={goNextStep} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} chosenAccessories={props.chosenAccessories} getCurrentVariation={props.getCurrentVariation} />
             case "Authentication": return <Authentication ref={nodeRefs[2]} goNextStep={goNextStep} currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer} />
             case "UserDetails": return <UserDetails ref={nodeRefs[3]} goNextStep={goNextStep} currentCustomer={currentCustomer as Customer} setCurrentCustomer={setCurrentCustomer} />
+            case "Shipping": return <Shipping ref={nodeRefs[4]} goNextStep={goNextStep} shippingMethods={props.shippingMethods} chosenShippingMethod={props.chosenShippingMethod} setChosenShippingMethod={props.setChosenShippingMethod} />
+            case "Redirection": return <Redirection ref={nodeRefs[5]} chosenShippingMethod={props.chosenShippingMethod} />
 
             default: return <div></div>
         }

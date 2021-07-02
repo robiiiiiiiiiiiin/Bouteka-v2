@@ -1,0 +1,9 @@
+@use '../../shared.scss' as *;
+
+.cashier-step.shipping {
+    .step-content {
+        .method {
+            margin: 1rem 0;
+        }
+    }
+}
