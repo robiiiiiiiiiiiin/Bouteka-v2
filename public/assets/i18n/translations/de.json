@@ -42,7 +42,8 @@
             "dialogAskWhere": "Schließlich: Wo und wann wollen Sie Ihre Bestellung abholen?"
         },
         "redirection": {
-            "dialog": "Super! Das letzte, was Sie tun müssen, ist Ihre Bestellung über unsere Zahlungsplattform zu bezahlen."
+            "dialog": "Super! Das letzte, was Sie tun müssen, ist Ihre Bestellung über unsere Zahlungsplattform zu bezahlen.",
+            "goToPayPlatform": "Zur Bezahlplattform gehen"
         }
     },
     "form": {

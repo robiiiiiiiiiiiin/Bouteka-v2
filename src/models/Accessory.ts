@@ -1,4 +1,4 @@
-export default interface Accessories {
+export default interface Accessory {
     id: number;
     name: string;
     slug: string;

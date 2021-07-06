@@ -180,7 +180,8 @@ body, #root, .App, .page {
             color: $color-brown-light;
         }
     }
-    &:disabled {
+    &:disabled, &[href=""] {
+        pointer-events: none;
         box-shadow: none;
         opacity: 0.5;
     }

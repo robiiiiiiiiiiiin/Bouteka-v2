@@ -42,7 +42,8 @@
             "dialogAskWhere": "Pour finir, où et quand voulez-vous retirer votre commande?"
         },
         "redirection": {
-            "dialog": "Super! Il ne reste plus qu'à payer votre commande depuis notre plateforme de paiement."
+            "dialog": "Super! Il ne reste plus qu'à payer votre commande depuis notre plateforme de paiement.",
+            "goToPayPlatform": "Aller sur la plateforme de paiement"
         }
     },
     "form": {

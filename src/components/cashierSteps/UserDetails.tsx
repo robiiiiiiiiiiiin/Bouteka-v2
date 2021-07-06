@@ -25,7 +25,7 @@ const UserDetails = React.forwardRef<HTMLDivElement, UserDetailsProps>((props, r
     const validateExistingAddress = (address: Customer['billing']): Boolean => {
         const everyFieldsFilled = Object.entries(address)
         // Only take required address fields
-        .filter(([param, value]) => ["first_name", "last_name", "address_1", "city", "postcode", "phone"].includes(param))
+        .filter(([param, value]) => ["first_name", "last_name", "address_1", "city", "postcode", "phone", "email"].includes(param))
         // Check that they all are filled
         .reduce((filled, [param, value]) => {
             return filled & Number(value.length >= 1)
@@ -100,6 +100,7 @@ const UserDetails = React.forwardRef<HTMLDivElement, UserDetailsProps>((props, r
                             <label htmlFor="city">{t('form.city')}</label>
                             <input type="text" id="city" name="city" required />
                             <label htmlFor="phone">{t('form.phone')}</label>
+                            <input type="hidden" id="email" name="email" value={props.currentCustomer.email} />
                             <input type="tel" id="phone" name="phone" pattern="(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b" required />
                             <p className="error">{newAddressError}</p>
                         </form>

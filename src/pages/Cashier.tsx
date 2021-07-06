@@ -26,6 +26,7 @@ import Accessory from 'models/Accessory';
 import Basket from 'models/Basket';
 import Customer from 'models/Customer';
 import ShippingMethod from 'models/ShippingMethod';
+import Order from 'models/Order';
 
 type CashierProps = {
     chosenBasket: Basket;
@@ -39,6 +40,10 @@ type CashierProps = {
     shippingMethods: Array<ShippingMethod>;
     chosenShippingMethod: ShippingMethod;
     setChosenShippingMethod: Dispatch<SetStateAction<ShippingMethod | null>>;
+    createdOrder: Order | null;
+    createOrder: () => Promise<void>;
+    currentCustomer: Customer | null;
+    setCurrentCustomer: Dispatch<SetStateAction<Customer | null>>;
 }
 
 const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
@@ -47,7 +52,6 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
     const stepOrder = ["Cabas", "Resume", "Authentication", "UserDetails", "Shipping", "Redirection"]
     const [currentStep, setCurrentStep] = useStateWithLS('currentStep', 1)
 
-    const [currentCustomer, setCurrentCustomer] = useStateWithLS<Customer | null>('currentCustomer', null);
     const hasPastas = !!props.chosenBasketAttributes.find(option => option.name === "400g pâtes blé dur en vrac")
     const cabas = props.accessories.find(accessory => accessory.slug === "le-cabas")
 
@@ -94,10 +98,10 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
                 }
             }
             case "Resume": return <Resume ref={nodeRefs[1]} goNextStep={goNextStep} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} chosenAccessories={props.chosenAccessories} getCurrentVariation={props.getCurrentVariation} />
-            case "Authentication": return <Authentication ref={nodeRefs[2]} goNextStep={goNextStep} currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer} />
-            case "UserDetails": return <UserDetails ref={nodeRefs[3]} goNextStep={goNextStep} currentCustomer={currentCustomer as Customer} setCurrentCustomer={setCurrentCustomer} />
+            case "Authentication": return <Authentication ref={nodeRefs[2]} goNextStep={goNextStep} currentCustomer={props.currentCustomer} setCurrentCustomer={props.setCurrentCustomer} />
+            case "UserDetails": return <UserDetails ref={nodeRefs[3]} goNextStep={goNextStep} currentCustomer={props.currentCustomer as Customer} setCurrentCustomer={props.setCurrentCustomer} />
             case "Shipping": return <Shipping ref={nodeRefs[4]} goNextStep={goNextStep} shippingMethods={props.shippingMethods} chosenShippingMethod={props.chosenShippingMethod} setChosenShippingMethod={props.setChosenShippingMethod} />
-            case "Redirection": return <Redirection ref={nodeRefs[5]} chosenShippingMethod={props.chosenShippingMethod} />
+            case "Redirection": return <Redirection ref={nodeRefs[5]} chosenBasket={props.chosenBasket} currentVariation={props.currentVariation as Variation} chosenAccessories={props.chosenAccessories} currentCustomer={props.currentCustomer} chosenShippingMethod={props.chosenShippingMethod} createdOrder={props.createdOrder} createOrder={props.createOrder} />
 
             default: return <div></div>
         }

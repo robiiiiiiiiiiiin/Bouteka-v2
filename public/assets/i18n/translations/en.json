@@ -42,7 +42,8 @@
             "dialogAskWhere": "Finally, where and when do you want to collect your order?"
         },
         "redirection": {
-            "dialog": "Great! Last thing you have to do is pay for your order via our payment platform."
+            "dialog": "Great! Last thing you have to do is pay for your order via our payment platform.",
+            "goToPayPlatform": "Go to the payment gateway"
         }
     },
     "form": {

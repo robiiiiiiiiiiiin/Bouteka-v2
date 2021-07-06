@@ -20,5 +20,5 @@ export const checkPath = (o: {[k: string]: any} = {}, path: string): Boolean => 
  * @returns {String} the formated price
  */
 export const formatPrice = (price: string | number): string => {
-    return parseInt(price.toString()).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
+    return parseFloat(price.toString()).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
 }
