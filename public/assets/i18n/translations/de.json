@@ -62,6 +62,7 @@
         "add": "Hinzufügen",
         "modify": "Ändern",
         "remove": "Entfernen",
-        "loading": "Laden"
+        "loading": "Laden",
+        "outOfStock": "Vergriffen"
     }
 }

@@ -62,6 +62,7 @@
         "add": "Ajouter",
         "modify": "Modifier",
         "remove": "Retirer",
-        "loading": "Chargement"
+        "loading": "Chargement",
+        "outOfStock": "Indisponible"
     }
 }

@@ -2,21 +2,19 @@ import 'App.scss';
 
 import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import { Switch, Route, useLocation, useHistory, Redirect } from "react-router-dom";
 import axios, { AxiosResponse } from 'axios';
 
-import { checkPath} from 'components/helpers'
+import { checkPath } from 'components/helpers'
 
 import Loading from 'pages/Loading';
 import Home from 'pages/Home';
 import Baskets from 'pages/Baskets';
 import Options from 'pages/Options';
 import Cashier from 'pages/Cashier';
-import LangSelector from 'components/LangSelector';
 import useStateWithLS from 'components/useStateWithLS';
 
 import Basket from 'models/Basket';
-import BasketAttr from 'models/BasketAttr';
 import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Variation from 'models/Variation';
 import Accessory from 'models/Accessory';
@@ -66,7 +64,7 @@ function App() {
   const transitionBetwPagesDur: number = 600
 
   /* i18n */
-  const { i18n, ready } = useTranslation(undefined, { useSuspense: false });
+  const { ready } = useTranslation(undefined, { useSuspense: false });
   const [selectedLang, setSelectedLang] = useState('fr');
 
   /* const changeLanguage = (event) => {
@@ -76,7 +74,6 @@ function App() {
 
   /* data */
   const apiUrl = process.env.REACT_APP_API_URL
-  console.log("apiUrl", apiUrl)
 
   const [baskets, setBaskets] = useStateWithLS<Array<Basket>>('baskets', [])
   const [chosenBasket, setChosenBasket] = useStateWithLS<Basket | null>('chosenBasket', null)
@@ -88,22 +85,38 @@ function App() {
 
   const [shippingMethods, setShippingMethods] = useStateWithLS<Array<ShippingMethod>>('shippingMethods', [])
   const [chosenShippingMethod, setChosenShippingMethod] = useStateWithLS<ShippingMethod | null>('chosenShippingMethod', null)
-  
+
   const [currentCustomer, setCurrentCustomer] = useStateWithLS<Customer | null>('currentCustomer', null);
 
   const [createdOrder, setCreatedOrder] = useStateWithLS<Order | null>('createdOrder', null)
 
-  const [dataLoading, setDataLoading] = useState(false)
+  const [basketsLoading, setBasketsLoading] = useState(!!baskets.length)
+  const [currentVariationLoading, setCurrentVariationLoading] = useState(!!currentVariation)
+  const [accessoriesLoading, setAccessoriesLoading] = useState(!!accessories.length)
+  const [shippingMethodsLoading, setShippingMethodsLoading] = useState(!!shippingMethods.length)
   const [error, setError] = useState<string | boolean>(false)
+
+  const currentPageLoading = () => {
+    switch(location.pathname) {
+      case "/baskets":
+        return basketsLoading
+      case "/options":
+        return basketsLoading
+      case "/cashier":
+        return accessoriesLoading || shippingMethodsLoading
+      default:
+        return false
+    }
+  }
 
   /**
    * 
    * @param {string} endpoint the api endpoint to fetch
    * @param {function} setData the setState function to execute with the fetched data.
    */
-  const fetchData = async (endpoint: string, setData: Dispatch<SetStateAction<any>>) => {
+  const fetchData = async (endpoint: string, setData: Dispatch<SetStateAction<any>>, setDataLoading: Dispatch<SetStateAction<any>> | null = null) => {
     setError(false);
-    setDataLoading(true);
+    if(setDataLoading) setDataLoading(true)
 
     try {
       const result = await axios(apiUrl + endpoint);
@@ -113,12 +126,10 @@ function App() {
       console.error("Fetch error", error)
     }
 
-    setDataLoading(false);
+    if(setDataLoading) setDataLoading(false)
   }
 
   const createOrder = async () => {
-    setDataLoading(true);
-
     try {
       const order: AxiosResponse<any> = await axios({
         url: apiUrl + 'orders',
@@ -137,8 +148,6 @@ function App() {
     } catch (error) {
       setError(checkPath(error, 'response.data.message') ? error.response.data.message : "Erreur de communication avec le serveur. Veuillez svp passer votre commande sur bouteka.ch")
     }
-
-    setDataLoading(false);
   }
 
   // Convert special character to unicode in a string
@@ -150,17 +159,17 @@ function App() {
 
   // Load the baskets
   useEffect(() => {
-    if (ready) fetchData('products/baskets?lang=' + selectedLang, setBaskets)
+    if (ready) fetchData('products/baskets?lang=' + selectedLang, setBaskets, setBasketsLoading)
   }, [ready, selectedLang, setBaskets])
 
   // Load the accessories
   useEffect(() => {
-    if (ready) fetchData('products/accessories?lang=' + selectedLang, setAccessories)
+    if (ready) fetchData('products/accessories?lang=' + selectedLang, setAccessories, setAccessoriesLoading)
   }, [ready, selectedLang, setAccessories])
 
   // Load the shipping methods
   useEffect(() => {
-    if (ready) fetchData('orders/shipping-methods', setShippingMethods)
+    if (ready) fetchData('orders/shipping-methods', setShippingMethods, setShippingMethodsLoading)
   }, [ready, setShippingMethods])
 
   // Reset createdOrder if user change something in his cart
@@ -203,30 +212,33 @@ function App() {
     }}>
       <TransitionGroup>
         <CSSTransition key={location.key} nodeRef={nodeRefs[currentPathname]} timeout={transitionBetwPagesDur} classNames="fade" >
-          {ready
+          {ready && !currentPageLoading()
             ?
             <Switch location={location}>
               <Route path="/lang" >
                 {/* <LangSelector changeLanguage={changeLanguage} selectedLang={selectedLang} /> */}
               </Route>
               <Route path="/baskets">
-                {baskets.length
-                  ? <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenBasketAttrs={setChosenBasketAttributes} />
-                  : <Loading ref={loadingRef} />
-                }
+                  <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenBasketAttrs={setChosenBasketAttributes} />
               </Route>
               <Route path="/options">
-                <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttributes={setChosenBasketAttributes} />
+                {chosenBasket
+                  ? <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttributes={setChosenBasketAttributes} />
+                  : <Redirect to="/baskets" />
+                }
               </Route>
               <Route path="/cashier">
-                <Cashier
-                  ref={cashierRef} history={history}
-                  chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes}
-                  currentVariation={currentVariation} getCurrentVariation={getCurrentVariation}
-                  accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories}
-                  shippingMethods={shippingMethods} chosenShippingMethod={chosenShippingMethod as ShippingMethod} setChosenShippingMethod={setChosenShippingMethod}
-                  currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer}
-                  createdOrder={createdOrder} createOrder={createOrder} />
+                {chosenBasket
+                  ? <Cashier
+                    ref={cashierRef} history={history}
+                    chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes}
+                    currentVariation={currentVariation} getCurrentVariation={getCurrentVariation}
+                    accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories}
+                    shippingMethods={shippingMethods} chosenShippingMethod={chosenShippingMethod as ShippingMethod} setChosenShippingMethod={setChosenShippingMethod}
+                    currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer}
+                    createdOrder={createdOrder} createOrder={createOrder} />
+                  : <Redirect to="/baskets" />
+                }
               </Route>
               <Route path="/">
                 <Home ref={homeRef} history={history} />

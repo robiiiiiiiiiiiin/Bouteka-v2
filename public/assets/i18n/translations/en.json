@@ -62,6 +62,7 @@
         "add": "Add",
         "modify": "Modify",
         "remove": "Remove",
-        "loading": "Loading"
+        "loading": "Loading",
+        "outOfStock": "Out of stock"
     }
 }
