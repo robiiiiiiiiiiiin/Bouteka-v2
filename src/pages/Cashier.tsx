@@ -112,13 +112,13 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
             <main className="wrapper">
                 <div className="characters">
                     <div className={`character-wrapper cashier`}>
-                        <img className="character" src={character_cashier} alt="" />
+                        <img className="character" src={character_cashier} alt="" draggable="false" />
                     </div>
                     <div className='desk-wrapper'>
-                        <img className="desk" src={shop_desk} alt="" />
+                        <img className="desk" src={shop_desk} alt="" draggable="false" />
                     </div>
                     <div className='character-wrapper user'>
-                        <img className="character" src={character_back} alt="" />
+                        <img className="character" src={character_back} alt="" draggable="false" />
                     </div>
                 </div>
                 <TransitionGroup>
@@ -127,7 +127,7 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
                     </CSSTransition>
                 </TransitionGroup>
                 <button className="button secondary goback" onClick={() => goPreviousStep()}>
-                    <img className="arrow-icon" src={arrow_left} alt="" />
+                    <img className="arrow-icon" src={arrow_left} alt="" draggable="false" />
                 </button>
             </main>
         </div>

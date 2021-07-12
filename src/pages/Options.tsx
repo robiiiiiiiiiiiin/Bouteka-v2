@@ -11,8 +11,7 @@ import Decor from 'components/Decor'
 import Cart from 'components/Cart'
 
 import boxBg from 'assets/img/box_bg_carots.svg'
-import boxFg from 'assets/img/box_fg_carots.svg'
-import iconCarot from 'assets/img/product_carots.svg'
+import boxFg from 'assets/img/box_fg.svg'
 
 import { useTranslation } from 'react-i18next';
 
@@ -244,8 +243,10 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
     const items: Array<JSX.Element> = []
     Object.values(availableOptions).forEach((product, i) => {
         const optionIsInBasket = props.chosenBasketAttributes.filter(option => option.id === product.id).length > 0
+        const product_icon = require(`assets/img/product_${product.name}.svg`)
+        const box_icon = require(`assets/img/box_bg_${product.name}.svg`)
         items.push(
-            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: boxBg, icon: (optionIsInBasket) ? '' : iconCarot, fg: boxFg}} disabled={optionIsInBasket} >
+            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: box_icon.default, icon: (optionIsInBasket) ? '' : product_icon.default, fg: boxFg}} disabled={optionIsInBasket} >
               { (setSelected: Dispatch<SetStateAction<boolean>>) => (
                 product.isVariable ? <VariableProduct setSelected={setSelected} product={product} /> : <SimpleProduct  setSelected={setSelected} product={product} />
               )}

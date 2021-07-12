@@ -306,7 +306,17 @@ form {
         padding-left: .5rem;
         color: $color-text;
         &:focus {
-            outline: 1px solid $color-brown-dark;
+            outline: none;
+            box-shadow: 0 0 0 1px $color-brown-dark;
+        }
+        /* Remove arrows button for number field */
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        &[type=number] {
+            -moz-appearance: textfield;
         }
     }
     &.validate input:invalid {
@@ -321,18 +331,18 @@ form {
 
 @keyframes walking-right {
     0% {
-        transform: rotate(0) scaleY(1) translateY(0);
+        transform: rotate(0) scaleY(1) translateX(0) translateY(0);
     }
     100% {
-        transform: rotate(10deg) scaleY(0.7) translateY(15%);
+        transform: rotate(10deg) scaleY(0.7) translateX(10%) translateY(20%);
     }
 }
 @keyframes walking-left {
     0% {
-        transform: rotate(0) scaleY(1) translateY(0);
+        transform: rotate(0) scaleY(1) translateX(0) translateY(0);
     }
     100% {
-        transform: rotate(-10deg) scaleY(0.7) translateY(15%);
+        transform: rotate(-10deg) scaleY(0.7) translateX(-10%) translateY(20%);
     }
 }
 

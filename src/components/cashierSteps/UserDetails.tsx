@@ -88,20 +88,20 @@ const UserDetails = React.forwardRef<HTMLDivElement, UserDetailsProps>((props, r
                 <div className="understep" ref={nodeRefs[1]}>
                     <div className="step-content">
                         <p>{t('cashier.userDetails.dialogAddAddress')}</p>
-                        <form id="newAddressForm" className={validateFields ? 'validate' : ''} onSubmit={modifyAddress}>
+                        <form id="newAddressForm" className={validateFields ? 'validate' : ''} onSubmit={modifyAddress} autoComplete="on" >
                             <label htmlFor="name">{t('form.name')}</label>
-                            <input type="text" id="name" name="name" required />
+                            <input type="text" id="name" name="name" required autoComplete="lname" />
                             <label htmlFor="firstname">{t('form.firstname')}</label>
-                            <input type="text" id="firstname" name="firstname" required />
+                            <input type="text" id="firstname" name="firstname" required autoComplete="fname" />
                             <label htmlFor="street">{t('form.street')}</label>
-                            <input type="text" id="street" name="street" required />
+                            <input type="text" id="street" name="street" required autoComplete="shipping street-address" />
                             <label htmlFor="postcode">{t('form.postcode')}</label>
-                            <input type="number" id="postcode" name="postcode" required />
+                            <input type="number" id="postcode" name="postcode" required autoComplete="shipping postal-code" />
                             <label htmlFor="city">{t('form.city')}</label>
-                            <input type="text" id="city" name="city" required />
+                            <input type="text" id="city" name="city" required autoComplete="shipping locality" />
                             <label htmlFor="phone">{t('form.phone')}</label>
+                            <input type="tel" id="phone" name="phone" pattern="(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b" required autoComplete="tel" />
                             <input type="hidden" id="email" name="email" value={props.currentCustomer.email} />
-                            <input type="tel" id="phone" name="phone" pattern="(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b" required />
                             <p className="error">{newAddressError}</p>
                         </form>
                     </div>

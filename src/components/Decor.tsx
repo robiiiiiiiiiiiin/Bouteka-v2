@@ -14,13 +14,13 @@ const Decor = ({index = 1}: DecorProps) => {
     const grasses = []
     for (let i = 1; i <= 4; i++) {
         grasses.push(
-            <img key={`grass_${i}`} className="grass" src={grass} alt="" />
+            <img key={`grass_${i}`} className="grass" src={grass} alt="" draggable="false" />
         )
     }
 
     return (
         <div className="decor" style={{['--index' as any]: index-1}} >
-            <img className="tree" src={treeBig} alt="" />
+            <img className="tree" src={treeBig} alt="" draggable="false" />
             <div className="grasses" >
                 { grasses }
             </div>

@@ -1,6 +1,9 @@
 @use '../shared.scss' as *;
 
 .selectable-item {
+    .btn-toggle {
+        cursor: pointer;
+    }
     .banner {
         width: calc(100% - (2 * #{$gutter-banner-horiz}));
         background: $color-brown-light;

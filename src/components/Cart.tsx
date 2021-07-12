@@ -34,6 +34,7 @@ const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, 
     }, [chosenBasketAttributes, chosenBasket])
 
     const optionItems = chosenBasketAttributes.map(option => {
+        const product_icon = require(`assets/img/product_${option.name}.svg`)
 
         const removeFromCart = (idToRemove: number) => {
             const newArray = chosenBasketAttributes.filter(option => option.id !== idToRemove)
@@ -41,7 +42,7 @@ const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, 
         }
 
         return (
-            <SelectableItem key={`cart_option_${option.id}`} className="option" imgs={{ bg: cartShadow, icon: iconCarot }}>
+            <SelectableItem key={`cart_option_${option.id}`} className="option" imgs={{ bg: cartShadow, icon: product_icon.default }}>
                 {(/* setSelected */) => (
                     <div className='banner'>
                         <div className="header">
@@ -58,7 +59,7 @@ const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, 
     return (
         <div className={`cart ${cartOpen ? 'opened' : ''}`} >
             <button id="cart-btn" className={`button secondary cart ${animating ? 'animating' : ''}`} onClick={() => setCartOpen(true)}>
-                <img className="cart-icon" src={cart} alt="" />
+                <img className="cart-icon" src={cart} alt="" draggable="false" />
             </button>
             <OutsideClickHandler activated={cartOpen} triggerThis={() => setCartOpen(false)}>
                 <div className="content">

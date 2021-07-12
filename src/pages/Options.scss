@@ -19,9 +19,9 @@
                     transform: translate(calc(var(--current-page) * (-400%)), calc(var(--current-page) * #{$slope} * var(--max-width) * -1));
                     transition: transform 2s;
                     .icon {
-                        width: 50%;
+                        width: 60%;
                         margin: auto;
-                        transform: translateY(15%);
+                        transform: translateY(20%);
                     }
                 }
                 .banner {

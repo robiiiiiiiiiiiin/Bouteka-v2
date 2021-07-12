@@ -75,15 +75,15 @@ function App() {
   /* data */
   const apiUrl = process.env.REACT_APP_API_URL
 
-  const [baskets, setBaskets] = useStateWithLS<Array<Basket>>('baskets', [])
+  const [baskets, setBaskets] = useState<Array<Basket>>([])
   const [chosenBasket, setChosenBasket] = useStateWithLS<Basket | null>('chosenBasket', null)
   const [chosenBasketAttributes, setChosenBasketAttributes] = useStateWithLS<Array<ChosenBasketAttr>>('chosenBasketAttrs', [])
   const [currentVariation, setCurrentVariation] = useStateWithLS<Variation | null>('currentVariation', null)
 
-  const [accessories, setAccessories] = useStateWithLS<Array<Accessory>>('accessories', [])
+  const [accessories, setAccessories] = useState<Array<Accessory>>([])
   const [chosenAccessories, setChosenAccessories] = useStateWithLS<Array<Accessory>>('chosenAccessories', [])
 
-  const [shippingMethods, setShippingMethods] = useStateWithLS<Array<ShippingMethod>>('shippingMethods', [])
+  const [shippingMethods, setShippingMethods] = useState<Array<ShippingMethod>>([])
   const [chosenShippingMethod, setChosenShippingMethod] = useStateWithLS<ShippingMethod | null>('chosenShippingMethod', null)
 
   const [currentCustomer, setCurrentCustomer] = useStateWithLS<Customer | null>('currentCustomer', null);
@@ -215,9 +215,6 @@ function App() {
           {ready && !currentPageLoading()
             ?
             <Switch location={location}>
-              <Route path="/lang" >
-                {/* <LangSelector changeLanguage={changeLanguage} selectedLang={selectedLang} /> */}
-              </Route>
               <Route path="/baskets">
                   <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenBasketAttrs={setChosenBasketAttributes} />
               </Route>
@@ -245,7 +242,7 @@ function App() {
               </Route>
             </Switch>
             :
-            <Loading ref={loadingRef} />
+            <Loading ref={loadingRef} hasBasket={!!chosenBasket} selectedLang={selectedLang} />
           }
         </CSSTransition>
       </TransitionGroup>

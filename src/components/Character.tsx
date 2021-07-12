@@ -29,7 +29,7 @@ const Character = ({options}: CharacterProps) => {
 
     return (
         <div className={`character-wrapper ${direction} ${isWalking ? 'walking' : ''}`}>
-            <img className="character" src={image} alt="" />
+            <img className="character" src={image} alt="" draggable="false" />
         </div>
     )
 }

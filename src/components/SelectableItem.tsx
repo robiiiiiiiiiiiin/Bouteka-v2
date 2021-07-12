@@ -26,9 +26,9 @@ const SelectableItem = (props: SelectableItemProps) => {
             <OutsideClickHandler activated={selected} triggerThis={closeModal}>
                 <button className="btn-toggle" onClick={() => setSelected(!selected)} disabled={props.disabled}>
                     <div className="composed-img" role="img">
-                        { props.imgs.bg &&  <img className="bg" src={props.imgs.bg} alt="" /> }
-                                            <img className="icon" src={props.imgs.icon} alt="" />
-                        { props.imgs.fg &&  <img className="fg" src={props.imgs.fg} alt="" /> }
+                        { props.imgs.bg &&  <img className="bg" src={props.imgs.bg} alt="" draggable="false" /> }
+                                            <img className="icon" src={props.imgs.icon} alt="" draggable="false" />
+                        { props.imgs.fg &&  <img className="fg" src={props.imgs.fg} alt="" draggable="false" /> }
                     </div>
                 </button>
                 { props.children(setSelected) }

@@ -1,6 +1,7 @@
 {
     "Hello": "Hallo",
     "clickOnWorld": "Klicken Sie auf die Welt",
+    "loading": "Beladung",
     "tooltip": {
         "chooseBasket": "Wählen Sie die Größe Ihres Korbes",
         "addSomething": "Möchten Sie etwas hinzufügen?"

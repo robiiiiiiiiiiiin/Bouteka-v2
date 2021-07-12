@@ -36,15 +36,15 @@ const Home = React.forwardRef<HTMLDivElement, HomeProps>((props, ref) => {
         <div ref={ref} className="page home" onClick={animate}>
             <main className={`wrapper ${animated ? 'animated' : ''}`}>
                 <div className="cloud-wrapper">
-                    <img className="cloud" src={cloud} alt="" />
+                    <img className="cloud" src={cloud} alt="" draggable="false" />
                 </div>
                 <div className="sun-wrapper">
-                    <img className="sun" src={sun} alt="" />
+                    <img className="sun" src={sun} alt="" draggable="false" />
                 </div>
                 <div role="img" className="composed-img world">
-                    <img className="bg" src={world_bg} alt="" />
+                    <img className="bg" src={world_bg} alt="" draggable="false" />
                     <Character options={{direction: 'l', isWalking: characterWalking}} />
-                    <img className="fg" src={world_fg} alt="" />
+                    <img className="fg" src={world_fg} alt="" draggable="false" />
                 </div>
                 <div className="text">{t('clickOnWorld')}</div>
             </main>

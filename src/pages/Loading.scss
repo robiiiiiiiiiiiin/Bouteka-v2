@@ -1,0 +1,12 @@
+@use '../shared.scss' as *;
+
+.page.loading {
+    @extend %on-the-road;
+    main.wrapper {
+        .text {
+            margin: auto;
+            padding-top: 35vh;
+            text-align: center;
+        }
+    }
+}
