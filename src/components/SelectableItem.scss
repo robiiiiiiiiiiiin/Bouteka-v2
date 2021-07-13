@@ -2,6 +2,7 @@
 
 .selectable-item {
     .btn-toggle {
+        @include focusable;
         cursor: pointer;
     }
     .banner {

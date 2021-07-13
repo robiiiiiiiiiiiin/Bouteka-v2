@@ -9,6 +9,10 @@
         height: 3.5rem;
         border-radius: 50%;
         padding: 0.55rem;
+        overflow: hidden;
+        .cart-icon {
+            margin: -50% 0 0 0;
+        }
         &.animating {
             animation-name: addedToCart;
             animation-duration: 0.2s;
@@ -56,6 +60,7 @@
                     transition: opacity 0.5s;
                 }
                 .btn-toggle {
+                    @include focusable($radius: 2px);
                     height: 4rem;
                 }
                 .banner {

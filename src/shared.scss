@@ -145,6 +145,13 @@ body, #root, .App, .page {
     }
 }
 
+@mixin focusable($radius: 5px, $color: black) {
+    &:focus-visible, &:hover:not(:disabled) {
+        outline: none;
+        filter: drop-shadow( 0px 0px $radius $color)
+    }
+}
+
 .button {
     border-radius: 8px;
     font-weight: 700;
@@ -157,10 +164,12 @@ body, #root, .App, .page {
     text-decoration: none;
     cursor: pointer;
     &.primary {
+        @include focusable($radius: 3px);
         background: $color-brown-dark;
         color: $color-brown-light;
     }
     &.secondary {
+        @include focusable($radius: 3px);
         background: $color-brown-light;
         color: $color-brown-dark;
     }
@@ -189,27 +198,6 @@ body, #root, .App, .page {
 
 .hidden {
     display: none;
-}
-
-.character-wrapper {
-    &.walking.r {
-        .character {
-            animation-name: walking-right;
-        }
-    }
-    &.walking.l {
-        .character {
-            animation-name: walking-left;
-        }
-    }
-    &.walking {
-        .character {
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-            animation-timing-function: linear;
-            animation-duration: 0.5s;
-        }
-    }
 }
 
 %thin-scrollbar {
@@ -326,23 +314,6 @@ form {
     .error {
         margin: 0.8rem 0 0 0.5rem;
         color: $color-error;
-    }
-}
-
-@keyframes walking-right {
-    0% {
-        transform: rotate(0) scaleY(1) translateX(0) translateY(0);
-    }
-    100% {
-        transform: rotate(10deg) scaleY(0.7) translateX(10%) translateY(20%);
-    }
-}
-@keyframes walking-left {
-    0% {
-        transform: rotate(0) scaleY(1) translateX(0) translateY(0);
-    }
-    100% {
-        transform: rotate(-10deg) scaleY(0.7) translateX(-10%) translateY(20%);
     }
 }
 

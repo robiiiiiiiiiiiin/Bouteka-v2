@@ -7,8 +7,8 @@ import SelectableItem from 'components/SelectableItem'
 import OutsideClickHandler from 'components/OutsideClickHandler'
 
 import cart from 'assets/img/cart.svg'
+import cart_with_arm from 'assets/img/cart_with_arm.svg'
 import cartShadow from 'assets/img/cartShadow.svg'
-import iconCarot from 'assets/img/product_carots.svg'
 
 import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Basket from 'models/Basket';
@@ -59,7 +59,7 @@ const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, 
     return (
         <div className={`cart ${cartOpen ? 'opened' : ''}`} >
             <button id="cart-btn" className={`button secondary cart ${animating ? 'animating' : ''}`} onClick={() => setCartOpen(true)}>
-                <img className="cart-icon" src={cart} alt="" draggable="false" />
+                <img className="cart-icon" src={cart_with_arm} alt="" draggable="false" />
             </button>
             <OutsideClickHandler activated={cartOpen} triggerThis={() => setCartOpen(false)}>
                 <div className="content">

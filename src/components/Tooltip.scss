@@ -4,7 +4,7 @@
     background: $color-brown-light;
     position: fixed;
     left: 0;
-    top: 25%;
+    top: 0;
     padding: $gutter-banner-vert $gutter-banner-horiz;
     width: calc(100% - (2 * #{$gutter-banner-horiz}));
     text-align: center;

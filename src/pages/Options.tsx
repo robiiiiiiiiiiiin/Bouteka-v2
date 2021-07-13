@@ -178,7 +178,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
       setAnimProductAdded(true)
       setTimeout(() => {
         setAnimProductAdded(false)
-      }, 400)
+      }, 600)
     }
 
     type ProductProps = {
@@ -263,10 +263,11 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
         <div ref={ref} className="page options" style={{['--current-page' as any]: currentPage-1}}>
             <main className="wrapper">
                 <Tooltip text={t('tooltip.addSomething')} />
+                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} setChosenBasketAttributes={props.setChosenBasketAttributes} /> 
                 <ul className="products">
                     { items }
                 </ul>
-                <Character options={{ hasBasket: true, isWalking: characterWalking }} />
+                <Character options={{ hasBasket: true, isWalking: characterWalking, animating: animProductAdded }} />
                 <Road />
                 <nav className="navbar">
                   { currentPage > 1 &&
@@ -278,8 +279,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
                   { currentPage >= pageCount &&
                     <Link className="button primary checkout" to="/cashier">{t('pagination.checkout')}</Link>
                   }
-                </nav>
-                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} setChosenBasketAttributes={props.setChosenBasketAttributes} />  
+                </nav> 
             </main>
             <div className='decorative-elems'>
               { decors }
