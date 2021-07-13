@@ -1,6 +1,6 @@
 //import './Redirection.scss'
 
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import LoadingSpinner from 'components/LoadingSpinner';

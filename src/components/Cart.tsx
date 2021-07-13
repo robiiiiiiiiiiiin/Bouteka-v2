@@ -9,6 +9,7 @@ import OutsideClickHandler from 'components/OutsideClickHandler'
 import cart from 'assets/img/cart.svg'
 import cart_with_arm from 'assets/img/cart_with_arm.svg'
 import cartShadow from 'assets/img/cartShadow.svg'
+import product_default from 'assets/img/product_default.svg'
 
 import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Basket from 'models/Basket';
@@ -34,7 +35,13 @@ const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, 
     }, [chosenBasketAttributes, chosenBasket])
 
     const optionItems = chosenBasketAttributes.map(option => {
-        const product_icon = require(`assets/img/product_${option.name}.svg`)
+        /* Fetch product icons dynamically */
+        let product_icon
+        try {
+          product_icon = require(`assets/img/product_${option.name}.svg`).default
+        } catch {
+          product_icon = product_default
+        }
 
         const removeFromCart = (idToRemove: number) => {
             const newArray = chosenBasketAttributes.filter(option => option.id !== idToRemove)
@@ -42,7 +49,7 @@ const Cart = ({chosenBasketAttributes, setChosenBasketAttributes, chosenBasket, 
         }
 
         return (
-            <SelectableItem key={`cart_option_${option.id}`} className="option" imgs={{ bg: cartShadow, icon: product_icon.default }}>
+            <SelectableItem key={`cart_option_${option.id}`} className="option" imgs={{ bg: cartShadow, icon: product_icon }}>
                 {(/* setSelected */) => (
                     <div className='banner'>
                         <div className="header">

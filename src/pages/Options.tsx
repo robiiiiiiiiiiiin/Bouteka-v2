@@ -10,7 +10,8 @@ import Road from 'components/Road'
 import Decor from 'components/Decor'
 import Cart from 'components/Cart'
 
-import boxBg from 'assets/img/box_bg_carots.svg'
+import boxBg_default from 'assets/img/box_bg_default.svg'
+import product_default from 'assets/img/product_default.svg'
 import boxFg from 'assets/img/box_fg.svg'
 
 import { useTranslation } from 'react-i18next';
@@ -120,7 +121,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
       },
       {
         "id": 9,
-        "name": "Tsanpinyon",
+        "name": "Nouveau produit",
         "position": 7,
         "visible": false,
         "variation": true,
@@ -243,10 +244,18 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
     const items: Array<JSX.Element> = []
     Object.values(availableOptions).forEach((product, i) => {
         const optionIsInBasket = props.chosenBasketAttributes.filter(option => option.id === product.id).length > 0
-        const product_icon = require(`assets/img/product_${product.name}.svg`)
-        const box_icon = require(`assets/img/box_bg_${product.name}.svg`)
+        /* Fetch product icons dynamically */
+        let product_icon
+        let box_icon
+        try {
+          product_icon = require(`assets/img/product_${product.name}.svg`).default
+          box_icon = require(`assets/img/box_bg_${product.name}.svg`).default
+        } catch {
+          product_icon = product_default
+          box_icon = boxBg_default
+        }
         items.push(
-            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: box_icon.default, icon: (optionIsInBasket) ? '' : product_icon.default, fg: boxFg}} disabled={optionIsInBasket} >
+            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: box_icon, icon: (optionIsInBasket) ? '' : product_icon, fg: boxFg}} disabled={optionIsInBasket} >
               { (setSelected: Dispatch<SetStateAction<boolean>>) => (
                 product.isVariable ? <VariableProduct setSelected={setSelected} product={product} /> : <SimpleProduct  setSelected={setSelected} product={product} />
               )}

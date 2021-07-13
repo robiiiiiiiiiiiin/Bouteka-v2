@@ -1,6 +1,6 @@
 import 'App.scss';
 
-import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, useLocation, useHistory, Redirect } from "react-router-dom";
 import axios, { AxiosResponse } from 'axios';
@@ -91,7 +91,7 @@ function App() {
   const [createdOrder, setCreatedOrder] = useStateWithLS<Order | null>('createdOrder', null)
 
   const [basketsLoading, setBasketsLoading] = useState(!!baskets.length)
-  const [currentVariationLoading, setCurrentVariationLoading] = useState(!!currentVariation)
+  //const [currentVariationLoading, setCurrentVariationLoading] = useState(!!currentVariation)
   const [accessoriesLoading, setAccessoriesLoading] = useState(!!accessories.length)
   const [shippingMethodsLoading, setShippingMethodsLoading] = useState(!!shippingMethods.length)
   const [error, setError] = useState<string | boolean>(false)

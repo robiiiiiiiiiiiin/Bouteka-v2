@@ -1,7 +1,6 @@
 import './Cashier.scss';
 
 import React, { createRef, Dispatch, SetStateAction } from 'react';
-import { useTranslation } from 'react-i18next';
 import { History } from 'history';
 
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
@@ -47,8 +46,6 @@ type CashierProps = {
 }
 
 const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
-    const { t } = useTranslation();
-
     const stepOrder = ["Cabas", "Resume", "Authentication", "UserDetails", "Shipping", "Redirection"]
     const [currentStep, setCurrentStep] = useStateWithLS('currentStep', 1)
 
