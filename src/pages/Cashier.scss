@@ -12,6 +12,7 @@
     background-image: url("/assets/img/shop_bg.svg");
     background-size: cover;
     background-position-x: center;
+    overflow: visible;
     main.wrapper {
         .characters {
             position: absolute;
@@ -21,7 +22,7 @@
             .character-wrapper {
                 position: absolute;
                 &.cashier {
-                    width: 10% /* 18% */;
+                    width: 1% /* 18% */;
                     top: 5%;
                     left: 55%;
                 }
