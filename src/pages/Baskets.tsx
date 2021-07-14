@@ -75,7 +75,7 @@ const Baskets = React.forwardRef<HTMLDivElement, BasketsProps>((props, ref) => {
         <div ref={ref} className="page baskets">
             <main className="wrapper">
                 {!chosenBasketId && <Tooltip text={t('tooltip.chooseBasket')} />}
-                <ul className="baskets">
+                <ul className="basket-list">
                     {items}
                 </ul>
                 <Character options={{}} />

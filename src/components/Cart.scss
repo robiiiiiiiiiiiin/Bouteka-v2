@@ -113,13 +113,13 @@
         transform: translateY(0%);
         visibility: visible;
         opacity: 1;
-        transition: $transition-duration;
+        transition: opacity $transition-duration;
     }
     %invisible {
         transform: translateY(-30%);
         visibility: hidden;
         opacity: 0;
-        transition: $transition-duration;
+        transition: opacity $transition-duration;
     }
 
     .button.cart {

@@ -116,6 +116,7 @@ body, #root, .App, .page {
         }
     }
     .decor {
+        z-index: -1;
         .tree { z-index: 2; }
         .grass { z-index: 1; }
     }
