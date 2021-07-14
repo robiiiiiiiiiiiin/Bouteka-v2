@@ -3,7 +3,7 @@
 %positionnedAtBottom {
     position: fixed;
     top: calc(
-        var(--window-height) - 1rem
+        var(--window-height-static) - 1rem
     ); /* Positioned according to --window-height instead of viewport to avoid off-screen displaying on mobile */
     transform: translateY(-100%); /* As the height of the element is variable, we have to use this method */
 }
@@ -45,7 +45,7 @@
             text-align: center;
             /* Overlap steps for nice transition */
             .understep {
-                position: fixed;
+                position: absolute;
                 bottom: 0;
                 right: 0;
                 left: 0;

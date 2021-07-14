@@ -1,6 +1,6 @@
 import './Cashier.scss';
 
-import React, { createRef, Dispatch, SetStateAction } from 'react';
+import React, { createRef, Dispatch, SetStateAction, useRef } from 'react';
 import { History } from 'history';
 
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
@@ -51,6 +51,8 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
 
     const hasPastas = !!props.chosenBasketAttributes.find(option => option.name === "400g pâtes blé dur en vrac")
     const cabas = props.accessories.find(accessory => accessory.slug === "le-cabas")
+
+    const baseWindowHeight = useRef(window.innerHeight)
 
     const goStep = (direction: string) => {
         if (direction === "previous") {
@@ -105,7 +107,7 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
     }
 
     return (
-        <div ref={ref} className="page cashier">
+        <div ref={ref} className="page cashier" style={{['--window-height-static' as any]: baseWindowHeight.current+'px'}}>
             <main className="wrapper">
                 <div className="characters">
                     <div className={`character-wrapper cashier`}>
