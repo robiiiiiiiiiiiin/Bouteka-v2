@@ -2,12 +2,14 @@
 
 %positionnedAtBottom {
     position: fixed;
-    top: calc(var(--window-height) - 1rem); /* Positioned according to --window-height instead of viewport to avoid off-screen displaying on mobile */
-    transform: translateY(-100%);           /* As the height of the element is variable, we have to use this method */
+    top: calc(
+        var(--window-height) - 1rem
+    ); /* Positioned according to --window-height instead of viewport to avoid off-screen displaying on mobile */
+    transform: translateY(-100%); /* As the height of the element is variable, we have to use this method */
 }
 
 .page.cashier {
-    background-image: url('/assets/img/shop_bg.svg');
+    background-image: url("/assets/img/shop_bg.svg");
     background-size: cover;
     background-position-x: center;
     main.wrapper {
@@ -41,6 +43,13 @@
             width: 100%;
             left: 0;
             text-align: center;
+            /* Overlap steps for nice transition */
+            .understep {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                left: 0;
+            }
             .step-content {
                 background-color: $color-brown-light;
                 padding: $gutter-banner-vert $gutter-banner-horiz;
