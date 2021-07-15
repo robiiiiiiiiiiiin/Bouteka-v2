@@ -1,4 +1,3 @@
-import './Loading.scss'
 import React from 'react';
 
 import Character from 'components/Character';

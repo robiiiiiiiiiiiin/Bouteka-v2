@@ -8,6 +8,7 @@ import axios, { AxiosResponse } from 'axios';
 import { checkPath } from 'components/helpers'
 
 import Loading from 'pages/Loading';
+import Offline from 'pages/Offline';
 import Home from 'pages/Home';
 import Baskets from 'pages/Baskets';
 import Options from 'pages/Options';
@@ -72,6 +73,35 @@ function App() {
     i18n.changeLanguage(event.target.value);
   } */
 
+  /* online / offline handling */
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+
+  useEffect(() => {
+    const handleConnexionChange = () => {
+      if (navigator.onLine) {
+        fetch(window.location.origin, { method: 'HEAD', mode: 'no-cors' })
+          .then(function () {
+            setIsOnline(true)
+          })
+          .catch(function () {
+            setIsOnline(false)
+          });
+      } else setIsOnline(false)
+    }
+
+    window.addEventListener('online', handleConnexionChange);
+    window.addEventListener('offline', handleConnexionChange);
+
+    return () => {
+      window.removeEventListener('online', handleConnexionChange);
+      window.removeEventListener('offline', handleConnexionChange);
+    }
+  }, [])
+
+  useEffect(()=> {
+    console.log("isOnline", isOnline)
+  }, [isOnline])
+
   /* data */
   const apiUrl = process.env.REACT_APP_API_URL
 
@@ -97,7 +127,7 @@ function App() {
   const [error, setError] = useState<string | boolean>(false)
 
   const currentPageLoading = () => {
-    switch(location.pathname) {
+    switch (location.pathname) {
       case "/baskets":
         return basketsLoading
       case "/options":
@@ -116,7 +146,7 @@ function App() {
    */
   const fetchData = async (endpoint: string, setData: Dispatch<SetStateAction<any>>, setDataLoading: Dispatch<SetStateAction<any>> | null = null) => {
     setError(false);
-    if(setDataLoading) setDataLoading(true)
+    if (setDataLoading) setDataLoading(true)
 
     try {
       const result = await axios(apiUrl + endpoint);
@@ -126,7 +156,7 @@ function App() {
       console.error("Fetch error", error)
     }
 
-    if(setDataLoading) setDataLoading(false)
+    if (setDataLoading) setDataLoading(false)
   }
 
   const createOrder = async () => {
@@ -212,37 +242,41 @@ function App() {
     }}>
       <TransitionGroup>
         <CSSTransition key={location.key} nodeRef={nodeRefs[currentPathname]} timeout={transitionBetwPagesDur} classNames="fade" >
-          {ready && !currentPageLoading()
+          { isOnline
             ?
-            <Switch location={location}>
-              <Route path="/baskets">
+              ready && !currentPageLoading()
+              ?
+              <Switch location={location}>
+                <Route path="/baskets">
                   <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenBasketAttrs={setChosenBasketAttributes} />
-              </Route>
-              <Route path="/options">
-                {chosenBasket
-                  ? <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttributes={setChosenBasketAttributes} />
-                  : <Redirect to="/baskets" />
-                }
-              </Route>
-              <Route path="/cashier">
-                {chosenBasket
-                  ? <Cashier
-                    ref={cashierRef} history={history}
-                    chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes}
-                    currentVariation={currentVariation} getCurrentVariation={getCurrentVariation}
-                    accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories}
-                    shippingMethods={shippingMethods} chosenShippingMethod={chosenShippingMethod as ShippingMethod} setChosenShippingMethod={setChosenShippingMethod}
-                    currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer}
-                    createdOrder={createdOrder} createOrder={createOrder} />
-                  : <Redirect to="/baskets" />
-                }
-              </Route>
-              <Route path="/">
-                <Home ref={homeRef} history={history} />
-              </Route>
-            </Switch>
+                </Route>
+                <Route path="/options">
+                  {chosenBasket
+                    ? <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttributes={setChosenBasketAttributes} />
+                    : <Redirect to="/baskets" />
+                  }
+                </Route>
+                <Route path="/cashier">
+                  {chosenBasket
+                    ? <Cashier
+                      ref={cashierRef} history={history}
+                      chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes}
+                      currentVariation={currentVariation} getCurrentVariation={getCurrentVariation}
+                      accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories}
+                      shippingMethods={shippingMethods} chosenShippingMethod={chosenShippingMethod as ShippingMethod} setChosenShippingMethod={setChosenShippingMethod}
+                      currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer}
+                      createdOrder={createdOrder} createOrder={createOrder} />
+                    : <Redirect to="/baskets" />
+                  }
+                </Route>
+                <Route path="/">
+                  <Home ref={homeRef} history={history} />
+                </Route>
+              </Switch>
+              :
+              <Loading ref={loadingRef} hasBasket={!!chosenBasket} selectedLang={selectedLang} />
             :
-            <Loading ref={loadingRef} hasBasket={!!chosenBasket} selectedLang={selectedLang} />
+              <Offline selectedLang={selectedLang} />
           }
         </CSSTransition>
       </TransitionGroup>

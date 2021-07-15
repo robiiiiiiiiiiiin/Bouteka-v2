@@ -57,149 +57,7 @@ $color-error: #ff0040;
 
 $transition-duration: 0.5s;
 
-/* normalize */
-* {
-    padding: 0;
-    margin: 0;
-}
-ul, ol {
-    list-style: none;
-}
-button {
-    border: none;
-    background: none;
-}
-
-/* general properties */
-
-body, input {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    color: $color-text;
-}
-
-/* body, #root, .App,  */.page {
-    overflow: hidden;
-}
-
-.page {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100vh;
-    margin: auto;
-    transform: rotate(0deg); /* Prevent fixed element to go off wrapper on big screens */
-    main.wrapper {
-        position: relative;
-        width: var(--wrapper-width);
-        max-width: var(--max-width);
-        height: 100vh;
-        margin: auto;
-    }
-}
-
-/* z-indexes */
-
-.page {
-    z-index: 1;
-    main.wrapper {
-        z-index: 2;
-    }
-    &.home {
-        .fg {
-            z-index: 4;
-        }
-        .character-wrapper {
-            z-index: 3;
-        }
-    }
-    .decor {
-        z-index: -1;
-        .tree { z-index: 2; }
-        .grass { z-index: 1; }
-    }
-    .tooltip, .navbar {
-        z-index: 10;
-    }
-    .cart .content {
-        z-index: 6;
-        .banner { z-index: 5; }
-    }
-    .banner {
-        z-index: 5;
-    }
-    .composed-img {
-        .bg     { z-index: 2; }
-        .icon   { z-index: 3; }
-        .fg     { z-index: 4; }
-    }
-}
-
-.composed-img {
-    display: grid;
-    grid-template: "center" 1fr / 1fr;
-    > * {
-        width: 100%;
-        grid-area: center;
-    }
-}
-
-@mixin focusable($radius: 5px, $color: black) {
-    &:focus-visible, &:hover:not(:disabled) {
-        outline: none;
-        filter: drop-shadow( 0px 0px $radius $color)
-    }
-}
-
-.button {
-    border-radius: 8px;
-    font-weight: 700;
-    padding: 4px 1em;
-    font-size: 1rem;
-    font-family: 'Montserrat', sans-serif;
-    box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.3);
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    cursor: pointer;
-    &.primary {
-        @include focusable($radius: 3px);
-        background: $color-brown-dark;
-        color: $color-brown-light;
-    }
-    &.secondary {
-        @include focusable($radius: 3px);
-        background: $color-brown-light;
-        color: $color-brown-dark;
-    }
-    &.toggle {
-        font-weight: 500;
-        box-shadow: none;
-        background: none;
-        border: 1.5px solid $color-brown-dark;
-        color: $color-brown-dark;
-        padding-right: 8px;
-        padding-left: 8px;
-        input {
-            display: none;
-        }
-        &.selected {
-            background: $color-brown-dark;
-            color: $color-brown-light;
-        }
-    }
-    &:disabled, &[href=""] {
-        pointer-events: none;
-        box-shadow: none;
-        opacity: 0.5;
-    }
-}
-
-.hidden {
-    display: none;
-}
+/* mixins */
 
 %thin-scrollbar {
     scrollbar-width: thin;
@@ -264,6 +122,185 @@ body, input {
     top: -30px;
 }
 
+%on-the-road {
+    background: $color-green-grass;
+    main.wrapper {
+        .btn-toggle {
+            width: 100%;
+        }
+        .character-wrapper {
+            position: absolute;
+            width: 40%;
+            top: calc(var(--window-height) / 2 + #{$space-character-top});
+            left: 5%;
+            z-index: 5;
+        }
+    }
+}
+
+/* normalize */
+* {
+    padding: 0;
+    margin: 0;
+}
+ul, ol {
+    list-style: none;
+}
+button {
+    border: none;
+    background: none;
+}
+
+/* general properties */
+
+body, input {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: $color-text;
+}
+.hidden {
+    display: none;
+}
+
+/* body, #root, .App,  */.page {
+    overflow: hidden;
+}
+
+/* similarities between pages */
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100vh;
+    margin: auto;
+    transform: rotate(0deg); /* Prevent fixed element to go off wrapper on big screens */
+    main.wrapper {
+        position: relative;
+        width: var(--wrapper-width);
+        max-width: var(--max-width);
+        height: 100vh;
+        margin: auto;
+    }
+}
+.page.loading, .page.offline {
+    @extend %on-the-road;
+    main.wrapper {
+        .text {
+            margin: auto;
+            padding-top: 35vh;
+            text-align: center;
+        }
+    }
+}
+
+/* z-indexes */
+
+.page {
+    z-index: 1;
+    main.wrapper {
+        z-index: 2;
+    }
+    &.home {
+        .fg {
+            z-index: 4;
+        }
+        .character-wrapper {
+            z-index: 3;
+        }
+    }
+    .decor {
+        z-index: -1;
+        .tree { z-index: 2; }
+        .grass { z-index: 1; }
+    }
+    .tooltip, .navbar {
+        z-index: 10;
+    }
+    .cart .content {
+        z-index: 6;
+        .banner { z-index: 5; }
+    }
+    .banner {
+        z-index: 5;
+    }
+    .composed-img {
+        .bg     { z-index: 2; }
+        .icon   { z-index: 3; }
+        .fg     { z-index: 4; }
+    }
+}
+
+/* focusablke elements */
+
+@mixin focusable($radius: 5px, $color: black) {
+    &:focus-visible, &:hover:not(:disabled) {
+        outline: none;
+        filter: drop-shadow( 0px 0px $radius $color)
+    }
+}
+
+/* Mutly layers images */
+
+.composed-img {
+    display: grid;
+    grid-template: "center" 1fr / 1fr;
+    > * {
+        width: 100%;
+        grid-area: center;
+    }
+}
+
+/* buttons */
+
+.button {
+    border-radius: 8px;
+    font-weight: 700;
+    padding: 4px 1em;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.3);
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+    &.primary {
+        @include focusable($radius: 3px);
+        background: $color-brown-dark;
+        color: $color-brown-light;
+    }
+    &.secondary {
+        @include focusable($radius: 3px);
+        background: $color-brown-light;
+        color: $color-brown-dark;
+    }
+    &.toggle {
+        font-weight: 500;
+        box-shadow: none;
+        background: none;
+        border: 1.5px solid $color-brown-dark;
+        color: $color-brown-dark;
+        padding-right: 8px;
+        padding-left: 8px;
+        input {
+            display: none;
+        }
+        &.selected {
+            background: $color-brown-dark;
+            color: $color-brown-light;
+        }
+    }
+    &:disabled, &[href=""] {
+        pointer-events: none;
+        box-shadow: none;
+        opacity: 0.5;
+    }
+}
+
+/* forms */
+
 form {
     display: flex;
     flex-direction: column;
@@ -304,21 +341,5 @@ form {
     .error {
         margin: 0.8rem 0 0 0.5rem;
         color: $color-error;
-    }
-}
-
-%on-the-road {
-    background: $color-green-grass;
-    main.wrapper {
-        .btn-toggle {
-            width: 100%;
-        }
-        .character-wrapper {
-            position: absolute;
-            width: 40%;
-            top: calc(var(--window-height) / 2 + #{$space-character-top});
-            left: 5%;
-            z-index: 5;
-        }
     }
 }
