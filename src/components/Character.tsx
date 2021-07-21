@@ -1,14 +1,12 @@
 import './Character.scss'
 
-import character_body from 'assets/img/character_body.svg'
-import character_body_smiling from 'assets/img/character_body_smiling.svg'
 import character_arm from 'assets/img/character_arm.svg'
 import character_arm_basket from 'assets/img/character_arm_basket.svg'
 
 type CharacterProps = {
     options: {
         direction?: string; 
-        isSmiling?: boolean;
+        expression?: "normal" | "smiling" | "sad";
         hasBasket?: boolean;
         isWalking?: boolean;
         animating?: boolean;
@@ -18,13 +16,13 @@ type CharacterProps = {
 const Character = ({options}: CharacterProps) => {
     const {
         direction = "r", 
-        isSmiling = false,
+        expression = "normal",
         hasBasket = false,
         isWalking = false,
         animating = false
     } = options
 
-    const image_body = isSmiling ? character_body_smiling : character_body
+    const image_body = require(`assets/img/character_body_${expression}.svg`).default
     const image_arm = hasBasket ? character_arm_basket : character_arm
 
     return (

@@ -19,7 +19,7 @@ const Offline = React.forwardRef<HTMLDivElement, OfflineProps>((props, ref) => {
     <div ref={ref} className="page loading">
       <main className="wrapper">
         <p className="text">{message}</p>
-        <Character options={{}} />
+        <Character options={{ expression:"sad" }} />
       </main>
     </div>
   )

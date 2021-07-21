@@ -185,7 +185,7 @@ body, input {
         margin: auto;
     }
 }
-.page.loading, .page.offline {
+.page.loading, .page.offline, .page.error {
     @extend %on-the-road;
     main.wrapper {
         .text {

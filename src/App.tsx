@@ -9,6 +9,7 @@ import { checkPath } from 'components/helpers'
 
 import Loading from 'pages/Loading';
 import Offline from 'pages/Offline';
+import Error from 'pages/Error';
 import Home from 'pages/Home';
 import Baskets from 'pages/Baskets';
 import Options from 'pages/Options';
@@ -74,33 +75,32 @@ function App() {
   } */
 
   /* online / offline handling */
+  const checkConnection = () => {
+    if (navigator.onLine) {
+      fetch("https://bouteka-v2.netlify.app", { method: 'HEAD', mode: 'no-cors' })
+        .then(function () {
+          setIsOnline(true)
+        })
+        .catch(function () {
+          setIsOnline(false)
+        });
+    } else {
+      setIsOnline(false)
+    }
+  }
+
   const [isOnline, setIsOnline] = useState(navigator.onLine)
 
   useEffect(() => {
-    const handleConnexionChange = () => {
-      if (navigator.onLine) {
-        fetch(window.location.origin, { method: 'HEAD', mode: 'no-cors' })
-          .then(function () {
-            setIsOnline(true)
-          })
-          .catch(function () {
-            setIsOnline(false)
-          });
-      } else setIsOnline(false)
-    }
-
-    window.addEventListener('online', handleConnexionChange);
-    window.addEventListener('offline', handleConnexionChange);
+    window.addEventListener('online', checkConnection);
+    window.addEventListener('offline', checkConnection);
+    checkConnection()
 
     return () => {
-      window.removeEventListener('online', handleConnexionChange);
-      window.removeEventListener('offline', handleConnexionChange);
+      window.removeEventListener('online', checkConnection);
+      window.removeEventListener('offline', checkConnection);
     }
   }, [])
-
-  useEffect(()=> {
-    console.log("isOnline", isOnline)
-  }, [isOnline])
 
   /* data */
   const apiUrl = process.env.REACT_APP_API_URL
@@ -146,13 +146,14 @@ function App() {
    */
   const fetchData = async (endpoint: string, setData: Dispatch<SetStateAction<any>>, setDataLoading: Dispatch<SetStateAction<any>> | null = null) => {
     setError(false);
+    checkConnection();
     if (setDataLoading) setDataLoading(true)
 
     try {
       const result = await axios(apiUrl + endpoint);
       setData(result.data);
     } catch (error) {
-      setError(error);
+      setError(checkPath(error, 'response.data.message') ? error.response.data.message : "Erreur de communication avec le serveur. Veuillez svp passer votre commande sur bouteka.ch");
       console.error("Fetch error", error)
     }
 
@@ -160,6 +161,7 @@ function App() {
   }
 
   const createOrder = async () => {
+    checkConnection()
     try {
       const order: AxiosResponse<any> = await axios({
         url: apiUrl + 'orders',
@@ -242,41 +244,45 @@ function App() {
     }}>
       <TransitionGroup>
         <CSSTransition key={location.key} nodeRef={nodeRefs[currentPathname]} timeout={transitionBetwPagesDur} classNames="fade" >
-          { isOnline
+          {isOnline
             ?
-              ready && !currentPageLoading()
+            error
               ?
-              <Switch location={location}>
-                <Route path="/baskets">
-                  <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenBasketAttrs={setChosenBasketAttributes} />
-                </Route>
-                <Route path="/options">
-                  {chosenBasket
-                    ? <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttributes={setChosenBasketAttributes} />
-                    : <Redirect to="/baskets" />
-                  }
-                </Route>
-                <Route path="/cashier">
-                  {chosenBasket
-                    ? <Cashier
-                      ref={cashierRef} history={history}
-                      chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes}
-                      currentVariation={currentVariation} getCurrentVariation={getCurrentVariation}
-                      accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories}
-                      shippingMethods={shippingMethods} chosenShippingMethod={chosenShippingMethod as ShippingMethod} setChosenShippingMethod={setChosenShippingMethod}
-                      currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer}
-                      createdOrder={createdOrder} createOrder={createOrder} />
-                    : <Redirect to="/baskets" />
-                  }
-                </Route>
-                <Route path="/">
-                  <Home ref={homeRef} history={history} />
-                </Route>
-              </Switch>
+              <Error selectedLang={selectedLang} />
               :
-              <Loading ref={loadingRef} hasBasket={!!chosenBasket} selectedLang={selectedLang} />
+              ready && !currentPageLoading()
+                ?
+                <Switch location={location}>
+                  <Route path="/baskets">
+                    <Baskets ref={basketsRef} history={history} baskets={baskets} chosenBasket={chosenBasket} setChosenBasket={setChosenBasket} setChosenBasketAttrs={setChosenBasketAttributes} />
+                  </Route>
+                  <Route path="/options">
+                    {chosenBasket
+                      ? <Options ref={optionsRef} chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes} setChosenBasketAttributes={setChosenBasketAttributes} />
+                      : <Redirect to="/baskets" />
+                    }
+                  </Route>
+                  <Route path="/cashier">
+                    {chosenBasket
+                      ? <Cashier
+                        ref={cashierRef} history={history}
+                        chosenBasket={chosenBasket as Basket} chosenBasketAttributes={chosenBasketAttributes}
+                        currentVariation={currentVariation} getCurrentVariation={getCurrentVariation}
+                        accessories={accessories} chosenAccessories={chosenAccessories} setChosenAccessories={setChosenAccessories}
+                        shippingMethods={shippingMethods} chosenShippingMethod={chosenShippingMethod as ShippingMethod} setChosenShippingMethod={setChosenShippingMethod}
+                        currentCustomer={currentCustomer} setCurrentCustomer={setCurrentCustomer}
+                        createdOrder={createdOrder} createOrder={createOrder} />
+                      : <Redirect to="/baskets" />
+                    }
+                  </Route>
+                  <Route path="/">
+                    <Home ref={homeRef} history={history} />
+                  </Route>
+                </Switch>
+                :
+                <Loading ref={loadingRef} hasBasket={!!chosenBasket} selectedLang={selectedLang} />
             :
-              <Offline selectedLang={selectedLang} />
+            <Offline selectedLang={selectedLang} />
           }
         </CSSTransition>
       </TransitionGroup>
