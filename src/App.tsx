@@ -77,7 +77,7 @@ function App() {
   /* online / offline handling */
   const checkConnection = () => {
     if (navigator.onLine) {
-      fetch("https://bouteka-v2.netlify.app", { method: 'HEAD', mode: 'no-cors' })
+      fetch(window.location.hostname, { method: 'HEAD', mode: 'no-cors' })
         .then(function () {
           setIsOnline(true)
         })
