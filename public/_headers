@@ -2,4 +2,4 @@
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
-  Content-Security-Policy: default-src 'self' bouteka-v2.netlify.app dev.bouteka.ch proxy.bouteka.ch
+  Content-Security-Policy: default-src 'self' dev-bouteka-v2.netlify.app *.bouteka.ch
