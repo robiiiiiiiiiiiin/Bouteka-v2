@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTranslation, Trans } from 'react-i18next';
+import { formatPrice } from 'components/helpers'
 
 import Accessory from 'models/Accessory';
 
@@ -13,7 +14,7 @@ type CabasProps = {
 
 const Cabas = React.forwardRef<HTMLDivElement, CabasProps>(({hasPastas, goNextStep, cabas, addAccessoryToCart, removeAccessoryFromCart}, ref) => {
     const { t } = useTranslation();
-    const cabasPrice = parseInt(cabas.price).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
+    const cabasPrice = formatPrice(cabas.price)
 
     const addCabas = () => {
         addAccessoryToCart(cabas)

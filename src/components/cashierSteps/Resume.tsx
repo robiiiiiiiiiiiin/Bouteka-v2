@@ -1,15 +1,13 @@
 import './Resume.scss'
 
-import React, { useEffect, Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
-
-import useStateWithLS from 'components/useStateWithLS';
+import { formatPrice } from 'components/helpers'
 
 import Basket from 'models/Basket';
 import ChosenBasketAttr from 'models/ChosenBasketAttr';
 import Accessory from 'models/Accessory';
-import Variation from 'models/Variation';
 
 type ResumeProps = {
     goNextStep: () => void;
@@ -21,10 +19,6 @@ type ResumeProps = {
 
 const Resume = React.forwardRef<HTMLDivElement, ResumeProps>(({ goNextStep, chosenBasket, chosenBasketAttributes, chosenAccessories, getCurrentVariation }, ref) => {
     const { t } = useTranslation();
-
-    const formatPrice = (price: string): string => {
-        return parseFloat(price).toLocaleString('fr-CH', { minimumFractionDigits: 2 })
-    }
 
     const confirm = () => {
         getCurrentVariation()

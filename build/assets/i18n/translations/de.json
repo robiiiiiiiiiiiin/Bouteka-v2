@@ -1,10 +1,7 @@
 {
     "Hello": "Hallo",
     "clickOnWorld": "Klicken Sie auf die Welt",
-    "choose": "Auswählen",
-    "add": "Hinzufügen",
-    "modify": "Ändern",
-    "remove": "Entfernen",
+    "loading": "Beladung",
     "tooltip": {
         "chooseBasket": "Wählen Sie die Größe Ihres Korbes",
         "addSomething": "Möchten Sie etwas hinzufügen?"
@@ -13,5 +10,60 @@
         "previous": "Zurück",
         "next": "Mehr sehen",
         "checkout": "Zur Kasse"
+    },
+    "cashier": {
+        "cabas": {
+            "wannaCabas": "Hallo, Ihr Warenkorb ist gut gefüllt! Möchten Sie <1>{{strongcabas}}</1> für {{price}} chf hinzufügen?",
+            "theCabas": "die Einkaufstasche",
+            "dontForgetWithoutPastas": "Ansonsten vergessen Sie nicht, Ihren eigenen Behälter mitzubringen, um Ihren Warenkorb abzuholen.",
+            "dontForgetWithPastas": "Andernfalls vergessen Sie nicht, Ihre eigenen Behälter mitzubringen, um Ihren Korb und die Pasta abzuholen.",
+            "addCabas": "Die Einkaufstasche hinzufügen",
+            "noThanks": "Nein Danke"
+        },
+        "resume": {
+            "thereIsTheContent": "Hier ist der Inhalt Ihres Warenkorbs:",
+            "confirm": "Bestätigen und bezahlen",
+            "back": "Zurück zu den Produkten",
+            "total": "Total"
+        },
+        "authentication": {
+            "dialogAlreadyConnected": "Ich sehe, Sie sind als <1>{{strongemail}}</1> angemeldet, sind Sie das?",
+            "dialogHaveAccount": "Haben Sie bereits ein Konto bei uns?",
+            "dialogCreateAccount": "Möchten Sie ein Konto erstellen?",
+            "createAnAccount": "Erstellen Sie ein Konto",
+            "createMyAccount": "Mein Konto erstellen",
+            "login": "Login",
+            "changeAccount": "Konto ändern"
+        },
+        "userDetails": {
+            "dialogConfirm": "Sind diese Koordinaten richtig?",
+            "dialogAddAddress": "Bitte geben Sie Ihre Koordinaten an."
+        },
+        "shipping": {
+            "dialogAskWhere": "Schließlich: Wo und wann wollen Sie Ihre Bestellung abholen?"
+        },
+        "redirection": {
+            "dialog": "Super! Das letzte, was Sie tun müssen, ist Ihre Bestellung über unsere Zahlungsplattform zu bezahlen.",
+            "goToPayPlatform": "Zur Bezahlplattform gehen"
+        }
+    },
+    "form": {
+        "cancel": "Abbrechen",
+        "confirm": "Bestätigen",
+        "username": "Benutzername",
+        "pwd": "Passwort",
+        "mail": "E-Mail Adresse",
+        "name": "Name",
+        "firstname": "Vorname",
+        "street": "Straße und Hausnummer",
+        "city": "Stadt",
+        "phone": "Telefonnummer",
+        "postcode": "Postnummer",
+        "choose": "Auswählen",
+        "add": "Hinzufügen",
+        "modify": "Ändern",
+        "remove": "Entfernen",
+        "loading": "Laden",
+        "outOfStock": "Vergriffen"
     }
 }

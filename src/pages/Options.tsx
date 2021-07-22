@@ -10,9 +10,9 @@ import Road from 'components/Road'
 import Decor from 'components/Decor'
 import Cart from 'components/Cart'
 
-import boxBg from 'assets/img/box_bg_carots.svg'
-import boxFg from 'assets/img/box_fg_carots.svg'
-import iconCarot from 'assets/img/product_carots.svg'
+import boxBg_default from 'assets/img/box_bg_default.svg'
+import product_default from 'assets/img/product_default.svg'
+import boxFg from 'assets/img/box_fg.svg'
 
 import { useTranslation } from 'react-i18next';
 
@@ -121,32 +121,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
       },
       {
         "id": 9,
-        "name": "Tsanpinyon 2",
-        "position": 7,
-        "visible": false,
-        "variation": true,
-        "options": [
-          "250g (Supplément CHF 2.50)",
-          "500g (Supplément CHF 4.50)",
-          "Sans"
-        ],
-        "isVariable": true,
-        "processed_options": [
-          {
-            "fullname": "250g (Supplément CHF 2.50)",
-            "name": "250g",
-            "price": " 2.50"
-          },
-          {
-            "fullname": "500g (Supplément CHF 4.50)",
-            "name": "500g",
-            "price": " 4.50"
-          }
-        ]
-      },
-      {
-        "id": 10,
-        "name": "Tsanpinyon 3",
+        "name": "Nouveau produit",
         "position": 7,
         "visible": false,
         "variation": true,
@@ -204,7 +179,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
       setAnimProductAdded(true)
       setTimeout(() => {
         setAnimProductAdded(false)
-      }, 400)
+      }, 600)
     }
 
     type ProductProps = {
@@ -227,7 +202,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
                 <h2 className="option-title">{name}</h2>
                 <span className="price">chf{price}</span>
             </div>
-            <button className="option-btn-add button primary" onClick={() => handleAddProduct()}>{t('add')}</button>
+            <button className="option-btn-add button primary" onClick={() => handleAddProduct()}>{t('form.add')}</button>
         </div>
       )
     }
@@ -261,7 +236,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
                   )
                 }
             </ul>
-            <button className="option-btn-add button primary" onClick={() => handleAddProduct()} disabled={!selectedVariation} >{t('add')}</button>
+            <button className="option-btn-add button primary" onClick={() => handleAddProduct()} disabled={!selectedVariation} >{t('form.add')}</button>
         </div>
       )
     }
@@ -269,8 +244,18 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
     const items: Array<JSX.Element> = []
     Object.values(availableOptions).forEach((product, i) => {
         const optionIsInBasket = props.chosenBasketAttributes.filter(option => option.id === product.id).length > 0
+        /* Fetch product icons dynamically */
+        let product_icon
+        let box_icon
+        try {
+          product_icon = require(`assets/img/product_${product.name}.svg`).default
+          box_icon = require(`assets/img/box_bg_${product.name}.svg`).default
+        } catch {
+          product_icon = product_default
+          box_icon = boxBg_default
+        }
         items.push(
-            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: boxBg, icon: (optionIsInBasket) ? '' : iconCarot, fg: boxFg}} disabled={optionIsInBasket} >
+            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: box_icon, icon: (optionIsInBasket) ? '' : product_icon, fg: boxFg}} disabled={optionIsInBasket} >
               { (setSelected: Dispatch<SetStateAction<boolean>>) => (
                 product.isVariable ? <VariableProduct setSelected={setSelected} product={product} /> : <SimpleProduct  setSelected={setSelected} product={product} />
               )}
@@ -287,10 +272,11 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
         <div ref={ref} className="page options" style={{['--current-page' as any]: currentPage-1}}>
             <main className="wrapper">
                 <Tooltip text={t('tooltip.addSomething')} />
+                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} setChosenBasketAttributes={props.setChosenBasketAttributes} /> 
                 <ul className="products">
                     { items }
                 </ul>
-                <Character options={{ hasBasket: true, isWalking: characterWalking }} />
+                <Character options={{ hasBasket: true, isWalking: characterWalking, animating: animProductAdded }} />
                 <Road />
                 <nav className="navbar">
                   { currentPage > 1 &&
@@ -302,8 +288,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
                   { currentPage >= pageCount &&
                     <Link className="button primary checkout" to="/cashier">{t('pagination.checkout')}</Link>
                   }
-                </nav>
-                <Cart animating={animProductAdded} chosenBasket={props.chosenBasket} chosenBasketAttributes={props.chosenBasketAttributes} setChosenBasketAttributes={props.setChosenBasketAttributes} />  
+                </nav> 
             </main>
             <div className='decorative-elems'>
               { decors }

@@ -3,7 +3,7 @@
 .page.baskets {
     @extend %on-the-road;
     main.wrapper {
-        .baskets {
+        .basket-list {
             position: absolute;
             width: 100%;
             top: calc((var(--window-height) / 2) - 10%);

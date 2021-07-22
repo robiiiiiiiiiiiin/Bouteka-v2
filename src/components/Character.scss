@@ -1,0 +1,50 @@
+@use '../shared.scss' as *;
+
+.character-wrapper {
+    .character_part {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    &.l {
+        transform: scaleX(-1)
+    }
+
+    &.animating {
+        .character_part.arm {
+            animation-name: addedToCharacterCart;
+            animation-duration: 0.3s;
+            animation-direction: alternate;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 2;
+        }
+    }
+
+    &.walking {
+        .character_part {
+            animation-name: walking;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-timing-function: linear;
+            animation-duration: 0.5s;
+        }
+    }
+
+    @keyframes addedToCharacterCart {
+        from {
+            transform: rotate(0deg) translateY(0);
+        }
+        to {
+            transform: rotate(-15deg) translateY(-2%) /* translateY(2.5%) */;
+        }
+    }
+
+    @keyframes walking {
+        0% {
+            transform: rotate(0) scaleY(1) translateX(0) translateY(0);
+        }
+        100% {
+            transform: rotate(10deg) scaleY(0.7) translateX(10%) translateY(20%);
+        }
+    }
+}

@@ -19,14 +19,14 @@
                     transform: translate(calc(var(--current-page) * (-400%)), calc(var(--current-page) * #{$slope} * var(--max-width) * -1));
                     transition: transform 2s;
                     .icon {
-                        width: 50%;
+                        width: 60%;
                         margin: auto;
-                        transform: translateY(15%);
+                        transform: translateY(20%);
                     }
                 }
                 .banner {
                     position: fixed;
-                    top: 15%;
+                    top: 0;
                     left: 0;
                     text-align: center;
                     .header {
@@ -46,11 +46,7 @@
                             justify-content: space-between;
                             align-items: center;
                             label {
-                                cursor: pointer;
                                 margin: calc(#{$space-elements} / 2) 0;
-                                input {
-                                    display: none;
-                                }
                             }
                         }
                     }
