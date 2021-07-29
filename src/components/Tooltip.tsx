@@ -9,26 +9,31 @@ type TooltipProps = {
     text: string;
 }
 
-const Tooltip = ({ text }: TooltipProps) => {
+const Tooltip = (props: TooltipProps) => {
     const { t } = useTranslation();
     const [show, setShow] = useState(false)
 
+    // Close the tooltip when a button is clicked
+    useEffect(() => {
+        const buttons = document.querySelectorAll('button')
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => setShow(false))
+        })
+
+        return () => {
+            buttons.forEach(btn => {
+                btn.removeEventListener('click', () => setShow(false))
+            })
+        }
+    }, [])
+
     useEffect(() => {
         setShow(true)
-
-        /* const closeTooltip = () => {
-            setShow(false)
-        }
-
-        document.addEventListener('mousedown', closeTooltip)
-        return () => { 
-            document.removeEventListener('mousedown', closeTooltip)
-        } */
     }, [])
 
     return (
         <div className={`tooltip ${show ? 'showing' : ''}`}>
-            <p className="text">{text}</p>
+            <p className="text">{props.text}</p>
             <button className="btn-cross" onClick={() => setShow(false)}>
                 <img src={cross} alt="" className="cross" />
             </button>
