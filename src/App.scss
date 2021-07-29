@@ -4,7 +4,7 @@
     opacity: 0;
 }
 .fade-enter-active, .fade-appear-active {
-    opacity: 0.99;
+    opacity: 1;
     transition: opacity var(--transition-betw-pages-dur);
 }
 .fade-exit {
