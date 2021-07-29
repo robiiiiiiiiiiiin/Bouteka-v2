@@ -89,18 +89,18 @@ const UserDetails = React.forwardRef<HTMLDivElement, UserDetailsProps>((props, r
                     <div className="step-content">
                         <p>{t('cashier.userDetails.dialogAddAddress')}</p>
                         <form id="newAddressForm" className={validateFields ? 'validate' : ''} onSubmit={modifyAddress} autoComplete="on" >
-                            <label htmlFor="name">{t('form.name')}</label>
-                            <input type="text" id="name" name="name" required autoComplete="lname" />
-                            <label htmlFor="firstname">{t('form.firstname')}</label>
-                            <input type="text" id="firstname" name="firstname" required autoComplete="fname" />
-                            <label htmlFor="street">{t('form.street')}</label>
-                            <input type="text" id="street" name="street" required autoComplete="shipping street-address" />
-                            <label htmlFor="postcode">{t('form.postcode')}</label>
-                            <input type="number" id="postcode" name="postcode" required autoComplete="shipping postal-code" />
-                            <label htmlFor="city">{t('form.city')}</label>
-                            <input type="text" id="city" name="city" required autoComplete="shipping locality" />
+                            <label htmlFor="lname">{t('form.name')}</label>
+                            <input type="text" id="lname" name="lname" required autoComplete="family-name" defaultValue={props.currentCustomer.billing.last_name || ""}/>
+                            <label htmlFor="fname">{t('form.firstname')}</label>
+                            <input type="text" id="fname" name="fname" required autoComplete="given-name"  defaultValue={props.currentCustomer.billing.first_name || ""}/>
+                            <label htmlFor="ship-address">{t('form.street')}</label>
+                            <input type="text" id="ship-address" name="ship-address" required autoComplete="shipping street-address"  defaultValue={props.currentCustomer.billing.address_1 || ""}/>
+                            <label htmlFor="ship-zip">{t('form.postcode')}</label>
+                            <input type="number" id="ship-zip" name="ship-zip" required autoComplete="shipping postal-code"  defaultValue={props.currentCustomer.billing.postcode || ""}/>
+                            <label htmlFor="ship-city">{t('form.city')}</label>
+                            <input type="text" id="ship-city" name="ship-city" required autoComplete="shipping locality"  defaultValue={props.currentCustomer.billing.city || ""}/>
                             <label htmlFor="phone">{t('form.phone')}</label>
-                            <input type="tel" id="phone" name="phone" pattern="(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b" required autoComplete="tel" />
+                            <input type="tel" id="phone" name="phone" pattern="(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b" required autoComplete="tel"  defaultValue={props.currentCustomer.billing.phone || ""}/>
                             <input type="hidden" id="email" name="email" value={props.currentCustomer.email} />
                             <p className="error">{newAddressError}</p>
                         </form>

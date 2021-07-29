@@ -131,7 +131,7 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
                 </button>
             </main>
         </div>
-            )
+    )
 })
 
-            export default Cashier;
+export default Cashier;

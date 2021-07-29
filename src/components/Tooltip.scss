@@ -4,10 +4,22 @@
     background: $color-brown-light;
     position: fixed;
     left: 0;
-    top: 0;
+    top: 15%;
     padding: $gutter-banner-vert $gutter-banner-horiz;
     width: calc(100% - (2 * #{$gutter-banner-horiz}));
-    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 7px 29px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .btn-cross {
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+        .cross {
+            @include focusable($radius: 1px);
+            width: 1rem;
+        }
+    }
     .text {
         margin: 0;
     }

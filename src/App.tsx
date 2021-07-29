@@ -46,25 +46,6 @@ function App() {
     return () => window.removeEventListener('resize', updateWindowDimensions);
   }, [])
 
-  /* Navigation */
-  let history = useHistory()
-  const location = useLocation()
-  const loadingRef = useRef<HTMLDivElement>(null)
-  const homeRef = useRef<HTMLDivElement>(null)
-  const basketsRef = useRef<HTMLDivElement>(null)
-  const optionsRef = useRef<HTMLDivElement>(null)
-  const cashierRef = useRef<HTMLDivElement>(null)
-  const nodeRefs = {
-    '/': homeRef,
-    '/baskets': basketsRef,
-    '/options': optionsRef,
-    '/cashier': cashierRef,
-    '/loading': loadingRef
-  }
-
-  const currentPathname = location.pathname as keyof typeof nodeRefs
-  const transitionBetwPagesDur: number = 600
-
   /* i18n */
   const { ready } = useTranslation(undefined, { useSuspense: false });
   const [selectedLang, setSelectedLang] = useState('fr');
@@ -138,6 +119,34 @@ function App() {
         return false
     }
   }
+  
+  /* Navigation */
+  let history = useHistory()
+  const location = useLocation()
+  const loadingRef = useRef<HTMLDivElement>(null)
+  const homeRef = useRef<HTMLDivElement>(null)
+  const basketsRef = useRef<HTMLDivElement>(null)
+  const optionsRef = useRef<HTMLDivElement>(null)
+  const cashierRef = useRef<HTMLDivElement>(null)
+  const nodeRefs = {
+    '/': homeRef,
+    '/baskets': basketsRef,
+    '/options': optionsRef,
+    '/cashier': cashierRef,
+    '/loading': loadingRef
+  }
+
+  // Return the current page, even for the pages like the loading page that are never in the location.pathname
+  const wantedCurrentLocation = (): keyof typeof nodeRefs => {
+    // We don't want a clean transition for the error page. SO we return the requested page
+    if(!isOnline || error) return location.pathname as keyof typeof nodeRefs
+    // We want a clean transition with the loading page
+    else if(currentPageLoading()) return "/loading"
+    // Normal behaviour
+    else return location.pathname as keyof typeof nodeRefs
+  }
+  const currentPathname = location.pathname as keyof typeof nodeRefs
+  const transitionBetwPagesDur: number = 600
 
   /**
    * 
@@ -243,7 +252,7 @@ function App() {
       ['--transition-betw-pages-dur' as any]: transitionBetwPagesDur + 'ms'
     }}>
       <TransitionGroup>
-        <CSSTransition key={location.key} nodeRef={nodeRefs[currentPathname]} timeout={transitionBetwPagesDur} classNames="fade" >
+        <CSSTransition key={wantedCurrentLocation()} nodeRef={nodeRefs[wantedCurrentLocation()]} timeout={transitionBetwPagesDur} classNames="fade" >
           {isOnline
             ?
             error

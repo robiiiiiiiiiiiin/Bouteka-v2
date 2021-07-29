@@ -11,6 +11,7 @@
         padding: 0.55rem;
         overflow: hidden;
         .cart-icon {
+            width: 100%;
             margin: -50% 0 0 0;
         }
         &.animating {
@@ -113,13 +114,13 @@
         transform: translateY(0%);
         visibility: visible;
         opacity: 1;
-        transition: opacity $transition-duration;
+        transition: opacity $transition-duration, transform $transition-duration, visibility $transition-duration
     }
     %invisible {
         transform: translateY(-30%);
         visibility: hidden;
         opacity: 0;
-        transition: opacity $transition-duration;
+        transition: opacity $transition-duration, transform $transition-duration, visibility $transition-duration
     }
 
     .button.cart {

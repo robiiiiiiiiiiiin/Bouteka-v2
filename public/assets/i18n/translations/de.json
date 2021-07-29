@@ -64,6 +64,7 @@
         "modify": "Ändern",
         "remove": "Entfernen",
         "loading": "Laden",
-        "outOfStock": "Vergriffen"
+        "outOfStock": "Vergriffen",
+        "close": "schließen"
     }
 }

@@ -51,7 +51,7 @@ const Baskets = React.forwardRef<HTMLDivElement, BasketsProps>((props, ref) => {
     const items: Array<JSX.Element> = []
     Object.values(props.baskets).forEach((basket, i) => {
         items.push(
-            <SelectableItem key={basket.id} index={i} selected={basket.id === chosenBasketId} imgs={{ bg: basketShadow, icon: basketIcon }} >
+            <SelectableItem key={basket.id} index={i} imgs={{ bg: basketShadow, icon: basketIcon }} >
                 {(/* setSelected */) => {
                     const instock = basket.stock_status !== "outofstock"
                     return (
@@ -74,7 +74,7 @@ const Baskets = React.forwardRef<HTMLDivElement, BasketsProps>((props, ref) => {
     return (
         <div ref={ref} className="page baskets">
             <main className="wrapper">
-                {!chosenBasketId && <Tooltip text={t('tooltip.chooseBasket')} />}
+                <Tooltip text={t('tooltip.chooseBasket')} />
                 <ul className="basket-list">
                     {items}
                 </ul>
