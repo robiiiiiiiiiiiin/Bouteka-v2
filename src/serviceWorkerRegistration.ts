@@ -76,11 +76,6 @@ function registerValidSW(swUrl: string, config?: Config) {
                 'New content is available and will be used when all ' +
                 'tabs for this page are closed. See https://cra.link/PWA.'
               );
-              
-              if (registration.waiting) {
-                // let waiting Service Worker know it should became active
-                registration.waiting.postMessage({type: 'SKIP_WAITING'})
-              }
 
               // Execute callback
               if (config && config.onUpdate) {
