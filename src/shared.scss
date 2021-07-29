@@ -152,6 +152,8 @@ button {
 }
 * {
     /* Removes the highlights of different browsers */
+    border: none;
+    outline: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
