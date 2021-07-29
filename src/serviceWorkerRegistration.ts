@@ -63,7 +63,7 @@ function registerValidSW(swUrl: string, config?: Config) {
     .then((registration) => {
       if (registration.waiting) {
         // let waiting Service Worker know it should became active
-        registration.waiting.postMessage('SKIP_WAITING')
+        registration.waiting.postMessage({type: 'SKIP_WAITING'})
       }
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
