@@ -151,8 +151,8 @@ button {
     background: none;
 }
 *:active {
-    /* Removes the blue highlight on chrome */
-    -webkit-tap-highlight-color: transparent;
+    /* Removes the highlights of different browsers */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 /* general properties */
