@@ -29,133 +29,11 @@ type OptionsProps = {
 
 const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
     const { t } = useTranslation();
-    //const availableOptions = props.chosenBasket.attributes
-    const availableOptions = [
-      {
-        "id": 3,
-        "name": "4 œufs",
-        "position": 4,
-        "visible": false,
-        "variation": true,
-        "options": [
-          "Avec (Supplément CHF 4.00)",
-          "Sans"
-        ],
-        "isVariable": false,
-        "processed_options": [
-          {
-            "fullname": "Avec (Supplément CHF 4.00)",
-            "name": "Avec",
-            "price": " 4.00"
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "name": "Pan levain",
-        "position": 5,
-        "visible": false,
-        "variation": true,
-        "options": [
-          "Baguette 250g (Supplément CHF 2.00)",
-          "Mi-blanc 500g (Supplément CHF 3.00)",
-          "Sans"
-        ],
-        "isVariable": true,
-        "processed_options": [
-          {
-            "fullname": "Baguette 250g (Supplément CHF 2.00)",
-            "name": "Baguette 250g",
-            "price": " 2.00"
-          },
-          {
-            "fullname": "Mi-blanc 500g (Supplément CHF 3.00)",
-            "name": "Mi-blanc 500g",
-            "price": " 3.00"
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "name": "400g pâtes blé dur en vrac",
-        "position": 6,
-        "visible": false,
-        "variation": true,
-        "options": [
-          "Avec (Supplément CHF 3.00)",
-          "Sans"
-        ],
-        "isVariable": false,
-        "processed_options": [
-          {
-            "fullname": "Avec (Supplément CHF 3.00)",
-            "name": "Avec",
-            "price": " 3.00"
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "name": "Tsanpinyon",
-        "position": 7,
-        "visible": false,
-        "variation": true,
-        "options": [
-          "250g (Supplément CHF 2.50)",
-          "500g (Supplément CHF 4.50)",
-          "Sans"
-        ],
-        "isVariable": true,
-        "processed_options": [
-          {
-            "fullname": "250g (Supplément CHF 2.50)",
-            "name": "250g",
-            "price": " 2.50"
-          },
-          {
-            "fullname": "500g (Supplément CHF 4.50)",
-            "name": "500g",
-            "price": " 4.50"
-          }
-        ]
-      },
-      {
-        "id": 9,
-        "name": "Nouveau produit",
-        "position": 7,
-        "visible": false,
-        "variation": true,
-        "options": [
-          "250g (Supplément CHF 2.50)",
-          "500g (Supplément CHF 4.50)",
-          "Sans"
-        ],
-        "isVariable": true,
-        "processed_options": [
-          {
-            "fullname": "250g (Supplément CHF 2.50)",
-            "name": "250g",
-            "price": " 2.50"
-          },
-          {
-            "fullname": "500g (Supplément CHF 4.50)",
-            "name": "500g",
-            "price": " 4.50"
-          }
-        ]
-      }
-    ]
-    /* const availableOptions = []
-    for(let i = 1; i <= 16; i++) {
-      availableOptions.push({ id: i })
-    } */
+    const availableOptions = props.chosenBasket.attributes
     const pageCount = Math.ceil(availableOptions.length / 4)
     const [currentPage, setCurrentPage] = useState(1)
     const [characterWalking, setCharacterWalking] = useState(false)
     const [animProductAdded, setAnimProductAdded] = useState(false)
-
-    useEffect(() => {
-    }, [])
 
     const move = (direction: string) => {
       setCharacterWalking(true)
@@ -187,7 +65,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
       product: BasketAttr;
     }
 
-    const SimpleProduct = ({setSelected, product}: ProductProps) => {
+    const SimpleBanner = ({setSelected, product}: ProductProps) => {
       const name = product.name
       const { fullname, price } = product.processed_options[0]
       
@@ -207,7 +85,7 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
       )
     }
     
-    const VariableProduct = ({setSelected, product}: ProductProps) => {
+    const VariableBanner = ({setSelected, product}: ProductProps) => {
       const name = product.name
       const [selectedVariation, setSelectedVariation] = useState<BasketAttrOption | null>(null)
 
@@ -255,9 +133,9 @@ const Options = React.forwardRef<HTMLDivElement, OptionsProps>((props, ref) => {
           box_icon = boxBg_default
         }
         items.push(
-            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: box_icon, icon: (optionIsInBasket) ? '' : product_icon, fg: boxFg}} disabled={optionIsInBasket} >
+            <SelectableItem key={`option_${product.id}`} index={i} imgs={{bg: box_icon, icon: (optionIsInBasket) ? '' : product_icon, fg: boxFg}} disabled={optionIsInBasket}>
               { (setSelected: Dispatch<SetStateAction<boolean>>) => (
-                product.isVariable ? <VariableProduct setSelected={setSelected} product={product} /> : <SimpleProduct  setSelected={setSelected} product={product} />
+                product.isVariable ? <VariableBanner setSelected={setSelected} product={product} /> : <SimpleBanner  setSelected={setSelected} product={product} />
               )}
             </SelectableItem>
         )
