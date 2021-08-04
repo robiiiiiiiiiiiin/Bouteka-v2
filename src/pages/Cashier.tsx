@@ -1,6 +1,6 @@
 import './Cashier.scss';
 
-import React, { createRef, Dispatch, SetStateAction, useRef } from 'react';
+import React, { createRef, Dispatch, SetStateAction, useRef, useEffect } from 'react';
 import { History } from 'history';
 
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
@@ -51,6 +51,11 @@ const Cashier = React.forwardRef<HTMLDivElement, CashierProps>((props, ref) => {
 
     const hasPastas = !!props.chosenBasketAttributes.find(option => option.name === "400g pâtes blé dur en vrac")
     const cabas = props.accessories.find(accessory => accessory.slug === "le-cabas")
+
+    // re-search for the correct current variation
+    useEffect(() => {
+        props.getCurrentVariation()
+    },[])
 
     // used to avoid unwanted behaviour on mobile when the keyboard is displayed
     const baseWindowHeight = useRef(window.innerHeight)
