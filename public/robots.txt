@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://bouteka-v2.netlify.app/sitemap.xml
