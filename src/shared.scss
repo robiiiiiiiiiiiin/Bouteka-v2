@@ -83,7 +83,7 @@ $transition-duration: 0.5s;
     left: 0;
     right: 0;
     height: 1.5em;
-    background: linear-gradient(0deg, $color-brown-light 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(to top, $color-brown-light, rgba(242, 202, 128,0));
 }
 
 %line {
